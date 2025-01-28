@@ -7,6 +7,8 @@ import CartPage from "../pages/Books/CartPage";
 import Checkout from "../pages/Books/CheckoutPage";
 import SingleBook from "../pages/Books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
+import Session from "../components/session";
+
 const router =createBrowserRouter([
     {
         path:"/",
@@ -19,6 +21,10 @@ const router =createBrowserRouter([
             {
                 path :"/about",
                 element: <div>about</div>
+            },
+            {
+                path :"/meet",
+                element: <Session/>
             },
             {
                 path:"/order",
