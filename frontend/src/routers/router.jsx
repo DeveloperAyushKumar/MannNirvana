@@ -45,7 +45,6 @@ const router =createBrowserRouter([
             {
                 path:"/books/:id",
                 element:<SingleBook/>
-
             }
             
         ]
