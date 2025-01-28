@@ -1,4 +1,6 @@
+import os
 from deepface import DeepFace
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
 
 # Analyze emotions in the image
 def analyze_emotions(image_path: str) -> dict:
