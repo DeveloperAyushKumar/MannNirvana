@@ -20,7 +20,7 @@ import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Com
   
 const PostPreview = ({post}) => {
   return (
-    <Card className="max-w-lg mx-auto shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Card className=" mx-auto shadow-lg hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6]">
       
       {/* Render image if available */}
       {post.image && (

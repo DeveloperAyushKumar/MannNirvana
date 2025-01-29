@@ -13,7 +13,7 @@ import logo from '../assets/Logo/logo.png'
 
 
 function Navbar() {
-  const {currentUser,logout}=useAuth();
+  const {currentUser,logout}={currentUser:null,logout:null}
   const cartItems=useSelector((state)=>(state.cart.cartItems))
   console.log(cartItems);
   const [isDroppedDown, setIsDroppedDown] = React.useState(false)
@@ -28,8 +28,8 @@ function Navbar() {
       herf: '/support'
     },
     {
-      name:"Blogs",
-      herf: '/blogs'
+      name:"Safe Space",
+      herf: '/safespace'
     },
     {
       name : 'Assessment',
@@ -76,8 +76,7 @@ function Navbar() {
                         <Link to={item.herf} key={item.name} className='text-lg font-semibold text-white bg-customBgBtn px-2 rounded-md'>{item.name}</Link>
                       )
                     })
-                  }
-          
+                  }       
               </div>
              }
             

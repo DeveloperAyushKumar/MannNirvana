@@ -74,7 +74,7 @@ function WebcamStream() {
       });
   };
 
-  return <video ref={videoRef} />;
+  return <video ref={videoRef} className='rounded-md' />;
 }
 
 export default WebcamStream;

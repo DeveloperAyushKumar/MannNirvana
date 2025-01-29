@@ -59,18 +59,18 @@ const InterviewMEET = (props) => {
 
   return (
     <>
-      <div className="w-full h-screen bg-slate-950 p-0 z-9 flex items-center">
+      <div className="w-full h-screen p-0 z-9 flex items-center">
         {/* EXIT */}
 
         <button
           onClick={toggleExitOption}
-          className="text-white text-lg absolute top-3 left-3 z-10 font-extrabold"
+          className="text-white text-lg absolute top-3 left-3 z-10 font-extrabold border border-purple-300 rounded-lg p-2 bg-red-400"
         >
           EXIT
         </button>
         {/* Main meet */}
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center px-auto justify-around">
-        <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-indigo-950 text-slate-50 hover:shadow-[55px_-43px_120px_rgba(112,0,255,0.25),-74px_39px_120px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
+        <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-[#D4C1EC] text-slate-50 shadow-[10px_-13px_20px_rgba(112,0,255,0.25),-14px_2px_12px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
           <div>{ifStart ? questions[qid] : "Best of luck for the session!"}</div>
           {ifStart != 2? <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
            : 
