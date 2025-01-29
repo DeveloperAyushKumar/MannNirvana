@@ -46,7 +46,7 @@ const router =createBrowserRouter([
                 element: <MentalState/>
             },
             {
-                path :"/meet",
+                path :"/assessment",
                 element: <Session/>
             },
             {

@@ -52,7 +52,6 @@ const InterviewMEET = (props) => {
 
   const backToHome = () => {
     console.log("Back to Home");
-    clearInterval(timingInterval);
     window.speechSynthesis.cancel();
     window.location.href = "/";
   };

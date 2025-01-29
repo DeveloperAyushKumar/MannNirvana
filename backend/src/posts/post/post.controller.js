@@ -1,18 +1,53 @@
-import mongoose from "mongoose";
 import {Post,Comment} from './post.model.js';
+import cloudinary from '../../../config/cloudStorage.js';
+import fs from 'fs';
 
 const createPost=async(req,res)=>{
-    const {content,tags,image}=req.body;
-    console.log(req.body);
-    const author=req.body.user._id;
     try {
-        const post=await Post.create({content,tags,image,author});
-        if(!post)res.status(400).json({message:"Post not created"});
+    const {content,tags,image_file} = req.body;
+    const currentDate = new Date();
+    const expirationDate = new Date(currentDate);
+    expirationDate.setDate(expirationDate.getDate() + 90);
+    const expirationDateString = expirationDate.toISOString();
+    const author=req.body.user._id;
+    if(image_file){
+        cloudinary.uploader.upload(image_file.image, {
+            upload_preset: 'unsigned_upload',
+            folder: 'mann_nirvana',
+            allowed_formats: ['jpg', 'jpeg', 'png'],
+            expires_at: expirationDateString
+        }, async function (err, result) {
+            if (err) {
+                console.log("failure", err);
+                return res.status(500).json({ ans: "fail" });
+            } else {
+                const post= await Post.create({
+                    content: content,
+                    tags: tags,
+                    image: result.secure_url,
+                    author: author
+                });
+    
+                if(!post) res.status(400).json({message:"Post not created"});
+                res.status(201).json({post});
+            }
+        });     
+    }
+    else{
+        const post= await Post.create({
+            content: content,
+            tags: tags,
+            author: author
+        });
+
+        if(!post) res.status(400).json({message:"Post not created"});
         res.status(201).json({post});
-    } catch (error) {
+    }}
+    catch (error) {
         res.status(500).json({message:error.message})
     }
 }
+
 const getPost=async(req,res)=>{
     try {
         const post=await Post.findById(req.params.id);
@@ -25,8 +60,8 @@ const getPost=async(req,res)=>{
     }
 }
 const editPost=async(req,res)=>{
-    const {content,tags,image}=req.body;
     try {
+        const {content,tags,image}=req.body;
         const post=await Post.findById(req.params.id);
         if(!post){
             return res.status(404).json({message:"Post not found"})

@@ -61,7 +61,7 @@ const SafeSpace = () => {
   <Card className="max-w-sm shadow-lg hover:shadow-xl transition-shadow duration-300 mt-6 max-h-80 p-4 bg-[#F5E8F9] border border-[#DADADA] text-[#4A4A4A]">
     <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Tags </h1>
       <div className="flex flex-wrap gap-2 mb-4 ">
-        {['Mental Health', 'Inspiration', 'Stress Relief', 'Wellness', 'Self-care'].map((tag) => (
+        {['Mental Health', 'Inspiration', 'Women', 'Stress Relief', 'Wellness', 'Self-care'].map((tag) => (
           <button
           key={tag}
           className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
