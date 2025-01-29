@@ -17,10 +17,8 @@ const postSchema = new mongoose.Schema({
         required: true,
     },
     author: {
-        // type: mongoose.Schema.Types.ObjectId, // Reference to User model
-        // ref: "User",
-        type:Number,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId, // Reference to User model
+        ref: "User",
     }, 
     image: {
         type: String, // URL or path
