@@ -63,6 +63,7 @@ async def analyze_image(file: UploadFile = File(...),
             raise ValueError("Emotions analysis did not return a dictionary.")
 
         score = compute_score(emotions)
+        max_emotion = max(emotions, key=emotions.get)
         print("Score:", score, type(score))  # Log the score returned
 
         if not isinstance(score, (int, float)):
@@ -74,7 +75,7 @@ async def analyze_image(file: UploadFile = File(...),
             "filename": file.filename,
             "score": score,
             "user_id": ObjectId(user_id),
-            "emotions": emotions,
+            "emotions": max_emotion,
             "created_at": timestamp,
         }
 

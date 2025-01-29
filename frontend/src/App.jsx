@@ -10,13 +10,13 @@ function App() {
     
     <div className="bg-customGray relative w-full">
     <AuthProvider>
-      <div className=" sticky top-4  ">
-    < Navbar/>
+      <div id="header" className="sticky top-4">
+        < Navbar/>
       </div>
-<main className="min-h-screen bg-customGray mt-10">
-  <Outlet/>
-</main>
- <Footer/>
+      <main className="min-h-screen bg-customGray">
+        <Outlet/>
+      </main>
+      <Footer/>
     </AuthProvider>
     </div>
   )
