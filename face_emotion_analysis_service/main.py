@@ -9,6 +9,7 @@ from emotion_recognition import analyze_emotions, compute_score
 from utils import generate_unique_filename
 from dotenv import load_dotenv
 from bson import ObjectId
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1" 
 
 load_dotenv()
 
