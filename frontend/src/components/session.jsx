@@ -15,10 +15,21 @@ const InterviewMEET = (props) => {
     "What activities or habits help you recharge mentally and maintain emotional resilience?"
   ]);
 
+  useEffect(()=>{
+    const header = document.getElementById("header"); 
+    if (header) {
+      header.style.display = "none";
+    }
+
+    const footer = document.getElementById("footer"); 
+    if (footer) {
+      footer.style.display = "none";
+    }
+  }, [])
+
   const [time, setTime] = useState(300);
   const [ifStart, setIfStart] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  let timingInterval;
 
   const speak = (text) => {
     return new Promise((resolve) => {
@@ -46,21 +57,6 @@ const InterviewMEET = (props) => {
     window.location.href = "/";
   };
 
-  const startInterview = () => {
-    setIfStart(1);
-    timingInterval = setInterval(()=>{
-      setTime((prev) => {
-        if (prev <= 1) {
-          clearInterval(timingInterval); 
-          setIfStart(2);
-          return 0; 
-        }
-        return prev - 1;
-      });
-
-    }, 1000);
-  };
-
 
   return (
     <>
@@ -76,12 +72,10 @@ const InterviewMEET = (props) => {
         {/* Main meet */}
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center px-auto justify-around">
         <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-indigo-950 text-slate-50 hover:shadow-[55px_-43px_120px_rgba(112,0,255,0.25),-74px_39px_120px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
-          <div>{ifStart ? questions[qid] : "Best of luck for the interview!"}</div>
-          {ifStart === 1? <div className="mt-auto"><AudioRecorder setQid={setQid} /></div>
+          <div>{ifStart ? questions[qid] : "Best of luck for the session!"}</div>
+          {ifStart != 2? <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
            : 
-          ifStart === 2? <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600">Show Results</button> 
-          : 
-          <></>}
+          <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600">Show Results</button>}
         </div>
 
           <div
@@ -91,7 +85,7 @@ const InterviewMEET = (props) => {
 
             {/* time and command component */}
             <div className="w-60 h-40 bg-slate-600 rounded-2xl ">
-              <div className="w-full h-[70%] bg-red-400 rounded-t-2xl justify-center text-3xl flex items-center" onClick={questions.length? startInterview: ()=>{}}>
+              <div className="w-full h-[70%] bg-red-400 rounded-t-2xl justify-center text-3xl flex items-center" >
                 {ifStart? `${Math.floor(time/60)} Mins ${time%60} Secs` : questions.length? "Start Interview" : "Loading Questions"}
               </div>
               <div className="flex w-full h-[30%] justify-around rounded-b-2xl">
@@ -107,7 +101,7 @@ const InterviewMEET = (props) => {
                 >
                   Speak
                 </button>
-                <button className="rounded-br-2xl h-full w-[49%] bg-slate-400 hover:bg-slate-600">
+                <button className={`rounded-br-2xl h-full w-[49%] bg-slate-400 hover:bg-slate-600 ${(isSpeaking || (ifStart != 1)) ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isSpeaking || (ifStart != 1)} onClick={() => setQid((prev) => (prev + 1))}>
                   Next
                 </button>
               </div>

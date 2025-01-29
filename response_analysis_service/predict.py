@@ -5,7 +5,7 @@ import numpy as np
 
 
 
-MAX_SEQUENCE_LENGTH = 100  # Use same length as training
+MAX_SEQUENCE_LENGTH = 1000  # Use same length as training
 
 label_map = {
 0: 'Personality disorder',

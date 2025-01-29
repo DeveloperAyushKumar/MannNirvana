@@ -1,10 +1,26 @@
 import { useRef, useState, useEffect } from "react";
 
-export default function App({ setQid }) {
+export default function App({ setIfStart, ifStart, setTime }) {
   const BACKEND_URL = import.meta.env.VITE_RES_URL;
   const [transcript, setTranscript] = useState(""); 
   const [recognition, setRecognition] = useState(null);
   const isRecording = useRef(false);
+  let timingInterval;
+  
+  const startInterview = () => {
+    setIfStart(1);
+    timingInterval = setInterval(()=>{
+      setTime((prev) => {
+        if (prev <= 1) {
+          clearInterval(timingInterval); 
+          setIfStart(2);
+          return 0; 
+        }
+        return prev - 1;
+      });
+
+    }, 1000);
+  };
 
   useEffect(() => {
     // Initialize SpeechRecognition
@@ -31,9 +47,12 @@ export default function App({ setQid }) {
 
   const record = () => {
     if (recognition && !isRecording.current) {
+      startInterview();
       setTranscript(""); // Clear previous transcript
       recognition.start();
       isRecording.current = true;
+      clearInterval(timingInterval); 
+      setTime(300);
     }
   };
 
@@ -72,31 +91,36 @@ export default function App({ setQid }) {
       }
     } catch (err) {
       console.error("Error uploading transcript:", err);
+    } finally {
+      stop();
+      setIfStart(2);
+      setTranscript("");
     }
-
-    setTranscript("");
-    setQid((prevQid) => prevQid + 1);
   };
 
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="flex justify-between w-full">
-        <button onClick={record} className="w-[30%] bg-yellow-400 text-black">Start Recording</button>
-        <button onClick={stop} className="w-[30%] bg-yellow-400 text-black">Stop Recording</button>
+        {ifStart===0? <button onClick={record} className="w-[30%] bg-yellow-400 text-black">Start Session</button> : <></>}
+  
+        {ifStart===1? 
         <button 
           onClick={uploadTranscript} 
           disabled={!transcript.trim()} 
           className={`w-[30%] bg-yellow-400 text-black ${!transcript.trim() ? "opacity-50 cursor-not-allowed" : ""}`}
         >
-          Upload Answer
-        </button>
+          End Session
+        </button> : <></>}
       </div>
       
-      {/* Display the live transcript */}
+      {
+      /* Display the live transcript */
+      ifStart===1 ? 
       <div className="w-full bg-gray-200 p-3 rounded-lg text-black">
         <h3 className="font-semibold">Live Transcript:</h3>
         <p>{transcript || "Start speaking..."}</p>
-      </div>
+      </div> : <></>
+      }
     </div>
   );
 }
