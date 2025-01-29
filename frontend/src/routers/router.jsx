@@ -7,6 +7,8 @@ import CartPage from "../pages/Books/CartPage";
 import Checkout from "../pages/Books/CheckoutPage";
 import SingleBook from "../pages/Books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
+import SafeSpace from "../pages/SafeSpace/SafeSpace";
+import PostPage from "../pages/SafeSpace/Post";
 const router =createBrowserRouter([
     {
         path:"/",
@@ -17,8 +19,12 @@ const router =createBrowserRouter([
                 element:<Home/>
             },
             {
-                path :"/about",
-                element: <div>about</div>
+                path :"/safespace",
+                element: <SafeSpace/>
+            },
+            {
+                path:"/safespace/:id",
+                element:<PostPage/>
             },
             {
                 path:"/order",
