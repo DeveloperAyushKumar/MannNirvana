@@ -15,7 +15,7 @@ const InterviewMEET = (props) => {
     "What activities or habits help you recharge mentally and maintain emotional resilience?"
   ]);
 
-  const [time, setTime] = useState(10);
+  const [time, setTime] = useState(300);
   const [ifStart, setIfStart] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
   let timingInterval;
