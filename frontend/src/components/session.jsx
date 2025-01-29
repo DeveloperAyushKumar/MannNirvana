@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import AudioStream from "./AudioRecorder";
+import AudioRecorder from "./AudioRecorder";
 import WebStream from "./WebStream";
 
 const InterviewMEET = (props) => {
@@ -77,7 +77,7 @@ const InterviewMEET = (props) => {
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center px-auto justify-around">
         <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-indigo-950 text-slate-50 hover:shadow-[55px_-43px_120px_rgba(112,0,255,0.25),-74px_39px_120px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
           <div>{ifStart ? questions[qid] : "Best of luck for the interview!"}</div>
-          {ifStart === 1? <div className="mt-auto"><AudioStream setQid={setQid} /></div>
+          {ifStart === 1? <div className="mt-auto"><AudioRecorder setQid={setQid} /></div>
            : 
           ifStart === 2? <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600">Show Results</button> 
           : 
