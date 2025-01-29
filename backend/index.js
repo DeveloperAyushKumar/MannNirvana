@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import cors from 'cors';
 import postRoutes from './src/posts/post/post.route.js';
+import faceRoutes from './src/Face_emotion/face.route.js';
 import bodyParser from 'body-parser';
 
 const app=express();
@@ -19,7 +20,8 @@ app.use(cors({
 
 
 
-app.use('/posts',postRoutes)
+app.use('/posts',postRoutes);
+app.use('/face', faceRoutes);
 
 
 //Connect to DB

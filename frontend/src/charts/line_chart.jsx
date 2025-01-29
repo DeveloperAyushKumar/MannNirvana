@@ -1,11 +1,26 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const EmotionLineChart = ({ data }) => {
+const EmotionLineChart = () => {
+  const { user_id } = useParams();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL; 
+  const [data, setData] = useState([]);
+  useEffect(()=>{
+    axios.get(`${backendUrl}/face?user_id=${user_id}`)
+    .then((response) => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, [])
+
   // Convert timestamps to Date objects
   const chartData = data.map(item => ({
-    timestamp: new Date(item.timestamp).toLocaleTimeString(),  // Format timestamp to just time
-    emotion: item.emotion,
+    timestamp: new Date(item.created_at).toLocaleTimeString(),  // Format timestamp to just time
+    emotion: item.emotions,
     score: item.score
   }));
 
@@ -24,7 +39,7 @@ const EmotionLineChart = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={400} className="mt-56">
       <LineChart data={chartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="timestamp" />

@@ -72,9 +72,7 @@ const InterviewMEET = (props) => {
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center px-auto justify-around">
         <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-[#D4C1EC] text-slate-50 shadow-[10px_-13px_20px_rgba(112,0,255,0.25),-14px_2px_12px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
           <div>{ifStart ? questions[qid] : "Best of luck for the session!"}</div>
-          {ifStart != 2? <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
-           : 
-          <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600">Show Results</button>}
+          <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
         </div>
 
           <div
