@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import Session from "../components/session";
 import Chart from "../charts/line_chart";
 import MentalState from "../charts/progress_circle";
+import SafeSpace from "../pages/SafeSpace/SafeSpace";
+import PostPage from "../pages/SafeSpace/Post";
 
 const emotionData = [
     { timestamp: "2025-01-01T10:00:00", emotion: "happy", score: "95.38" },
@@ -19,6 +21,7 @@ const emotionData = [
     { timestamp: "2025-01-01T14:00:00", emotion: "fear", score: "50.63" },
     { timestamp: "2025-01-01T15:00:00", emotion: "neutral", score: "20.45" }
 ];
+
 
 const router =createBrowserRouter([
     {
@@ -30,8 +33,12 @@ const router =createBrowserRouter([
                 element:<Home/>
             },
             {
-                path :"/about",
-                element: <div>about</div>
+                path :"/safespace",
+                element: <SafeSpace/>
+            },
+            {
+                path:"/safespace/:id",
+                element:<PostPage/>
             },
             {
                 path :"/state",
