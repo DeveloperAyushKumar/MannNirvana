@@ -12,6 +12,7 @@ import Chart from "../charts/line_chart";
 import MentalState from "../charts/progress_circle";
 import SafeSpace from "../pages/SafeSpace/SafeSpace";
 import PostPage from "../pages/SafeSpace/Post";
+import Consultant from "../pages/Consultant/Consultant";
 
 const emotionData = [
     { timestamp: "2025-01-01T10:00:00", emotion: "happy", score: "95.38" },
@@ -53,8 +54,8 @@ const router =createBrowserRouter([
                 element: <Chart data={emotionData} />
             },
             {
-                path:"/order",
-                element:<div>order</div>
+                path:"/consultant",
+                element:<Consultant/>
             },
             {
                 path:"/login",
