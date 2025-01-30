@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { ScrollArea } from "@/components/ui/scroll-area";
 const API_KEY = import.meta.env.VITE_SEARCH_API_KEY; 
 const URL =` https://newsapi.org/v2/everything?q=women%20mental%20health&sortBy=publishedAt&apiKey=${API_KEY}`;
 
@@ -29,6 +29,7 @@ const Devi = () => {
   }, []);
 
   return (
+    
     <div className="p-6 max-w-5xl mx-auto">
       <h1 className="text-4xl font-extrabold text-center mb-8 bg-gradient-to-r from-teal-600 via-cyan-700 to-blue-900 text-transparent bg-clip-text drop-shadow-lg">
   Women’s Mental Health News
@@ -36,7 +37,8 @@ const Devi = () => {
       {loading && <p className="text-center text-gray-600">Loading articles...</p>}
       {error && <p className="text-red-500 text-center">{error}</p>}
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <ScrollArea className="shadow-lg">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-h-[40rem]">
   {articles.map((article, index) => (
     <a
       key={index}
@@ -56,6 +58,7 @@ const Devi = () => {
     </a>
   ))}
 </div>
+   </ScrollArea>
 
     </div>
   );
