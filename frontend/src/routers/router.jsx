@@ -8,11 +8,10 @@ import Checkout from "../pages/Books/CheckoutPage";
 import SingleBook from "../pages/Books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
 import Session from "../components/session";
-import Chart from "../charts/line_chart";
-import MentalState from "../charts/progress_circle";
 import SafeSpace from "../pages/SafeSpace/SafeSpace";
 import PostPage from "../pages/SafeSpace/Post";
 import Consultant from "../pages/Consultant/Consultant";
+import Result from "../components/Result";
 
 
 const router =createBrowserRouter([
@@ -33,16 +32,12 @@ const router =createBrowserRouter([
                 element:<PostPage/>
             },
             {
-                path :"/state/:mental_state/:confidence",
-                element: <MentalState/>
+                path :"/result/:user_id/:mental_state/:confidence",
+                element: <Result />
             },
             {
                 path :"/assessment",
                 element: <Session/>
-            },
-            {
-                path :"/dashboard/:user_id",
-                element: <Chart />
             },
             {
                 path:"/consultant",
