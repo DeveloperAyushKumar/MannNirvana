@@ -4,8 +4,8 @@ export default function App({ setIfStart, ifStart, setTime }) {
   const BACKEND_URL = import.meta.env.VITE_RES_URL;
   const [transcript, setTranscript] = useState(""); 
   const [recognition, setRecognition] = useState(null);
-  const [result, setResult] = useState({});
   const isRecording = useRef(false);
+  let user_id = "6799288f3096d820266cbd6c";
   let timingInterval;
   
   const startInterview = () => {
@@ -52,6 +52,8 @@ export default function App({ setIfStart, ifStart, setTime }) {
       setTranscript(""); // Clear previous transcript
       recognition.start();
       isRecording.current = true;
+      clearInterval(timingInterval); 
+      setTime(300);
     }
   };
 
@@ -85,7 +87,6 @@ export default function App({ setIfStart, ifStart, setTime }) {
       if (response.ok) {
         const result = await response.json();
         console.log("Transcript uploaded successfully:", result);
-        setResult(result);
       } else {
         console.error("Failed to upload transcript:", response.statusText);
       }
@@ -93,17 +94,15 @@ export default function App({ setIfStart, ifStart, setTime }) {
       console.error("Error uploading transcript:", err);
     } finally {
       stop();
-      setTranscript("");
-      clearInterval(timingInterval); 
-      setTime(0);
       setIfStart(2);
+      setTranscript("");
     }
   };
 
   function redirect() {
-    window.location.href = `/state/${result.mental_state}/${result.confidence}`;
+    window.location.href = `/result/${user_id}/${result.mental_state}/${result.confidence}`;
   }
-
+  
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="flex justify-between w-full">
@@ -122,15 +121,10 @@ export default function App({ setIfStart, ifStart, setTime }) {
       {
       /* Display the live transcript */
       ifStart===1 ? 
-        <div className="w-full bg-gray-200 p-3 rounded-lg text-black">
-          <h3 className="font-semibold">Live Transcript:</h3>
-          <p>{transcript || "Start speaking..."}</p>
-        </div> : <></>
-      }
-
-      {
-        ifStart===2 ?
-        <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600" onClick={redirect}>Show Results</button> : <></>
+      <div className="w-full bg-gray-200 p-3 rounded-lg text-black">
+        <h3 className="font-semibold">Live Transcript:</h3>
+        <p>{transcript || "Start speaking..."}</p>
+      </div> : <></>
       }
     </div>
   );

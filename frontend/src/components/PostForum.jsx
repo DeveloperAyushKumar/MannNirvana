@@ -59,7 +59,7 @@ export default function PostForm() {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
-    if (selectedFile.size > 100 * 1024) {
+    if (selectedFile.size > 300 * 1024) {
       alert("Please select an image smaller than 100KB.");
       return;
     }
@@ -80,7 +80,7 @@ export default function PostForm() {
   };
 
   return (
-    <div className="mx-auto w-full p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
+    <div className="mx-auto p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
       <Textarea
         placeholder="Write your post..."
         value={post}

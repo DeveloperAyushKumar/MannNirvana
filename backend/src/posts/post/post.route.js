@@ -4,7 +4,7 @@ import { commentPost, createPost, deletePost, editPost, getAllPost, getPost, lik
 const router =express.Router();
 
 // posting a post
-router.route("/").post(createPost)
+router.route("/create-post").post(createPost)
 
 
 // get a post
@@ -18,8 +18,8 @@ router.route("/:id").delete(deletePost)
 // get all post
 router.route("/").get(getAllPost)
 //add comment
-router.route("/comment/:id").post(commentPost)
+router.route("/add-comment/:id").post(commentPost)
 // like a post
-router.route("/like/:id").post(likePost)
+router.route("/like-post/:id").post(likePost)
 
 export default router;

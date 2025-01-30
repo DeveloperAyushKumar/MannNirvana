@@ -10,7 +10,7 @@ function App() {
     
     <div className="bg-customGray relative w-full">
     <AuthProvider>
-      <div id="header" className="sticky top-4">
+      <div id="header" className="sticky top-4 z-20">
         < Navbar/>
       </div>
       <main className="min-h-screen bg-customGray">

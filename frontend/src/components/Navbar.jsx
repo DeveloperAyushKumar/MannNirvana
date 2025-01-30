@@ -24,8 +24,8 @@ function Navbar() {
       herf: '/'
     },
     {
-      name : 'Support',
-      herf: '/support'
+      name : 'Consultant',
+      herf: '/consultant'
     },
     {
       name:"Safe Space",

@@ -35,7 +35,8 @@ const postsApi=createApi({
                 headers:{
                     'Content-Type':'application/json',
                 }
-            })
+            }),
+            invalidatesTags:["Posts"]
         }),
         updatePost:builder.mutation({
             query:({id,...rest})=>({
@@ -60,17 +61,17 @@ const postsApi=createApi({
                 url:`/add-comment/${id}`,
                 method:"POST",
                 body:rest,
-                invalidatesTags:["Posts"]
-        })
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
     }),
     likePost:builder.mutation({
         query:({id,...res})=>({
             url:`/like-post/${id}`,
             method:"POST",
             body:res,
-            invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
-        
-        })
+            
+        }),
+        invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
     }),
 
 })

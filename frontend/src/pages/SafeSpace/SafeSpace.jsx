@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PostPreview from '../../components/PostPreview';
 import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
@@ -12,7 +12,7 @@ import { Link } from 'react-router';
 const SafeSpace = () => {
   // Example posts with tags
   const {data:posts=[]} = useFetchAllPostsQuery();
-  // console.log(posts)
+  console.log(posts)
 
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
@@ -28,16 +28,6 @@ const SafeSpace = () => {
   const filteredPosts = posts.filter((post) =>
     selectedTags.every((tag) => post.tags.includes(tag))
   );
-
-  useEffect(() => {
-    axios.get(`${backendUrl}/posts`)
-    .then((response) => {
-      setPosts(response.data.posts);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }, []);
 
   return (
     <div className="space-y-6 flex justify-evenly max-h-screen">
@@ -57,7 +47,7 @@ const SafeSpace = () => {
       </div>
         </Card>
 
-    <div className='w-2/3 max-h-screen flex flex-col gap-8'>
+<div className='w-2/3 max-h-screen'>
       <PostForm/>
 
       <ScrollArea className="shadow-lg">
