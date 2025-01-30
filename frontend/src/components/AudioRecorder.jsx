@@ -6,6 +6,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
   const [recognition, setRecognition] = useState(null);
   const [result, setResult] = useState({});
   const isRecording = useRef(false);
+  let user_id = "6799288f3096d820266cbd6c";
   let timingInterval;
   
   const startInterview = () => {
@@ -101,7 +102,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
   };
 
   function redirect() {
-    window.location.href = `/state/${result.mental_state}/${result.confidence}`;
+    window.location.href = `/result/${user_id}/${result.mental_state}/${result.confidence}`;
   }
 
   return (
