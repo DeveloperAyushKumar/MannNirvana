@@ -20,7 +20,7 @@ function CosultantCard({consultant}) {
     <p>{consultant.about}</p>
   </CardContent>
   <CardFooter>
-    {consultant.sepciality&&consultant.sepciality.map((speciality, index) => (
+    {consultant.sepciality.map((speciality, index) => (
         <span key={index} className="text-sm bg-gray-200 text-gray-800 px-2 py-1 rounded-full mr-2">
         {speciality}
       </span>

@@ -4,14 +4,41 @@ import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from '@radix-ui/react-separator';
-import { useFetchAllPostsQuery } from '@/src/redux/features/posts/postsApi';
-import { Link } from 'react-router';
-// import { use } from 'react';
 
 const SafeSpace = () => {
   // Example posts with tags
-  const {data:posts=[]} = useFetchAllPostsQuery();
-  // console.log(posts)
+  const posts = [
+    {
+      title: 'Overcoming Anxiety',
+      description: 'A personal story of overcoming anxiety and finding peace.',
+      author: 'Jane Doe',
+      id: '1',
+      likes: 120,
+      comments: 35,
+      tags: ['Mental Health', 'Inspiration'],
+      image: 'https://via.placeholder.com/500',
+    },
+    {
+      title: 'Finding Balance',
+      description: 'Tips for maintaining balance during stressful times.',
+      author: 'John Smith',
+      id: '2',
+      likes: 85,
+      comments: 15,
+      tags: ['Stress Relief', 'Wellness'],
+      image: '',
+    },
+    {
+      title: 'Coping with Depression',
+      description: 'A guide to managing depression with self-care.',
+      author: 'Sarah Lee',
+      id: '3',
+      likes: 45,
+      comments: 10,
+      tags: ['Mental Health', 'Self-care'],
+      image: 'https://via.placeholder.com/500',
+    },
+  ];
 
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
@@ -60,17 +87,17 @@ const SafeSpace = () => {
       <PostForm/>
 
       <ScrollArea className="shadow-lg">
-      <div className='w-full max-h-[26rem] '>
+      <div className='w-full max-h-[33rem] '>
 
       {/* Display filtered posts */}
       {filteredPosts.length === 0 ? (
         <p className="text-gray-600">No posts match the selected tags.</p>
       ) : (
         filteredPosts.map((post) => (
-          <Link to={"/safespace/"+post._id} key={post._id}>
+          <div key ={post.id}>
           <PostPreview key={post.id} post={post}  />
           <Separator className='my-2'/>
-          </Link>
+          </div>
         ))
       )}
       </div>

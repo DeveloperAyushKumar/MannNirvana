@@ -1,4 +1,4 @@
-import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query";
 import getBaseURL from "@/src/utils/getBaseURL";
 
 const baseQuery = fetchBaseQuery({
@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
 const postsApi=createApi({
     reducerPath:"postsApi",
     baseQuery,
-    tagTypes:["Posts","Post"],
+    tagTypes:['Posts'],
     endpoints:(builder)=>({
         fetchAllPosts:builder.query({
             query:()=>'/',
@@ -25,16 +25,13 @@ const postsApi=createApi({
         }),
         fetchPostById:builder.query({
             query:(id)=>`/${id}`,
-            providesTags:(result,error,id)=>[{type:"Post",id}],
+            providesTags:(result,error,id)=>[{type:"Posts",id}],
         }),
         addPost:builder.mutation({
             query:(newPost)=>({
                 url:`/create-post`,
                 method:"POST",
                 body:newPost,
-                headers:{
-                    'Content-Type':'application/json',
-                }
             })
         }),
         updatePost:builder.mutation({
@@ -53,7 +50,7 @@ const postsApi=createApi({
                 url:`/${id}`,
                 method:"DELETE"
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }],
+            invalidatesTags:["Posts"]
         }),
         addComment:builder.mutation({
             query:({id,...rest})=>({
@@ -64,12 +61,10 @@ const postsApi=createApi({
         })
     }),
     likePost:builder.mutation({
-        query:({id,...res})=>({
+        query:({id})=>({
             url:`/like-post/${id}`,
             method:"POST",
-            body:res,
-            invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
-        
+            invalidatesTags:["Posts"]
         })
     }),
 
