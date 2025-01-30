@@ -40,7 +40,7 @@ const SafeSpace = () => {
           className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
           onClick={() => handleTagSelect(tag)}
           >
-            {tag}
+            # {tag}
           </button>
         ))}
       </div>
