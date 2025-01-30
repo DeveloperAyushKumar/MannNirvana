@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import cors from 'cors';
 import postRoutes from './src/posts/post/post.route.js';
-import faceRoutes from './src/Face_emotion/face.route.js';
 import bodyParser from 'body-parser';
 import consultantRoutes from './src/Consultant/Consultant.route.js';
 
@@ -21,8 +20,7 @@ app.use(cors({
 
 
 
-app.use('/posts',postRoutes);
-app.use('/face', faceRoutes);
+app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
 
 
