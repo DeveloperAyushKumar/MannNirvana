@@ -1,10 +1,8 @@
 import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import { useParams } from "react-router-dom";
 import 'react-circular-progressbar/dist/styles.css';
 
-const ProgressCircle = () => {
-  const { mental_state, confidence } = useParams();
+const ProgressCircle = ({mental_state, confidence}) => {
   return (
     <div style={{ width: 200, height: 200 }}>
       <CircularProgressbar
