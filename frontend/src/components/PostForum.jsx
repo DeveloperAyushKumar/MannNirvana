@@ -77,7 +77,7 @@ export default function PostForm() {
   };
 
   return (
-    <div className="mx-auto p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
+    <div className="mx-auto w-full p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
       <Textarea
         placeholder="Write your post..."
         value={post}
