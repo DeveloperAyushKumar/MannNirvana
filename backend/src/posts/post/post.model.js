@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
-    user: { type: Number, required: true }, //dummy for testing 
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
+    // user: { type: Number, required: true }, //dummy for testing 
+    authorName :{
+        type :String ,
+    },
     text: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });

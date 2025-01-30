@@ -13,13 +13,16 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use(cors({
-    origin: "*",
-    credentials: true
-}));
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }));
 
+  // preflight 
+  app.options("*", cors());
 
-
-
+//Routes
 app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
 

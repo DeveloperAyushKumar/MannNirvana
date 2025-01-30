@@ -11,7 +11,7 @@ import { Link } from 'react-router';
 const SafeSpace = () => {
   // Example posts with tags
   const {data:posts=[]} = useFetchAllPostsQuery();
-  // console.log(posts)
+  console.log(posts)
 
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
