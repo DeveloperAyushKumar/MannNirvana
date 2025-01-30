@@ -15,17 +15,23 @@ const InterviewMEET = (props) => {
     "What activities or habits help you recharge mentally and maintain emotional resilience?"
   ]);
 
-  useEffect(()=>{
-    const header = document.getElementById("header"); 
-    if (header) {
-      header.style.display = "none";
-    }
+  useEffect(() => {
+    const header = document.getElementById("header");
+    const footer = document.getElementById("footer");
 
-    const footer = document.getElementById("footer"); 
-    if (footer) {
-      footer.style.display = "none";
-    }
-  }, [])
+    const headerDisplay = header ? header.style.display : "";
+    const footerDisplay = footer ? footer.style.display : "";
+
+    if (header) header.style.display = "none";
+    if (footer) footer.style.display = "none";
+
+    return () => {
+      if (header) header.style.display = headerDisplay;
+      if (footer) footer.style.display = footerDisplay;
+
+      window.location.reload();
+    };
+  }, []);
 
   const [time, setTime] = useState(300);
   const [ifStart, setIfStart] = useState(0);
