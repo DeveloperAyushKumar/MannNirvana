@@ -9,10 +9,20 @@ import Checkout from "../pages/Books/CheckoutPage";
 import SingleBook from "../pages/Books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
 import Session from "../components/session";
+import Chart from "../charts/line_chart";
+import MentalState from "../charts/progress_circle";
 import SafeSpace from "../pages/SafeSpace/SafeSpace";
 import PostPage from "../pages/SafeSpace/Post";
 import Consultant from "../pages/Consultant/Consultant";
-import Result from "../components/Result";
+
+const emotionData = [
+    { timestamp: "2025-01-01T10:00:00", emotion: "happy", score: "95.38" },
+    { timestamp: "2025-01-01T11:00:00", emotion: "sad", score: "10.25" },
+    { timestamp: "2025-01-01T12:00:00", emotion: "angry", score: "5.63" },
+    { timestamp: "2025-01-01T13:00:00", emotion: "happy", score: "88.25" },
+    { timestamp: "2025-01-01T14:00:00", emotion: "fear", score: "50.63" },
+    { timestamp: "2025-01-01T15:00:00", emotion: "neutral", score: "20.45" }
+];
 
 
 const router =createBrowserRouter([
@@ -33,12 +43,16 @@ const router =createBrowserRouter([
                 element:<PostPage/>
             },
             {
-                path :"/result/:user_id/:mental_state/:confidence",
-                element: <Result />
+                path :"/state",
+                element: <MentalState/>
             },
             {
                 path :"/assessment",
                 element: <Session/>
+            },
+            {
+                path :"/dashboard",
+                element: <Chart data={emotionData} />
             },
             {
                 path:"/consultant",

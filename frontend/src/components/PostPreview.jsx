@@ -19,8 +19,13 @@ import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Com
 //   };
   
 const PostPreview = ({post}) => {
+  console.log(post)
   return (
     <Card className=" mx-auto shadow-lg hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6]">
+      <CardTitle className="text-s font-semibold text-gray-900 mt-4 m-2">
+        {post.authorName?post.authorName:"Anonymous User"}
+
+      </CardTitle>
       
       {/* Render image if available */}
       {post.image && (
@@ -31,31 +36,28 @@ const PostPreview = ({post}) => {
         />
       )}
       
-      <CardTitle className="text-xl font-semibold text-gray-900 mt-4">{post.title}</CardTitle>
       
       <CardContent>
         {/* Post Description */}
-        <p className="text-gray-700 mb-4">{post.description}</p>
+        <p className="text-gray-700 mb-4">{post.content.length>200?post.content.slice(0,200):post.content}</p>
 
         {/* Author */}
-        <div className="text-sm text-gray-600">
-          <strong>Author:</strong> {post.author}
-        </div>
+      
 
         {/* Post ID (optional) */}
-        <div className="text-sm text-gray-600">
+        {/* <div className="text-sm text-gray-600">
           <strong>Post ID:</strong> {post.id}
-        </div>
+        </div> */}
         
         {/* Likes and Comments */}
         <div className="flex items-center space-x-4 mt-4">
           <div className="flex items-center space-x-1">
             <Heart size={18} className="text-red-500" />
-            <span className="text-gray-600">{post.likes}</span>
+            <span className="text-gray-600">{post.likes?post.likes.length:0}</span>
           </div>
           <div className="flex items-center space-x-1">
             <MessageCircle size={18} className="text-blue-500" />
-            <span className="text-gray-600">{post.comments}</span>
+            <span className="text-gray-600">{post.comments?post.comments.length:0}</span>
           </div>
         </div>
 
@@ -63,7 +65,7 @@ const PostPreview = ({post}) => {
         {post.tags && (
           <div className="flex space-x-2 mt-4">
             {post.tags.map((tag, index) => (
-              <Badge key={index} className="bg-blue-100 text-blue-800">
+              <Badge key={index} className="bg-blue-100 text-blue-800 p-2 w-28">
                 {tag}
               </Badge>
             ))}

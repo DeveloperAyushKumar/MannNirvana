@@ -70,9 +70,11 @@ const InterviewMEET = (props) => {
         </button>
         {/* Main meet */}
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center px-auto justify-around">
-        <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-[#D4C1EC] text-slate-50 shadow-[10px_-13px_20px_rgba(112,0,255,0.25),-14px_2px_12px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
+        <div className="w-1/3 h-1/2 min-w-[640px] min-h-[480px] rounded-2xl bg-[#D4C1EC] text-slate-500 shadow-[10px_-13px_20px_rgba(112,0,255,0.25),-14px_2px_12px_rgba(204,0,255,0.25)] border-white border-8 flex flex-col p-4">
           <div>{ifStart ? questions[qid] : "Best of luck for the session!"}</div>
-          <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
+          {ifStart != 2? <div className="mt-auto"><AudioRecorder setIfStart={setIfStart} ifStart={ifStart} setTime={setTime} /></div>
+           : 
+          <button className="mt-auto bg-yellow-400 text-black rounded-2xl p-2 hover:bg-slate-600">Show Results</button>}
         </div>
 
           <div
@@ -83,7 +85,7 @@ const InterviewMEET = (props) => {
             {/* time and command component */}
             <div className="w-60 h-40 bg-slate-600 rounded-2xl ">
               <div className="w-full h-[70%] bg-red-400 rounded-t-2xl justify-center text-3xl flex items-center" >
-                {ifStart? `${Math.floor(time/60)} Mins ${time%60} Secs` : questions.length? "Start Interview" : "Loading Questions"}
+                {ifStart? `${Math.floor(time/60)} Mins ${time%60} Secs` : questions.length? "Start Session" : "Loading Questions"}
               </div>
               <div className="flex w-full h-[30%] justify-around rounded-b-2xl">
                 <button
