@@ -1,20 +1,13 @@
-import { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const EmotionLineChart = ({data}) => {
-  const [chartData, setChartData] = useState([]);
-
-  useEffect(()=>{
-    if (!data || data.length === 0) return;
-    console.log(data);
-    setChartData(
-      data.map(item => ({
-        timestamp: new Date(item.created_at).toLocaleTimeString(),  
-        emotion: item.emotions,
-        score: item.score
-      }))
-    )
-  }, [data]);
+const EmotionLineChart = ({ data }) => {
+  // Convert timestamps to Date objects
+  const chartData = data.map(item => ({
+    timestamp: new Date(item.timestamp).toLocaleTimeString(),  // Format timestamp to just time
+    emotion: item.emotion,
+    score: item.score
+  }));
 
   // Custom Tooltip for showing emotion and score
   const CustomTooltip = ({ payload, label }) => {
@@ -31,19 +24,16 @@ const EmotionLineChart = ({data}) => {
   };
 
   return (
-    <div className='w-full text-center'>
-      <p className='text-xl font-bold'>Emotion Score Over Time</p>
-      <ResponsiveContainer width="100%" height={400} className='mt-10'>
-        <LineChart data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="timestamp" />
-          <YAxis />
-          <Tooltip content={<CustomTooltip />} />
-          {/* <Legend /> */}
-          <Line type="monotone" dataKey="score" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height={400}>
+      <LineChart data={chartData}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="timestamp" />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        {/* <Legend /> */}
+        <Line type="monotone" dataKey="score" stroke="#8884d8" activeDot={{ r: 8 }} />
+      </LineChart>
+    </ResponsiveContainer>
   );
 };
 

@@ -2,34 +2,37 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from 'axios';
+import { useAddPostMutation } from "../redux/features/posts/postsApi.js";
 
 export default function PostForm() {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [tags, setTags] = useState([]);
+  const [addPost, { isLoading, isError, error }] = useAddPostMutation();
   
   const availableTags = ["Mental Health", "Inspiration", "Stress Relief", "Wellness", "Self-care", "Women"];
 
   const handleSubmit = async () => {
-    if (!post.trim() && !file) return;
+    if (!post.trim()) return;
   
     try {
       const backendUrl = import.meta.env.VITE_BACKEND_URL; 
       const data = {
         content: post,
         tags: tags,
-        image_file: file,
+        ...(file&&{image_file: file}),
         user: { _id: '6799288f3096d820266cbd6c' }, 
       };
   
       // Make the POST request
-      const response = await axios.post(`${backendUrl}/posts`, data, {
-        headers: {
-          'Content-Type': 'application/json', // Sending JSON payload
-        },
-      });
-  
+      // const response = await axios.post(`${backendUrl}/posts`, data, {
+      //   headers: {
+      //     'Content-Type': 'application/json', // Sending JSON payload
+      //   },
+      // });
+      
+      const response = await addPost(data).unwrap();
       console.log('Post submitted successfully:', response.data);
   
       // Clear the form after successful submission
@@ -56,7 +59,7 @@ export default function PostForm() {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
-    if (selectedFile.size > 100 * 1024) {
+    if (selectedFile.size > 300 * 1024) {
       alert("Please select an image smaller than 100KB.");
       return;
     }
@@ -77,7 +80,7 @@ export default function PostForm() {
   };
 
   return (
-    <div className="mx-auto w-full p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
+    <div className="mx-auto p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
       <Textarea
         placeholder="Write your post..."
         value={post}
@@ -112,7 +115,7 @@ export default function PostForm() {
 
       <div>
         <label htmlFor="imageUpload" className="block text-sm font-medium text-gray-600">
-          Upload Image
+          Upload Image <span className="text-xs ">(Optional)</span>
         </label>
         <input
           type="file"

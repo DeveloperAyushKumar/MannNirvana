@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // import jwt from 'jsonwebtoken'
 // import bcrypt from 'bcrypt' 
 const userSchema=new mongoose.Schema({
-    name:{
+    username:{
         type:String,
         unique:true,
         required:true,
@@ -37,6 +37,9 @@ const userSchema=new mongoose.Schema({
         type : Number,
         default:0,
     }
+
+
+
 
 },{timestamps:true})
 // userSchema.pre("save",async function(next){

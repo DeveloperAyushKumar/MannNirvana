@@ -1,4 +1,4 @@
-import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import getBaseURL from "@/src/utils/getBaseURL";
 
 const baseQuery = fetchBaseQuery({
@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
 const postsApi=createApi({
     reducerPath:"postsApi",
     baseQuery,
-    tagTypes:['Posts'],
+    tagTypes:["Posts","Post"],
     endpoints:(builder)=>({
         fetchAllPosts:builder.query({
             query:()=>'/',
@@ -25,14 +25,18 @@ const postsApi=createApi({
         }),
         fetchPostById:builder.query({
             query:(id)=>`/${id}`,
-            providesTags:(result,error,id)=>[{type:"Posts",id}],
+            providesTags:(result,error,id)=>[{type:"Post",id}],
         }),
         addPost:builder.mutation({
             query:(newPost)=>({
                 url:`/create-post`,
                 method:"POST",
                 body:newPost,
-            })
+                headers:{
+                    'Content-Type':'application/json',
+                }
+            }),
+            invalidatesTags:["Posts"]
         }),
         updatePost:builder.mutation({
             query:({id,...rest})=>({
@@ -50,22 +54,24 @@ const postsApi=createApi({
                 url:`/${id}`,
                 method:"DELETE"
             }),
-            invalidatesTags:["Posts"]
+            invalidatesTags: (result, error, { id }) => [{ type: 'Post', id }],
         }),
         addComment:builder.mutation({
             query:({id,...rest})=>({
                 url:`/add-comment/${id}`,
                 method:"POST",
                 body:rest,
-                invalidatesTags:["Posts"]
-        })
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
     }),
     likePost:builder.mutation({
-        query:({id})=>({
+        query:({id,...res})=>({
             url:`/like-post/${id}`,
             method:"POST",
-            invalidatesTags:["Posts"]
-        })
+            body:res,
+            
+        }),
+        invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
     }),
 
 })
