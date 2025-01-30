@@ -1,7 +1,7 @@
 import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 import getBaseURL from '../../../utils/getBaseURL'
 const baseQuery=fetchBaseQuery({
-    baseUrl:`${getBaseURL()}/consultants`,
+    baseUrl:`${getBaseURL()}/consultant`,
     credentials:'include',
     prepareHeaders:(Headers)=>{
         const token =localStorage.getItem('token')
