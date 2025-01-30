@@ -4,6 +4,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import postRoutes from './src/posts/post/post.route.js';
 import bodyParser from 'body-parser';
+import faceRoutes from './src/Face_emotion/face.route.js';
 import consultantRoutes from './src/Consultant/Consultant.route.js';
 
 const app=express();
@@ -25,6 +26,7 @@ app.use(cors({
 //Routes
 app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
+app.use('/face', faceRoutes);
 
 
 //Connect to DB
