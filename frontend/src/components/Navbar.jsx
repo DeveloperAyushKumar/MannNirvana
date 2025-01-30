@@ -28,10 +28,6 @@ function Navbar() {
       herf: '/consultant'
     },
     {
-      name:"Safe Space",
-      herf: '/safespace'
-    },
-    {
       name : 'Assessment',
       herf: '/assessment'
     },
