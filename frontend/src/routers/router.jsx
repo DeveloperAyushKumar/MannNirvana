@@ -13,6 +13,8 @@ import MentalState from "../charts/progress_circle";
 import SafeSpace from "../pages/SafeSpace/SafeSpace";
 import PostPage from "../pages/SafeSpace/Post";
 import Consultant from "../pages/Consultant/Consultant";
+import Result from "../components/Result";
+import Devi from "../pages/Devi/Devi";
 
 const emotionData = [
     { timestamp: "2025-01-01T10:00:00", emotion: "happy", score: "95.38" },
@@ -63,12 +65,12 @@ const router =createBrowserRouter([
 
             }, 
             {
-                path:"/register",
-                element:<Register/>
+                path:"/result/:user_id/:mental_state/:confidence",
+                element:<Result/>
             },
             {
-                path:"/cart",
-                element:<CartPage/>
+                path:"/devi",
+                element:<Devi/>
             },
             {
                 path :"/checkout",
