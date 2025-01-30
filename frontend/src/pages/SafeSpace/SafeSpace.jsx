@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostPreview from '../../components/PostPreview';
 import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
@@ -28,6 +28,16 @@ const SafeSpace = () => {
     selectedTags.every((tag) => post.tags.includes(tag))
   );
 
+  useEffect(() => {
+    axios.get(`${backendUrl}/posts`)
+    .then((response) => {
+      setPosts(response.data.posts);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }, []);
+
   return (
     <div className="space-y-6 flex justify-evenly max-h-screen">
       {/* Top Selection/Tag-Adding Section */}
@@ -46,7 +56,7 @@ const SafeSpace = () => {
       </div>
         </Card>
 
-<div className='w-2/3 max-h-screen'>
+    <div className='w-2/3 max-h-screen flex flex-col gap-8'>
       <PostForm/>
 
       <ScrollArea className="shadow-lg">
