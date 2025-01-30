@@ -104,7 +104,7 @@ const likePost=async(req,res)=>{
         if(post.likes.includes(req.body.user._id)){
             return res.status(400).json({message:"You already liked this post"})
         }
-        post.likes.push(req.user._id);
+        post.likes.push(req.body.user._id);
         await post.save();
         res.status(200).json(post);
     } catch (error) {
