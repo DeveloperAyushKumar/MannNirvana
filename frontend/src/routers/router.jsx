@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router";
 import App from "../App";
 import Home from "../pages/Home/Home";
 import Login from "../components/Login";
+import Devi from "../pages/Devi/Devi";
 import Register from "../components/Register";
 import CartPage from "../pages/Books/CartPage";
 import Checkout from "../pages/Books/CheckoutPage";
@@ -64,8 +65,10 @@ const router =createBrowserRouter([
             {
                 path:"/books/:id",
                 element:<SingleBook/>
+            },{
+                path:"/Devi",
+                element:<Devi/>
             }
-            
         ]
     },
 ]);
