@@ -5,6 +5,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
   const [transcript, setTranscript] = useState(""); 
   const [recognition, setRecognition] = useState(null);
   const isRecording = useRef(false);
+  let user_id = "6799288f3096d820266cbd6c";
   let timingInterval;
   
   const startInterview = () => {
@@ -98,6 +99,10 @@ export default function App({ setIfStart, ifStart, setTime }) {
     }
   };
 
+  function redirect() {
+    window.location.href = `/result/${user_id}/${result.mental_state}/${result.confidence}`;
+  }
+  
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="flex justify-between w-full">
