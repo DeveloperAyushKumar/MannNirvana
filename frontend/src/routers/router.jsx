@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
-import Home from "../pages/Home/Home";
+import Home from "../pages/Devi/Devi";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import Checkout from "../pages/Books/CheckoutPage";

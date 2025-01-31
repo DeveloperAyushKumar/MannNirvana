@@ -21,7 +21,7 @@ import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Com
 const PostPreview = ({post}) => {
   console.log(post)
   return (
-    <Card className=" mx-auto shadow-lg hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6]">
+    <Card className=" mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6] rounded-none border-l-0">
       <CardTitle className="text-s font-semibold text-gray-900 mt-4 m-2">
         {post.authorName?post.authorName:"Anonymous User"}
 
