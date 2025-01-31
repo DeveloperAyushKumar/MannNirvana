@@ -19,13 +19,30 @@ export default function PostForm() {
     if (!post.trim()) return;
   
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL; 
+      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+
+      
+      // hate detection 
+      const hateResponse = await fetch(hateSpeechUrl,{
+        method:'POST',
+        headers:{"Content-type":"application.json",
+        body :JSON.stringify({post}),
+
+        },
+
+      })
+      if(hateResponse.status!=200){
+        alert("Remove Content Detected !! Please Maintain a Safe Space Here "
+        )
+        return 
+      }
       const data = {
         content: post,
         tags: tags,
         ...(file&&{image_file: file}),
         user: { _id: '6799288f3096d820266cbd6c' }, 
       };
+      
   
       // Make the POST request
       // const response = await axios.post(`${backendUrl}/posts`, data, {
