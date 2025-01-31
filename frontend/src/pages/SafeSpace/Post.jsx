@@ -82,7 +82,7 @@ const PostPage = () => {
 
         {/* Post Footer (Likes) */}
         <CardFooter className="flex justify-between items-center">
-          <Button onClick={handleLike} className="bg-blue-500 text-white font-semibold" size="sm">{likes} Like</Button>
+          <Button onClick={handleLike} className="bg-dark text-white font-semibold" size="sm">{likes} Like</Button>
         </CardFooter>
       </Card>
 
@@ -102,7 +102,7 @@ const PostPage = () => {
             </div>
           ))
         ) : (
-          <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+          <p className="text-gray-900">No comments yet. Be the first to comment!</p>
         )}
 
         {/* Add a Comment */}
@@ -111,10 +111,10 @@ const PostPage = () => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Add a comment..."
-            className="w-full border-gray-300 rounded-md p-2"
+            className="w-full border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
             rows={3}
           />
-          <Button type="submit" variant="solid" size="sm" className="px-4 py-2 bg-slate-500 text-white text-md ">Comment</Button>
+          <Button type="submit" variant="solid" size="sm" className="px-4 py-2 bg-extraDark text-white text-md ">Comment</Button>
         </form>
       </div>
     </div>

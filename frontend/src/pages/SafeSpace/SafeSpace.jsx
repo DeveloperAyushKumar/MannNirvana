@@ -30,18 +30,19 @@ const SafeSpace = () => {
   );
 
   return (
-    <div className="space-y-6 flex justify-evenly p-2">
+    // space-y-6 flex justify-evenly
+    <div className="grid grid-cols-5 p-2">
       {/* Top Selection/Tag-Adding Section */}
       
-  <Card className="  border-r-4 border-white  hover:shadow-xl transition-shadow duration-300 mt-6 p-4 bg-[#FFF8E6] text-[#4A4A4A] rounded-none rounded-l-md">
+      <Card className=" col-span-1 border-none border-r-4 border-gray-700 transition-shadow duration-300 mt-6 p-4 bg-white text-[#4A4A4A] rounded-none ">
     <div>
 
-    <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Tags </h1>
+    <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
       <div className="flex flex-wrap gap-2 mb-4 ">
         {['Mental Health', 'Inspiration', 'Women', 'Stress Relief', 'Wellness', 'Self-care'].map((tag) => (
           <button
           key={tag}
-          className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+          className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
           onClick={() => handleTagSelect(tag)}
           >
             # {tag}
@@ -54,9 +55,9 @@ const SafeSpace = () => {
         </div>
 
 
-        </Card>
+      </Card>
 
-<div className='w-full max-h-screen'>
+      <div className=' col-span-4 w-full max-h-screen'>
       <PostForm/>
 
       <ScrollArea className="">
