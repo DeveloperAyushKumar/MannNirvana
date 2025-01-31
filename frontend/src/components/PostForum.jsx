@@ -16,15 +16,68 @@ export default function PostForm() {
   const availableTags = ["MentalHealthMatters","Grief","HealingJourney","EmotionalSupport","MentalHealthAwareness","VulnerableButStrong","YouAreNotAlone","BreakingTheSilence","SelfCompassion","HealingTogether"];
 
   const handleSubmit = async () => {
-    // ... (previous submit logic remains the same)
+    if (!post.trim()) return;
+
+    try {
+      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+
+      // // Hate detection
+      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: "6799288f3096d820266cbd6c"}, {
+        headers: { "Content-Type": "application/json" }
+      });
+
+      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
+      if (hateResponse.status === 250) {
+        alert("Remove Content Detected!! Please Maintain a Safe Space Here");
+        return;
+      }
+      const data = {
+        content: post,
+        tags: tags,
+        ...(file && { image_file: file }),
+        user: { _id: '6799288f3096d820266cbd6c' }, 
+      };
+      const response = await addPost(data).unwrap();
+      console.log('Post submitted successfully:', response.data);
+
+      // Clear the form after successful submission
+      setPost("");
+      setFile(null);
+      setPreview(null);
+      setTags([]); // Reset selected tags
+
+    } catch (error) {
+      console.error('Error submitting post:', error);
+    }
   };
 
+
   function toBase64(file) {
-    // ... (previous toBase64 function remains the same)
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
   }
 
+
   const handleImageChange = async (e) => {
-    // ... (previous image change logic remains the same)
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
+
+    if (selectedFile.size > 300 * 1024) {
+      alert("Please select an image smaller than 100KB.");
+      return;
+    }
+
+    try {
+      const base64 = await toBase64(selectedFile);
+      setFile({ name: selectedFile.name, image: base64 });
+      setPreview(base64);
+    } catch (error) {
+      console.error("Error converting image to base64:", error);
+    }
   };
 
   const handleTagClick = (tag) => {
@@ -32,6 +85,7 @@ export default function PostForm() {
       setTags([...tags, tag]);
     }
   };
+
 
   return (
     <div className="mx-auto p-4 rounded-r-md bg-white text-[#4A4A4A] border-white border-b-4">
