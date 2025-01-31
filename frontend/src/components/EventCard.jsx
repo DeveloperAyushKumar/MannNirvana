@@ -2,8 +2,12 @@ import React from "react";
 import { Calendar, MapPin } from "lucide-react";
 
 const EventCard = ({ event }) => {
+ 
+    const goToExternalSite = () => {
+      window.open(event.href, "_blank", "noopener,noreferrer");
+    };
   return (
-    <div className="w-[280px] bg-white rounded-2xl shadow-lg p-4">
+    <div className="w-[280px] bg-white rounded-2xl shadow-lg p-4 " onClick={goToExternalSite}>
       {/* 📌 Top Image Section */}
       <div className="relative rounded-xl overflow-hidden">
         <img
@@ -21,10 +25,10 @@ const EventCard = ({ event }) => {
       {/* 📄 Event Details */}
       <div className="p-3">
         <h3 className="text-lg font-bold text-gray-900">
-          {event.name} <span className="text-blue-500">✔</span>
+          {event.name.slice(0,15)+".."} <span className="text-blue-500">✔</span>
         </h3>
         <p className="text-sm text-gray-600">
-          By {event.organizer}
+          By {event.organizer.slice(0,15)+".."}
         </p>
 
         {/* 📍 Location & Distance */}
