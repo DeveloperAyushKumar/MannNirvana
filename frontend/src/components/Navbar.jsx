@@ -45,11 +45,15 @@ function Navbar() {
   return (
     <header className='max-w-screen-2xl mx-autopx py-2 px-4 bg-light bg-opacity-90 mx-4 rounded-full  '>
         <nav className='flex justify-between items-center   '>
-        <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-between px-2'>
             {/* left side */}
          <Link to="/">
           <img src={logo} alt="logo" className='size-12 rounded-full'  />
          </Link>
+         <div className='font-extrabold px-4'>
+         MannNirvana
+         </div>
+        
             {
             /* Searh bar 
              <div className='flex items-center relative sm:w-72 w-40 space-x-2'>

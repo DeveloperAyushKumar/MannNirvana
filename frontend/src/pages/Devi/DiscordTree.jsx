@@ -2,34 +2,25 @@ import { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 
 const HealthTopicNode = ({ topic, level }) => {
-//   const [expanded, setExpanded] = useState(false);
-//   const [newLink, setNewLink] = useState('');
-// const handleExpand =()=>{
-//     setExpanded(!expanded);
-// }
   return (
-    <div className="relative flex items-center ">
+    <div className="relative flex items-center w-full mb-3">
       {/* Channel line */}
-      <div className={`w-1 h-8 bg-blue-600 absolute left-${level * 12} flex items-center `} />
+      <div className={`w-1 h-8 bg-light absolute left-${level * 12} flex items-center`} />
 
       {/* Topic name */}
       <a
         href={topic.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-blue-800 text-white px-3 py-1 rounded rounded-r-2xl cursor-pointer"
+        className="bg-light text-white px-4 py-3 rounded-lg w-full min-h-[3rem] flex items-center hover:bg-opacity-90 transition-all"
       >
         {topic.name}
-        </a>
-      
-
-      {/* Render child nodes if expanded */}
+      </a>
     </div>
   );
 };
 
 const HealthTopicTree = () => {
-  // Women's health issues
   const topics = [
     {
       id: 1,
@@ -162,22 +153,43 @@ const HealthTopicTree = () => {
   ];
 
   return (
-    <div className="flex flex-col space-y-4 p-4">
-      <div className="flex items-center space-x-4">
+    <div className="max-w-2xl mx-auto p-4  rounded-lg">
+      <div className="flex items-center space-x-4 mb-6">
         {/* Main Server line */}
-        <div className="w-1 h-8 bg-blue-600" />
-        <p className="text-white text-lg font-semibold">Devi Are You Stressed ?   
+        <div className="w-1 h-8 bg-light" />
+        <p className="text-white text-lg font-semibold m-6">
+          Devi Are You Stressed?
         </p>
       </div>
-        <p className='text-xs font-semibold text-gray-700 '>
-            Join our Discord 
-        </p>
-      {/* Render the topics */}
-      {topics.map((topic) => (
-        <HealthTopicNode key={topic.id} topic={topic} level={1} />
-      ))}
+      
+      <p className="text-xs font-semibold text-gray-800 mb-6">
+        Connect with women facing the same problem.
+      </p>
+      
+      <div className="space-y-2">
+        {topics.map((topic) => (
+          <HealthTopicNode key={topic.id} topic={topic} level={1} />
+        ))}
+      </div>
     </div>
   );
 };
 
 export default HealthTopicTree;
+
+
+{/* <div className="max-w-2xl mx-auto space-y-4 p-4">
+<div className="flex items-center space-x-4">
+
+  <div className="w-1 h-8 bg-dark" />
+  <p className="text-white text-lg font-semibold">Devi Are You Stressed ?   
+  </p>
+</div>
+  <p className='text-xs font-semibold text-gray-700 '>
+      Join our Discord 
+  </p>
+
+{topics.map((topic) => (
+  <HealthTopicNode key={topic.id} topic={topic} level={1} />
+))}
+</div> */}

@@ -116,7 +116,7 @@ const InterviewMEET = (props) => {
         <div className="w-full h-full backdrop-blur-lg absolute top-0 bg-[rgba(23, 23, 23, 0.44)] flex items-center justify-center">
           <div className="w-[300px] h-28 flex flex-col items-center justify-around">
             <div className="w-full h-[77px] bg-light rounded-t-2xl p-2 text-center">
-              Do you want to quit the interview?
+              Do you want to quit the assessment?
             </div>
             <div className="flex w-full h-[33px] justify-around rounded-b-2xl">
               <button
