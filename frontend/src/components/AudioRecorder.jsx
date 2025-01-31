@@ -107,16 +107,24 @@ export default function App({ setIfStart, ifStart, setTime }) {
   return (
     <div className="flex flex-col items-center space-y-4">
       <div className="flex justify-between w-full">
-        {ifStart===0? <button onClick={record} className="w-[30%] bg-yellow-400 text-black">Start Session</button> : <></>}
+        {ifStart===0? <button onClick={record} className="w-[30%] rounded-md bg-extraDark text-black text-center">Start Session</button> : <></>}
   
         {ifStart===1? 
         <button 
           onClick={uploadTranscript} 
           disabled={!transcript.trim()} 
-          className={`w-[30%] bg-yellow-400 text-black ${!transcript.trim() ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`w-[30%] rounded-md bg-dark text-black ${!transcript.trim() ? "opacity-50 cursor-not-allowed" : ""}`}
         >
           End Session
-        </button> : <></>}
+        </button> : <></>
+        }
+
+        {
+          ifStart===2?
+        <button className="mt-auto bg-dark text-black rounded-2xl p-2 hover:bg-extraDark flex items-center gap-2" onClick={redirect}>
+          Show Results
+        </button> : <></>
+        }
       </div>
       
       {
