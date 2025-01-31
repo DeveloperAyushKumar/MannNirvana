@@ -22,15 +22,15 @@ export default function PostForm() {
       const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
 
       // // Hate detection
-      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: "6799288f3096d820266cbd6c"}, {
-        headers: { "Content-Type": "application/json" }
-      });
+      // const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: "6799288f3096d820266cbd6c"}, {
+      //   headers: { "Content-Type": "application/json" }
+      // });
 
-      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
-      if (hateResponse.status === 250) {
-        alert("Remove Content Detected!! Please Maintain a Safe Space Here");
-        return;
-      }
+      // console.log('Hate speech response:', hateResponse.data, hateResponse.status);
+      // if (hateResponse.status === 250) {
+      //   alert("Remove Content Detected!! Please Maintain a Safe Space Here");
+      //   return;
+      // }
       const data = {
         content: post,
         tags: tags,

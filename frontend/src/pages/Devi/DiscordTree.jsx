@@ -2,21 +2,11 @@ import { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 
 const HealthTopicNode = ({ topic, level }) => {
-  const [expanded, setExpanded] = useState(false);
+//   const [expanded, setExpanded] = useState(false);
 //   const [newLink, setNewLink] = useState('');
-const handleExpand =()=>{
-    setExpanded(!expanded);
-}
-
-//   const handleLinkChange = (e) => setNewLink(e.target.value);
-
-//   const handleAddLink = () => {
-//     if (newLink) {
-//       topic.href = newLink; // Here can directly add new links if needed
-//       setNewLink('');
-//     }
-//   };
-
+// const handleExpand =()=>{
+//     setExpanded(!expanded);
+// }
   return (
     <div className="relative flex items-center ">
       {/* Channel line */}
@@ -31,23 +21,9 @@ const handleExpand =()=>{
       >
         {topic.name}
         </a>
-        <div>
-
-        {topic.children?.length > 0 && (
-            <span className="ml-1 flex items-center" onClick={handleExpand}>
-            {expanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-          </span>
-        )}
-        </div>
+      
 
       {/* Render child nodes if expanded */}
-      {expanded && (
-        <div className="ml-4 flex space-x-4">
-          {topic.children.map((child) => (
-            <HealthTopicNode key={child.id} topic={child} level={level + 1} />
-          ))}
-        </div>
-      )}
     </div>
   );
 };
@@ -58,7 +34,7 @@ const HealthTopicTree = () => {
     {
       id: 1,
       name: 'Mental Disturbances (Late Pregnancy & Postpartum)',
-      href: 'https://example.com/mental-disturbances',
+      href: 'https://discord.gg/46k7bNrN',
       children: [
         {
           id: 2,
@@ -77,7 +53,7 @@ const HealthTopicTree = () => {
     {
       id: 4,
       name: 'Violence',
-      href: 'https://example.com/violence',
+      href: 'https://discord.gg/upvCFtEa',
       children: [
         {
           id: 5,
@@ -96,7 +72,7 @@ const HealthTopicTree = () => {
     {
       id: 7,
       name: 'Financial Dependence',
-      href: 'https://example.com/financial-dependence',
+      href: 'https://discord.gg/z3XF7pdT',
       children: [
         {
           id: 8,
@@ -109,7 +85,7 @@ const HealthTopicTree = () => {
     {
       id: 9,
       name: 'PMDD (Premenstrual Dysphoric Disorder)',
-      href: 'https://example.com/pmdd',
+      href: 'https://discord.gg/zjGVpaqF',
       children: [
         {
           id: 10,
@@ -128,7 +104,7 @@ const HealthTopicTree = () => {
     {
       id: 12,
       name: 'PMS (Premenstrual Syndrome)',
-      href: 'https://example.com/pms',
+      href: 'https://discord.gg/VXUN5kzd',
       children: [
         {
           id: 13,
@@ -141,7 +117,7 @@ const HealthTopicTree = () => {
     {
       id: 14,
       name: 'Hormonal Changes in PCOD',
-      href: 'https://example.com/hormonal-changes-pcod',
+      href: 'https://discord.gg/5UEErHNQ',
       children: [
         {
           id: 15,
@@ -154,7 +130,7 @@ const HealthTopicTree = () => {
     {
       id: 16,
       name: 'Infertility',
-      href: 'https://example.com/infertility',
+      href: 'https://discord.gg/vtxc5vUK',
       children: [
         {
           id: 17,
@@ -173,7 +149,7 @@ const HealthTopicTree = () => {
     {
       id: 19,
       name: 'Pregnancy Loss',
-      href: 'https://example.com/pregnancy-loss',
+      href: 'https://discord.gg/YRmQGG89',
       children: [
         {
           id: 20,
