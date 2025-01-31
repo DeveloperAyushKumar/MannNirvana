@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from 'axios';
 import { useAddPostMutation } from "../redux/features/posts/postsApi.js";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
 
 export default function PostForm() {
   const [post, setPost] = useState("");
@@ -17,13 +19,30 @@ export default function PostForm() {
     if (!post.trim()) return;
   
     try {
-      const backendUrl = import.meta.env.VITE_BACKEND_URL; 
+      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+
+      
+      // hate detection 
+      const hateResponse = await fetch(hateSpeechUrl,{
+        method:'POST',
+        headers:{"Content-type":"application.json",
+        body :JSON.stringify({post}),
+
+        },
+
+      })
+      if(hateResponse.status!=200){
+        alert("Remove Content Detected !! Please Maintain a Safe Space Here "
+        )
+        return 
+      }
       const data = {
         content: post,
         tags: tags,
         ...(file&&{image_file: file}),
         user: { _id: '6799288f3096d820266cbd6c' }, 
       };
+      
   
       // Make the POST request
       // const response = await axios.post(`${backendUrl}/posts`, data, {
@@ -80,13 +99,20 @@ export default function PostForm() {
   };
 
   return (
-    <div className="mx-auto p-4 border rounded-lg shadow-md bg-[#FFF8E6] text-[#4A4A4A]">
+    <div className="mx-auto p-4 rounded-r-md bg-[#FFF8E6] text-[#4A4A4A] border-white  border-b-4">
       <Textarea
+      
         placeholder="Write your post..."
         value={post}
         onChange={(e) => setPost(e.target.value)}
         className="mb-4 text-[#4A4A4A]"
       />
+         {preview && (
+        <div className="mt-1 w-full">
+          {/* <p className="text-sm text-gray-600">Image Preview:</p> */}
+          <img src={preview} alt="Preview" className="mt-2 max-h-96 object-cover rounded-md" />
+        </div>
+      )}
       <p>
         {tags.map((tag, idx) => (
           <span onClick={(e)=>{
@@ -95,16 +121,17 @@ export default function PostForm() {
         ))}
       </p>
 
-      <div className="mb-4">
+    <div className="flex justify-between">
+      <div className="mb-4 w-1/2">
         <p className="font-bold text-lg">Tags</p>
         <div className="flex flex-wrap gap-2">
           {availableTags.map((tag, idx) => {
             if(tags.includes(tag)) return null;
             return (
               <button
-                key={idx}
-                onClick={() => handleTagClick(tag)}
-                className="px-3 py-1 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-100"
+              key={idx}
+              onClick={() => handleTagClick(tag)}
+              className="px-3 py-1 border border-blue-500 text-blue-500 rounded-lg hover:bg-blue-100"
               >
                 {tag}
               </button>
@@ -113,29 +140,31 @@ export default function PostForm() {
         </div>
       </div>
 
-      <div>
-        <label htmlFor="imageUpload" className="block text-sm font-medium text-gray-600">
-          Upload Image <span className="text-xs ">(Optional)</span>
-        </label>
-        <input
-          type="file"
-          id="imageUpload"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:ring focus:border-blue-300 text-black bg-[#fff]"
-        />
-      </div>
+      <div className="flex w-1/4 justify-between mt-6">
+      <Button className="flex  bg-blue-500 rounded-lg items-center space-x-2 max-h-10 m-0">
+  <label htmlFor="imageUpload" className="cursor-pointer">
+<div className="flex items-center   gap-1  text-white">
+  <FontAwesomeIcon icon={faUpload} className="text-white" />
+  Upload
+</div>
 
-      {preview && (
-        <div className="mt-3">
-          <p className="text-sm text-gray-600">Image Preview:</p>
-          <img src={preview} alt="Preview" className="mt-2 w-32 h-32 object-cover rounded-md" />
-        </div>
-      )}
+  </label>
+  <input
+    type="file"
+    id="imageUpload"
+    accept="image/*"
+    onChange={handleImageChange}
+    className="hidden"
+  />
+</Button>
 
-      <Button onClick={handleSubmit} className="w-full text-white bg-blue-500 mt-4">
+  
+      <Button onClick={handleSubmit} className=" text-white max-h-10 bg-blue-500 ">
         Add Post
       </Button>
+      </div>
+
+      </div>
     </div>
   );
 }
