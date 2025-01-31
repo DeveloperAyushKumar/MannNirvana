@@ -2,6 +2,7 @@ import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+
 const ProgressCircle = ({mental_state, confidence}) => {
   return (
     <div style={{ width: 200, height: 200 }}>

@@ -174,7 +174,7 @@ const CheckoutPage = () => {
                                                 <div className="inline-flex items-end">
                                                     <button
                                                         disabled={!isChecked}
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
+                                                        className="bg-dark hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Place an Order</button>
                                                 </div>
                                             </div>
 

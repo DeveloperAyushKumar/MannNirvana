@@ -6,13 +6,22 @@ import router from './routers/router.jsx'
 import {Provider } from 'react-redux'
 import {store} from './redux/store.js'
 
+import { PetraWallet } from "petra-plugin-wallet-adapter";
+import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
+import { Network } from "aptos";
+
+const wallets = [new PetraWallet()];
 createRoot(document.getElementById('root')).render(
 
 
 <Provider store={store}>
-  
-     <RouterProvider router={router}/>
-
-  </Provider>,
+    <AptosWalletAdapterProvider
+      plugins={wallets}
+      autoConnect={false}
+      dappConfig={{ network: Network.DEVNET, aptosConnectDappId: "dapp-id" }}
+    >
+      <RouterProvider router={router}/>
+    </AptosWalletAdapterProvider>
+  </Provider>
 
 )

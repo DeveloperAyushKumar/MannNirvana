@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import cors from 'cors';
 import postRoutes from './src/posts/post/post.route.js';
-import faceRoutes from './src/Face_emotion/face.route.js';
 import bodyParser from 'body-parser';
+import faceRoutes from './src/Face_emotion/face.route.js';
 import consultantRoutes from './src/Consultant/Consultant.route.js';
 
 const app=express();
@@ -14,16 +14,19 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use(cors({
-    origin: "*",
-    credentials: true
-}));
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }));
 
+  // preflight 
+  app.options("*", cors());
 
-
-
-app.use('/posts',postRoutes);
-app.use('/face', faceRoutes);
+//Routes
+app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
+app.use('/face', faceRoutes);
 
 
 //Connect to DB

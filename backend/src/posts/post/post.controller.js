@@ -29,7 +29,7 @@ const createPost=async(req,res)=>{
                 });
     
                 if(!post) res.status(400).json({message:"Post not created"});
-                res.status(201).json({post});
+                res.status(201).json(post);
             }
         });     
     }
@@ -41,7 +41,7 @@ const createPost=async(req,res)=>{
         });
 
         if(!post) res.status(400).json({message:"Post not created"});
-        res.status(201).json({post});
+        res.status(201).json(post);
     }}
     catch (error) {
         res.status(500).json({message:error.message})
@@ -54,7 +54,7 @@ const getPost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        res.status(200).json({post});
+        res.status(200).json(post);
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -70,15 +70,15 @@ const editPost=async(req,res)=>{
         post.tags=tags;
         post.image=image;
         await post.save();
-        res.status(200).json({post});
+        res.status(200).json(post);
     } catch (error) {
         res.status(500).json({message:error.message})
     }
 }
 const getAllPost=async(req,res)=>{
     try {
-        const posts=await Post.find().populate('author');
-        res.status(200).json({posts});
+        const posts=await Post.find();
+        res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -104,9 +104,9 @@ const likePost=async(req,res)=>{
         if(post.likes.includes(req.body.user._id)){
             return res.status(400).json({message:"You already liked this post"})
         }
-        post.likes.push(req.user._id);
+        post.likes.push(req.body.user._id);
         await post.save();
-        res.status(200).json({post});
+        res.status(200).json(post);
     } catch (error) {
         res.status(500).json({message:error.message})
     }
@@ -120,10 +120,10 @@ const commentPost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        const comment=new Comment({text,user:req.body.user._id});
+        const comment=new Comment({text,user:req.body.user._id,...(req.body.authorName&&{authorName :req.body.authorName })});
         post.comments.push(comment);
         await post.save();
-        res.status(200).json({post});
+        res.status(200).json(post);
     } catch (error) {
         res.status(500).json({message:error.message})
     }

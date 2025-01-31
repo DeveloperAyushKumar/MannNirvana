@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PostPreview from '../../components/PostPreview';
 import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
@@ -12,7 +12,7 @@ import { Link } from 'react-router';
 const SafeSpace = () => {
   // Example posts with tags
   const {data:posts=[]} = useFetchAllPostsQuery();
-  // console.log(posts)
+  console.log(posts)
 
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
@@ -29,39 +29,39 @@ const SafeSpace = () => {
     selectedTags.every((tag) => post.tags.includes(tag))
   );
 
-  useEffect(() => {
-    axios.get(`${backendUrl}/posts`)
-    .then((response) => {
-      setPosts(response.data.posts);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }, []);
-
   return (
-    <div className="space-y-6 flex justify-evenly max-h-screen">
+    // space-y-6 flex justify-evenly
+    <div className="grid grid-cols-5 p-2">
       {/* Top Selection/Tag-Adding Section */}
-  <Card className="max-w-sm shadow-lg hover:shadow-xl transition-shadow duration-300 mt-6 max-h-80 p-4 bg-[#F5E8F9] border border-[#DADADA] text-[#4A4A4A]">
-    <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Tags </h1>
+      
+      <Card className=" col-span-1 border-none border-r-4 border-gray-700 transition-shadow duration-300 mt-6 p-4 bg-white text-[#4A4A4A] rounded-none ">
+    <div>
+
+    <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
       <div className="flex flex-wrap gap-2 mb-4 ">
         {['Mental Health', 'Inspiration', 'Women', 'Stress Relief', 'Wellness', 'Self-care'].map((tag) => (
           <button
           key={tag}
-          className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+          className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
           onClick={() => handleTagSelect(tag)}
           >
-            {tag}
+            # {tag}
           </button>
-        ))}
+        ))} 
       </div>
-        </Card>
+        </div>
+        <div>
+          
+        </div>
 
-    <div className='w-2/3 max-h-screen flex flex-col gap-8'>
+
+      </Card>
+
+      <div className=' col-span-4 w-full max-h-screen'>
       <PostForm/>
 
-      <ScrollArea className="shadow-lg">
-      <div className='w-full max-h-[26rem] '>
+      <ScrollArea className="">
+      <div className='w-full max-h-[28rem] '>
 
       {/* Display filtered posts */}
       {filteredPosts.length === 0 ? (
@@ -70,7 +70,7 @@ const SafeSpace = () => {
         filteredPosts.map((post) => (
           <Link to={"/safespace/"+post._id} key={post._id}>
           <PostPreview key={post.id} post={post}  />
-          <Separator className='my-2'/>
+          {/* <Separator className='my-2'/> */}
           </Link>
         ))
       )}

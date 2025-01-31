@@ -1,11 +1,27 @@
 import React from 'react';
 import { Card, CardContent, CardTitle } from "@/components/ui/card"; // ShadCN Card components
+import { Badge } from "@/components/ui/badge"; // ShadCN Badge component
 import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Comments
+
+// const post = {
+//     id: 1,
+//     title: 'Understanding Anxiety: A Journey to Overcome Fear',
+//     author: 'John Doe',
+//     authorImage: '/path/to/image.jpg',
+//     description: 'This post explores what anxiety is, how it affects us, and practical ways to cope with it.',
+//     likes: 42,
+//     comments: [
+//       { author: 'Jane Smith', text: 'Great insights! Thank you for sharing.' },
+//       { author: 'Sarah Lee', text: 'This really helped me understand anxiety better.' },
+//     ],
+//     image: '/path/to/post-image.jpg', // Optional
+//     date: 'January 29, 2025',
+//   };
   
 const PostPreview = ({post}) => {
   console.log(post)
   return (
-    <Card className=" mx-auto shadow-lg hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6]">
+    <Card className=" mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-white rounded-none border-l-0">
       <CardTitle className="text-s font-semibold text-gray-900 mt-4 m-2">
         {post.authorName?post.authorName:"Anonymous User"}
 
@@ -40,7 +56,7 @@ const PostPreview = ({post}) => {
             <span className="text-gray-600">{post.likes?post.likes.length:0}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <MessageCircle size={18} className="text-blue-500" />
+            <MessageCircle size={18} className="text-dark" />
             <span className="text-gray-600">{post.comments?post.comments.length:0}</span>
           </div>
         </div>

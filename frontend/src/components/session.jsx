@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FaMicrophone, FaStopwatch, FaArrowRight, FaVolumeUp, FaTimes, FaHome } from "react-icons/fa";
 import AudioRecorder from "./AudioRecorder";
 import WebStream from "./WebStream";
 
@@ -15,22 +16,26 @@ const InterviewMEET = (props) => {
     "What activities or habits help you recharge mentally and maintain emotional resilience?"
   ]);
 
-  useEffect(()=>{
-    const header = document.getElementById("header"); 
-    if (header) {
-      header.style.display = "none";
-    }
+  useEffect(() => {
+    const header = document.getElementById("header");
+    const footer = document.getElementById("footer");
 
-    const footer = document.getElementById("footer"); 
-    if (footer) {
-      footer.style.display = "none";
-    }
-  }, [])
+    const headerDisplay = header ? header.style.display : "";
+    const footerDisplay = footer ? footer.style.display : "";
+
+    if (header) header.style.display = "none";
+    if (footer) footer.style.display = "none";
+
+    return () => {
+      if (header) header.style.display = headerDisplay;
+      if (footer) footer.style.display = footerDisplay;
+      window.location.reload();
+    };
+  }, []);
 
   const [time, setTime] = useState(300);
   const [ifStart, setIfStart] = useState(0);
   const [isSpeaking, setIsSpeaking] = useState(false);
-
   const speak = (text) => {
     return new Promise((resolve) => {
       const synth = window.speechSynthesis;
@@ -40,33 +45,24 @@ const InterviewMEET = (props) => {
     });
   };
 
-  //todo Toggle Exit options from where
   const [exitOption, setExitOption] = useState(false);
-  const Confirmation = document.getElementById("exits-options");
-
   const toggleExitOption = () => {
     setExitOption(!exitOption);
-    if (Confirmation)
-      Confirmation.style.display = exitOption === true ? "flex" : "none";
   };
 
   const backToHome = () => {
-    console.log("Back to Home");
     window.speechSynthesis.cancel();
     window.location.href = "/";
   };
 
-
   return (
     <>
-      <div className="w-full h-screen p-0 z-9 flex items-center">
-        {/* EXIT */}
-
+      <div className="w-full h-screen flex items-center">
         <button
           onClick={toggleExitOption}
           className="absolute top-3 left-3 z-10 font-extrabold border border-extraLight rounded-lg p-2 bg-light flex items-center gap-2 text-white"
         >
-          EXIT
+          <FaTimes /> EXIT
         </button>
 
         <div className="main-meet flex w-11/12 h-4/5 m-auto items-center justify-around">
@@ -93,10 +89,9 @@ const InterviewMEET = (props) => {
                     await speak(questions[qid]);
                     setIsSpeaking(false);
                   }}
-
-                  disabled={isSpeaking || (ifStart != 1)}
+                  disabled={isSpeaking || ifStart !== 1}
                 >
-                  Speak
+                  <FaVolumeUp /> Speak
                 </button>
                 <button
                   className={`rounded-br-2xl h-full w-[49%] bg-extraDark  flex items-center justify-center gap-2 ${
@@ -143,5 +138,5 @@ const InterviewMEET = (props) => {
     </>
   );
 };
-export default InterviewMEET;
 
+export default InterviewMEET;

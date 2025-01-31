@@ -8,7 +8,7 @@ export default function Consultant() {
 //   useEffect(()=>{
     const {data:consultants=[], error, isLoading} = useFetchAllConsultantsQuery();
     // setConsultants(data);
-    // console.log(consultants);  
+    console.log(consultants);  
     
 
         
