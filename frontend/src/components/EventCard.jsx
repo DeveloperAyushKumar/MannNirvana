@@ -25,7 +25,9 @@ const EventCard = ({ event }) => {
       {/* 📄 Event Details */}
       <div className="p-3">
         <h3 className="text-lg font-bold text-gray-900">
-          {event.name.slice(0,15)+".."} <span className="text-blue-500">✔</span>
+
+          {event.name} <span className="text-dark">✔</span>
+
         </h3>
         <p className="text-sm text-gray-600">
           By {event.organizer.slice(0,15)+".."}

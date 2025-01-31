@@ -10,7 +10,7 @@ import { Link } from 'react-router';
 import { useSelector } from 'react-redux';
 import { useAuth } from '../context/AuthContext';
 import logo from '../assets/Logo/logo.png'
-
+import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
 function Navbar() {
   const {currentUser,logout}={currentUser:null,logout:null}
@@ -36,14 +36,14 @@ function Navbar() {
       name :'Devi',
       herf:'/devi'
     },
-    {
-      name :'Profile',
-      href:'/profile'
-    }
+    // {
+    //   name :'Profile',
+    //   href:'/profile'
+    // }
 
   ]
   return (
-    <header className='max-w-screen-2xl mx-autopx py-2 px-4 bg-white bg-opacity-90 mx-4 rounded-full  '>
+    <header className='max-w-screen-2xl mx-autopx py-2 px-4 bg-light bg-opacity-90 mx-4 rounded-full  '>
         <nav className='flex justify-between items-center   '>
         <div className='flex items-center justify-between'>
             {/* left side */}
@@ -69,16 +69,13 @@ function Navbar() {
                 
                     navigation.map((item)=>{
                       return (
-                        <Link to={item.herf} key={item.name} className='text-lg font-semibold text-white bg-customBgBtn px-2 rounded-md'>{item.name}</Link>
+                        <Link to={item.herf} key={item.name} className='text-lg font-semibold text-white  px-2 rounded-md'>{item.name}</Link>
                       )
                     })
-                  }       
+                  }   
+                    <WalletSelector />    
               </div>
              }
-            
-
-
-
         </div>
  
     </nav>

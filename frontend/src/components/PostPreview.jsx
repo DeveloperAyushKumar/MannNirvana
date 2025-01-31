@@ -21,7 +21,7 @@ import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Com
 const PostPreview = ({post}) => {
   console.log(post)
   return (
-    <Card className=" mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-[#FFF8E6] rounded-none border-l-0">
+    <Card className=" mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-white rounded-none border-l-0">
       <CardTitle className="text-s font-semibold text-gray-900 mt-4 m-2">
         {post.authorName?post.authorName:"Anonymous User"}
 
@@ -56,7 +56,7 @@ const PostPreview = ({post}) => {
             <span className="text-gray-600">{post.likes?post.likes.length:0}</span>
           </div>
           <div className="flex items-center space-x-1">
-            <MessageCircle size={18} className="text-blue-500" />
+            <MessageCircle size={18} className="text-dark" />
             <span className="text-gray-600">{post.comments?post.comments.length:0}</span>
           </div>
         </div>
@@ -65,7 +65,7 @@ const PostPreview = ({post}) => {
         {post.tags && (
           <div className="flex space-x-2 mt-4">
             {post.tags.map((tag, index) => (
-              <Badge key={index} className="bg-blue-100 text-blue-800 p-2 w-28">
+              <Badge key={index} className="bg-light text-center text-extraDark  p-2 w-28">
                 # {tag}
               </Badge>
             ))}

@@ -3,17 +3,20 @@ import "./App.css"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
 import { AuthProvider } from "./context/AuthContext"
+
+
 function App() {
   
 
   return (
     
-    <div className="bg-customGray relative w-full">
+    <div className="bg-white relative w-full">
     <AuthProvider>
       <div id="header" className="sticky top-4 z-20">
         < Navbar/>
+      
       </div>
-      <main className="min-h-screen bg-customGray">
+      <main className="min-h-screen bg-white">
         <Outlet/>
       </main>
       <Footer/>
