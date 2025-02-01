@@ -1,2 +1,2 @@
-const getBaseURL=()=>("http://localhost:8000")
+const getBaseURL=()=>(import.meta.env.VITE_BACKEND_URL)
 export default getBaseURL
