@@ -18,21 +18,25 @@ export default function PostForm() {
   const availableTags = ["MentalHealthMatters","Grief","HealingJourney","EmotionalSupport","MentalHealthAwareness","VulnerableButStrong","YouAreNotAlone","BreakingTheSilence","SelfCompassion","HealingTogether"];
 
   const handleSubmit = async () => {
+    if(!user){
+      alert("Please login to add post");
+      return;
+    }
     if (!post.trim()) return;
 
     try {
       const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
 
       // Hate detection
-      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
-        headers: { "Content-Type": "application/json" },
-      });
+      // const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
+      //   headers: { "Content-Type": "application/json" },
+      // });
 
-      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
-      if (hateResponse.status === 250) {
-        alert("Please Maintain a Safe Space Here");
-        return;
-      }
+      // console.log('Hate speech response:', hateResponse.data, hateResponse.status);
+      // if (hateResponse.status === 250) {
+      //   alert("Please Maintain a Safe Space Here");
+      //   return;
+      // }
 
       const data = {
         content: post,

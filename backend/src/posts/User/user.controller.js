@@ -32,6 +32,7 @@ const createUser = async (req, res) => {
             );
         }
         else{
+            // console.log({name, address})
             user = await User.create({
                 name,
                 address,
@@ -47,6 +48,8 @@ const createUser = async (req, res) => {
 const editUser = async (req, res) => {
     const userId  = req.params.id;  // Assuming user ID is passed in the URL
     const { name, address, avatar } = req.body;
+    console.log("avatar url")
+    console.log(avatar)
 
     try {
         let avatarUrl = null;
@@ -93,7 +96,7 @@ const getUser = async (req, res) => {
         console.log(req.params.id);
         const user = await User.findOne({ address: req.params.id });
         if (!user) {
-            return res.status(404).json({ message: "User not found" })
+            return res.status(250).json({ message: "User not found" })
         }
         res.status(200).json({ user });
     } catch (error) {

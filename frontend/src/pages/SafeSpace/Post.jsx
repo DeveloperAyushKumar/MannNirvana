@@ -25,7 +25,8 @@ const PostPage = () => {
     }
 }, [post]);
 
-  console.log(comments)
+  // console.log(comments)
+  // console.log(post)
   const[likePost]=useLikePostMutation();
   const[addComment]=useAddCommentMutation();
 // console.log(post)
@@ -33,13 +34,21 @@ const PostPage = () => {
   // Handle comment submission
   const handleCommentSubmit = (e) => {
     e.preventDefault();
+    if(!user){
+      alert("Please Login to comment")
+      return 
+    }
     if (comment.trim()) {
-      setComments([...comments, { author: 'User', text: comment }]);
+      setComments([...comments, { user, text: comment }]);
       setComment(''); // Reset comment input
       addComment({id:post._id,user:user,text:comment});
     }
   };
   const handleLike = async () => {
+    if(!user) {
+      alert("Please login to Like a post") 
+      return 
+    }
     const prevLikes = likes;
     setLikes((prev) => prev + 1); // Optimistically update UI
   
@@ -63,14 +72,14 @@ const PostPage = () => {
       {/* Post Content */}
       <Card className="w-full max-w-3xl mx-auto mb-8 p-4 border border-gray-200 rounded-lg space-y-4">
         <div className="flex items-center space-x-4">
-          {post.author?.avatar && <img 
-            src={post.author.avatar || avatar} 
+          <img 
+            src={post.author?.avatar || avatar} 
             alt="Author Image" 
             className="w-8 h-8 rounded-full"
-          />}
+          />
 
           <div className="flex flex-col">
-            <span className="font-semibold text-lg text-gray-800">{post.author?.name}</span>
+            <span className="font-semibold text-lg text-gray-800">{post.author?.name||"Anonymous User"}</span>
           </div><span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
         </div>
 
@@ -97,12 +106,12 @@ const PostPage = () => {
           comments.map((comment, index) => (
             <div key={index} className="flex items-start space-x-4 border-b pb-4 border-white ">
               <img 
-                src={avatar} 
+                src={comment.user?.avatar||avatar} 
                 alt="User Avatar" 
                 className="w-8 h-8 rounded-full"
               />
               <div>
-                <span className="font-semibold text-gray-800">{comment.authorName?.name?comment.authorName?.name:"Anonymous User"}</span>
+                <span className="font-semibold text-gray-800">{comment.user?comment.user.name:"Anonymous User"}</span>
                 <p className="text-gray-900">{comment.text}</p>
               </div>
             </div>
