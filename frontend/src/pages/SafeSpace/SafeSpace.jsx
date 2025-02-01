@@ -3,7 +3,6 @@ import PostPreview from '../../components/PostPreview';
 import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from '@radix-ui/react-separator';
 import { useFetchAllPostsQuery } from '@/src/redux/features/posts/postsApi';
 
 import { Link } from 'react-router';
@@ -57,7 +56,7 @@ const SafeSpace = () => {
 
       </Card>
 
-      <div className=' col-span-4 w-full max-h-screen'>
+      <div className=' col-span-4 w-full'>
       <PostForm/>
 
       <ScrollArea className="">

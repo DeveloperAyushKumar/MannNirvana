@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // import jwt from 'jsonwebtoken'
 // import bcrypt from 'bcrypt' 
 const userSchema=new mongoose.Schema({
-    username:{
+    name:{
         type:String,
         unique:true,
         required:true,
@@ -11,36 +11,19 @@ const userSchema=new mongoose.Schema({
         trim:true,
 
     },
-    email:{
+    address: {
         type:String,
-        unique:true,
-        lowercase:true,
-        trim:true,
         required:true,
-
     },
     avatar:{
         type:String, //cloudinary url
         required:true,
         
     },
-    avatarPublicId:{
-        type:String,
-        required:true,
-    },
-    password:{
-        type:String,
-        required:[true,"Password is required"]
-
-    },
     coins:{
         type : Number,
         default:0,
     }
-
-
-
-
 },{timestamps:true})
 // userSchema.pre("save",async function(next){
 //     if(!this.isModified("password"))return next();

@@ -50,7 +50,7 @@ const createPost=async(req,res)=>{
 
 const getPost=async(req,res)=>{
     try {
-        const post=await Post.findById(req.params.id);
+        const post=await Post.findById(req.params.id).populate('author').populate('comments.user');
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
@@ -77,7 +77,7 @@ const editPost=async(req,res)=>{
 }
 const getAllPost=async(req,res)=>{
     try {
-        const posts=await Post.find();
+        const posts=await Post.find().populate('author');
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({message:error.message})

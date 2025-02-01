@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardTitle } from "@/components/ui/card"; // ShadCN Card components
 import { Badge } from "@/components/ui/badge"; // ShadCN Badge component
 import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Comments
+import avatar from '../assets/user.png'
 
 // const post = {
 //     id: 1,
@@ -19,14 +20,17 @@ import { Heart, MessageCircle } from 'react-feather'; // Icons for Likes and Com
 //   };
   
 const PostPreview = ({post}) => {
-  console.log(post)
   return (
-    <Card className=" mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-white rounded-none border-l-0">
-      <CardTitle className="text-s font-semibold text-gray-900 mt-4 m-2">
-        {post.authorName?post.authorName:"Anonymous User"}
-
+    <Card className="mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-white rounded-none border-l-0">
+      <CardTitle className="flex items-center space-x-2 text-sm font-semibold text-gray-900 mt-4 m-2">
+        <img 
+          src={post.author.avatar || avatar} 
+          alt="Author Image" 
+          className="w-8 h-8 rounded-full"
+        />
+        <span>{post.author.name ? post.author.name : "Anonymous User"}</span>
       </CardTitle>
-      
+
       {/* Render image if available */}
       {post.image && (
         <img 
@@ -65,7 +69,7 @@ const PostPreview = ({post}) => {
         {post.tags && (
           <div className="flex space-x-2 mt-4">
             {post.tags.map((tag, index) => (
-              <Badge key={index} className="bg-light text-center text-extraDark  p-2 ">
+              <Badge key={index} className="bg-light text-center text-extraDark p-2">
                 # {tag}
               </Badge>
             ))}

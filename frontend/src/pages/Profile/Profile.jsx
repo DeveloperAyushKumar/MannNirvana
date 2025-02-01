@@ -50,7 +50,7 @@ const ProfilePage = () => {
     try {
       const base64 = await toBase64(selectedFile);
       setProfile((prev) => ({ ...prev, avatar: base64 }));
-     
+      setPreview(base64);
     } catch (error) {
       console.error("Error converting image to base64:", error);
     }
@@ -62,7 +62,6 @@ const ProfilePage = () => {
       console.log("Saving profile:", profile);
       const response = await axios.put(`${BackendURL}/user/edit/${user._id}`, {
         name,
-        avatar,
         address: user.address
       });
       

@@ -7,12 +7,12 @@ import Checkout from "../pages/Books/CheckoutPage";
 import SingleBook from "../pages/Books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
 import Session from "../components/session";
-import MentalState from "../charts/progress_circle";
 import SafeSpace from "../pages/SafeSpace/SafeSpace";
 import PostPage from "../pages/SafeSpace/Post";
 import Consultant from "../pages/Consultant/Consultant";
 import Result from "../components/Result";
 import Devi from "../pages/Devi/Devi";
+import Profile from "../pages/Profile/Profile";
 
 
 const router =createBrowserRouter([
@@ -25,12 +25,12 @@ const router =createBrowserRouter([
                 element:<SafeSpace/>
             },
             {
-                path:"/safespace/:id",
-                element:<PostPage/>
+                path : '/profile',
+                element:<Profile/>
             },
             {
-                path :"/state",
-                element: <MentalState/>
+                path:"/safespace/:id",
+                element:<PostPage/>
             },
             {
                 path :"/assessment",

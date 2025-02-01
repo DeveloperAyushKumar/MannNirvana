@@ -18,11 +18,7 @@ export const WalletProvider = ({ children }) => {
     const fetchUser = async () => {
       if (connected && account?.address) {
         try {
-          const response = await axios.get(`${BackendURL}/user/${account.address}`,{
-            validateStatus: function (status) {
-              return status >= 200 && status < 500; // Allows 2xx and 3xx status codes
-            }
-          });
+          const response = await axios.get(`${BackendURL}/user/${account.address}`);
 
           if (response.status === 200) {
             console.log("User already exists");
@@ -31,7 +27,6 @@ export const WalletProvider = ({ children }) => {
             const user = {
               name: "Anonymous User",
               address: account.address,
-              avatar:null
             };
             const createResponse = await axios.post(`${BackendURL}/user`, user);
             if(createResponse.status === 201){

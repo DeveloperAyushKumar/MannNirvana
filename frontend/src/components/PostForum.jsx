@@ -5,11 +5,13 @@ import axios from 'axios';
 import { useAddPostMutation } from "../redux/features/posts/postsApi.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { useWalletContext } from "../context/WalletContext.jsx";
 
 export default function PostForm() {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const {user} = useWalletContext();
   const [tags, setTags] = useState([]);
   const [addPost, { isLoading, isError, error }] = useAddPostMutation();
   
@@ -21,22 +23,25 @@ export default function PostForm() {
     try {
       const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
 
-      // // Hate detection
-      // const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: "6799288f3096d820266cbd6c"}, {
-      //   headers: { "Content-Type": "application/json" }
-      // });
+      // Hate detection
+      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-      // console.log('Hate speech response:', hateResponse.data, hateResponse.status);
-      // if (hateResponse.status === 250) {
-      //   alert("Remove Content Detected!! Please Maintain a Safe Space Here");
-      //   return;
-      // }
+      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
+      if (hateResponse.status === 250) {
+        alert("Please Maintain a Safe Space Here");
+        return;
+      }
+
       const data = {
         content: post,
         tags: tags,
         ...(file && { image_file: file }),
-        user: { _id: '6799288f3096d820266cbd6c' }, 
+        user: { _id: user._id }, 
       };
+
+      // Post submission if no hate speech is detected
       const response = await addPost(data).unwrap();
       console.log('Post submitted successfully:', response.data);
 
