@@ -1,16 +1,17 @@
 import React, { useState,useEffect } from 'react';
-import { Avatar} from '@/components/ui/avatar';
 import{ Card, CardContent, CardFooter} from '@/components/ui/card';
 import { Button} from'@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAddCommentMutation, useFetchPostByIdQuery, useLikePostMutation } from '@/src/redux/features/posts/postsApi';
 import { useParams } from 'react-router';
+import { useWalletContext } from '../../context/WalletContext';
+import avatar from '../../assets/user.png';
 
 
 
 const PostPage = () => {
   const postId=useParams().id;
-  const user={_id:'6799288f3096d820266cbd6d'};
+  const {user} = useWalletContext();
   const {data:post={},} =useFetchPostByIdQuery(postId);
   const[likes,setLikes]=useState(post.likes?post.likes:0);
   const [comment, setComment] = useState('');
@@ -59,16 +60,17 @@ const PostPage = () => {
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
-      {/* Post Title */}
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">{post.authorName?post.authorName:"Anonymous User"}</h1>
-
       {/* Post Content */}
       <Card className="w-full max-w-3xl mx-auto mb-8 p-4 border border-gray-200 rounded-lg space-y-4">
         <div className="flex items-center space-x-4">
-          {post.authorImage&&<Avatar src={post.authorImage} alt={post.author} className="w-10 h-10" />}
+          {post.author?.avatar && <img 
+            src={post.author.avatar || avatar} 
+            alt="Author Image" 
+            className="w-8 h-8 rounded-full"
+          />}
+
           <div className="flex flex-col">
-            {/* <span className="font-semibold text-lg text-gray-800">{post.author}</span> */}
-         
+            <span className="font-semibold text-lg text-gray-800">{post.author?.name}</span>
           </div><span className="text-sm text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</span>
         </div>
 
@@ -94,9 +96,13 @@ const PostPage = () => {
         {comments.length > 0 ? (
           comments.map((comment, index) => (
             <div key={index} className="flex items-start space-x-4 border-b pb-4 border-white ">
-              <Avatar src="/path/to/user-avatar.jpg" alt={comment.user} className="w-8 h-8" />
+              <img 
+                src={avatar} 
+                alt="User Avatar" 
+                className="w-8 h-8 rounded-full"
+              />
               <div>
-                <span className="font-semibold text-gray-800">{comment.authorName?comment.authorName:"Anonymous User"}</span>
+                <span className="font-semibold text-gray-800">{comment.authorName?.name?comment.authorName?.name:"Anonymous User"}</span>
                 <p className="text-gray-900">{comment.text}</p>
               </div>
             </div>

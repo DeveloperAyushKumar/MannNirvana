@@ -2,26 +2,25 @@ import { Outlet } from "react-router"
 import "./App.css"
 import Navbar from "./components/Navbar"
 import Footer from "./components/Footer"
-import { AuthProvider } from "./context/AuthContext"
+import { WalletProvider } from "./context/WalletContext";
+import { AptosWalletAdapterProvider } from "@aptos-labs/wallet-adapter-react";
 
 
 function App() {
   
 
   return (
-    
-    <div className="bg-white relative w-full">
-    <AuthProvider>
-      <div id="header" className="sticky top-4 z-20">
+    <AptosWalletAdapterProvider>
+      <WalletProvider>
+      <div className="bg-white flex flex-col w-full">
         < Navbar/>
-      
+        <main className="min-h-screen bg-white">
+          <Outlet/>
+        </main>
+        <Footer/>
       </div>
-      <main className="min-h-screen bg-white">
-        <Outlet/>
-      </main>
-      <Footer/>
-    </AuthProvider>
-    </div>
+      </WalletProvider>
+    </AptosWalletAdapterProvider>
   )
 }
 export default App;
