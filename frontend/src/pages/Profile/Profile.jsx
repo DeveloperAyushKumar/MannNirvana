@@ -62,7 +62,6 @@ const ProfilePage = () => {
       console.log("Saving profile:", profile);
       const response = await axios.put(`${BackendURL}/user/edit/${user._id}`, {
         name,
-        avatar,
         address: user.address
       });
       
@@ -77,7 +76,7 @@ const ProfilePage = () => {
     <div className="w-full h-screen flex flex-col items-center justify-center relative">
     {/* Coins Section (Aligned to Right) */}
     <div className="absolute top-4 right-4 flex items-center gap-2">
-        <p className="text-lg font-semibold text-gray-800">{user.coins} Coins</p>
+        <p className="text-lg font-semibold text-gray-800">{user?.coins} Coins</p>
         <FontAwesomeIcon icon={faCoins} className="text-yellow-500 text-2xl" />
     </div>
 

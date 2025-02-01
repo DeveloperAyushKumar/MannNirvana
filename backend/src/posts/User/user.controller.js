@@ -74,6 +74,7 @@ const editUser = async (req, res) => {
         }
 
         // Update the user record
+        console.log(updatedData);
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true });
 
         if (!user) {

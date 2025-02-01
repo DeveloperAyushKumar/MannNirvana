@@ -3,7 +3,6 @@ import { IoSearchCircleOutline } from "react-icons/io5";
 import { RiMenu2Line } from "react-icons/ri";
 import { HiUser } from "react-icons/hi";
 import { MdLogin } from "react-icons/md";
-
 import { FaRegHeart } from "react-icons/fa";
 import { BsCart4 } from "react-icons/bs";
 import { Link } from 'react-router';
@@ -11,7 +10,6 @@ import { useSelector } from 'react-redux';
 import { useWalletContext } from '../context/WalletContext';
 import logo from '../assets/Logo/logo.png'
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-import { useWallet } from '@aptos-labs/wallet-adapter-react';
 
 function Navbar() {
   const { user, isConnected } = useWalletContext();
