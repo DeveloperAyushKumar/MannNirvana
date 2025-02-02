@@ -13,6 +13,7 @@ import Consultant from "../pages/Consultant/Consultant";
 import Result from "../components/Result";
 import Devi from "../pages/Devi/Devi";
 import Profile from "../pages/Profile/Profile";
+import NGOList from "../pages/NGO/NGO";
 
 
 const router =createBrowserRouter([
@@ -61,6 +62,10 @@ const router =createBrowserRouter([
             {
                 path:"/books/:id",
                 element:<SingleBook/>
+            },
+            {
+                path :'/ngo',
+                element:<NGOList/>
             }
             
         ]
