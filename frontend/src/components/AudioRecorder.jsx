@@ -108,7 +108,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
 
   function redirect() {
     console.log("clicked");
-    window.location.href = `/result/${user_id}/${result?.mental_state}/${result?.confidence}`;
+    window.location.href = `/result/${user._id}/${result?.mental_state}/${result?.confidence}`;
   }
   
   return (

@@ -77,7 +77,7 @@ function Navbar() {
                       }
 
                       if(item.name==='Profile'){
-                        return <WalletSelector />
+                        return <WalletSelector key={item.name} />
                       }
                     }
                     return (
