@@ -13,6 +13,7 @@ import Consultant from "../pages/Consultant/Consultant";
 import Result from "../components/Result";
 import Devi from "../pages/Devi/Devi";
 import Profile from "../pages/Profile/Profile";
+import Funding from "../components/Funding";
 import NGOList from "../pages/NGO/NGO";
 
 
@@ -54,12 +55,11 @@ const router =createBrowserRouter([
                 path:"/devi",
                 element:<Devi/>
             },
-            // {
-            //     path :"/checkout",
-            //     element:<PrivateRoute><Checkout/></PrivateRoute>
-
-            // },
             {
+                path: "/funding/:recipientId/:ngo",
+                element: <Funding/>
+            },
+            {            
                 path:"/books/:id",
                 element:<SingleBook/>
             },
@@ -67,7 +67,6 @@ const router =createBrowserRouter([
                 path :'/ngo',
                 element:<NGOList/>
             }
-            
         ]
     },
 ]);

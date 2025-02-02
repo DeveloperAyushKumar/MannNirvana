@@ -8,7 +8,7 @@ const ProgressCircle = ({mental_state, confidence}) => {
     <div style={{ width: 200, height: 200 }}>
       <CircularProgressbar
         value={confidence}
-        text="Possibility"
+        text={`${confidence}%`}
         styles={buildStyles({
           pathColor: confidence > 70 ? "#4caf50" : "#ff9800",  // Green for high percentages, Orange for low
           textColor: "#000000",

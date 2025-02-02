@@ -37,6 +37,10 @@ function Navbar() {
       href:'/devi'
     },
     {
+      name: 'Ngo',
+      href:'/ngo'
+    },
+    {
       name :'Profile',
       href:'/profile'
     }
@@ -77,7 +81,7 @@ function Navbar() {
                       }
 
                       if(item.name==='Profile'){
-                        return <WalletSelector />
+                        return <WalletSelector key={item.name} />
                       }
                     }
                     return (

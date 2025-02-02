@@ -71,9 +71,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
 
   const rewardUser = async () => {
     try {
-
-  
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/reward/${user.address}`);
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/reward/${user._id}`);
   
       if (response.status === 200) {
         console.log("coins updated successfully");
@@ -126,7 +124,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
 
   function redirect() {
     console.log("clicked");
-    window.location.href = `/result/${user_id}/${result?.mental_state}/${result?.confidence}`;
+    window.location.href = `/result/${user._id}/${result?.mental_state}/${result?.confidence}`;
   }
   
   return (

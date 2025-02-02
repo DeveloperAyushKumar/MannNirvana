@@ -10,11 +10,18 @@ const WalletContext = createContext({
 
 const BackendURL = import.meta.env.VITE_BACKEND_URL;
 
+function generateAnonymousUsername() {
+  const randomNumber = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit number
+  return `AnonymousUser${randomNumber}`;
+}
+
 export const WalletProvider = ({ children }) => {
-  const { account, connected } = useWallet();
+  const { account, connected, connect } = useWallet();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    console.log("Connected:", connected);
+
     const fetchUser = async () => {
       if (connected && account?.address) {
         try {
@@ -25,7 +32,7 @@ export const WalletProvider = ({ children }) => {
             setUser(response.data.user);
           } else {
             const user = {
-              name: "Anonymous User",
+              name: generateAnonymousUsername(),
               address: account.address,
             };
             const createResponse = await axios.post(`${BackendURL}/user`, user);
@@ -48,6 +55,7 @@ export const WalletProvider = ({ children }) => {
 
     fetchUser();
   }, [connected, account]);
+
 
   return (
     <WalletContext.Provider value={{ user, setUser, isConnected: connected }}>
