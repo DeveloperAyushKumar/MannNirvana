@@ -112,17 +112,20 @@ const likePost=async(req,res)=>{
     }
 }
 const commentPost=async(req,res)=>{
-    const {text}=req.body;
-    console.log(req.body)
-    console.log(req.params)
+    const {text,user}=req.body;
+    // console.log(req.body)
+
+    // console.log(req.params)
     try {
         const post=await Post.findById(req.params.id);
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        const comment=new Comment({text,user:req.body.user._id,...(req.body.authorName&&{authorName :req.body.authorName })});
+        const comment=new Comment({text,user:user._id,});
+        // console.log(comment)
         post.comments.push(comment);
         await post.save();
+        // console.log(comment)
         res.status(200).json(post);
     } catch (error) {
         res.status(500).json({message:error.message})

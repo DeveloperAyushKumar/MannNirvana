@@ -24,11 +24,11 @@ const PostPreview = ({post}) => {
     <Card className="mx-auto shadow-none hover:shadow-xl transition-shadow duration-300 bg-white rounded-none border-l-0">
       <CardTitle className="flex items-center space-x-2 text-sm font-semibold text-gray-900 mt-4 m-2">
         <img 
-          src={post.author.avatar || avatar} 
+          src={post?.author?.avatar || avatar} 
           alt="Author Image" 
           className="w-8 h-8 rounded-full"
         />
-        <span>{post.author.name ? post.author.name : "Anonymous User"}</span>
+        <span>{post.author?.name ? post.author.name : "Anonymous User"}</span>
       </CardTitle>
 
       {/* Render image if available */}

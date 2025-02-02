@@ -33,12 +33,14 @@ const ProfilePage = () => {
         name: user?.name || "Anonymous User",
         avatar: user?.avatar || defaultAvatar,
       });
+      
     }
   }, [isConnected, user]);
 
   // Handle image selection and conversion to Base64
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files?.[0];
+    console.log(selectedFile)
     if (!selectedFile) return;
 
     // Check file size (100KB limit)
@@ -49,8 +51,13 @@ const ProfilePage = () => {
 
     try {
       const base64 = await toBase64(selectedFile);
-      setProfile((prev) => ({ ...prev, avatar: base64 }));
-      setPreview(base64);
+      // console.log(base64)
+      setProfile((prev) => {
+        const updatedProfile = { ...prev, avatar: base64 };
+        console.log("Updated Profile:", updatedProfile);  // Log updated value
+        return updatedProfile;
+      });
+      
     } catch (error) {
       console.error("Error converting image to base64:", error);
     }
@@ -62,7 +69,8 @@ const ProfilePage = () => {
       console.log("Saving profile:", profile);
       const response = await axios.put(`${BackendURL}/user/edit/${user._id}`, {
         name,
-        address: user.address
+        address: user.address,
+        avatar
       });
       
       console.log("Profile saved:", response.data);
