@@ -103,7 +103,17 @@ const PostPage = () => {
       {/* Comments Section */}
       <div className="space-y-4 mb-8">
         <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
-
+  {/* Add a Comment */}
+  {isConnected? <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
+          <Textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Add a comment..."
+            className="w-full border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
+            rows={3}
+          />
+          <Button type="submit" variant="solid" size="sm" className="px-4 py-2 bg-extraDark text-white text-md ">Comment</Button>
+        </form> : <></>}
         {/* Display Comments */}
         {comments.length > 0 ? (
           comments.map((comment, index) => (
@@ -122,18 +132,8 @@ const PostPage = () => {
         ) : (
           <p className="text-gray-900">No comments yet. Be the first to comment!</p>
         )}
+      
 
-        {/* Add a Comment */}
-        {isConnected? <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
-          <Textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Add a comment..."
-            className="w-full border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
-            rows={3}
-          />
-          <Button type="submit" variant="solid" size="sm" className="px-4 py-2 bg-extraDark text-white text-md ">Comment</Button>
-        </form> : <></>}
       </div>
     </div>
   );
