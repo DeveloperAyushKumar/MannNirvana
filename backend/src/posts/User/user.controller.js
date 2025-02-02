@@ -103,5 +103,24 @@ const getUser = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+const incrementCoins = async (req, res) => {
+    try {
+        const user = await User.findOne({ address: req.params.id });
 
-export { createUser, getUser, editUser};
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        user.coins = (user.coins || 0) + 10; // Increment coins
+        await user.save(); // Save updated user
+
+        res.status(200).json({ message: "Coins incremented successfully", coins: user.coins });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+};
+
+
+
+
+export { createUser, getUser, editUser, incrementCoins};
