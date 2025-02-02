@@ -20,6 +20,8 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@reduxjs/toolkit": "^2.5.0",
     "add": "^2.0.6",
+    "antd": "^5.23.3",
+    "aptos": "^1.21.0",
     "axios": "^1.7.9",
     "carousel": "^0.0.3",
     "class-variance-authority": "^0.7.1",

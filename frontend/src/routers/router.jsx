@@ -13,6 +13,7 @@ import Consultant from "../pages/Consultant/Consultant";
 import Result from "../components/Result";
 import Devi from "../pages/Devi/Devi";
 import Profile from "../pages/Profile/Profile";
+import Funding from "../components/Funding";
 
 
 const router =createBrowserRouter([
@@ -53,16 +54,10 @@ const router =createBrowserRouter([
                 path:"/devi",
                 element:<Devi/>
             },
-            // {
-            //     path :"/checkout",
-            //     element:<PrivateRoute><Checkout/></PrivateRoute>
-
-            // },
             {
-                path:"/books/:id",
-                element:<SingleBook/>
-            }
-            
+                path: "/funding/:recipientId/:ngo",
+                element: <Funding/>
+            }            
         ]
     },
 ]);

@@ -11,10 +11,12 @@ const WalletContext = createContext({
 const BackendURL = import.meta.env.VITE_BACKEND_URL;
 
 export const WalletProvider = ({ children }) => {
-  const { account, connected } = useWallet();
+  const { account, connected, connect } = useWallet();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    console.log("Connected:", connected);
+
     const fetchUser = async () => {
       if (connected && account?.address) {
         try {
@@ -48,6 +50,7 @@ export const WalletProvider = ({ children }) => {
 
     fetchUser();
   }, [connected, account]);
+
 
   return (
     <WalletContext.Provider value={{ user, setUser, isConnected: connected }}>
