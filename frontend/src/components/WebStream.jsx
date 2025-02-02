@@ -1,8 +1,10 @@
 import { useRef, useEffect } from 'react';
+import { useWalletContext } from '../context/WalletContext';
 
 function WebcamStream() {
   const BACKEND_URL = import.meta.env.VITE_FACE_URL;
   const videoRef = useRef(null);
+  const {user} = useWalletContext();
   let sendFrameInterval;
 
   useEffect(() => {
@@ -54,7 +56,7 @@ function WebcamStream() {
   const sendDataViaAPI = (blob) => {
     const formData = new FormData();
     formData.append('file', blob, 'frame.jpg'); // Append the blob as a file
-    formData.append("user_id", "6799288f3096d820266cbd6c");
+    formData.append("user_id", user._id);
 
     fetch(`${BACKEND_URL}/analyse-image/`, {
       method: 'POST',
