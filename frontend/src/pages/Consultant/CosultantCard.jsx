@@ -14,7 +14,9 @@ function CosultantCard({consultant}) {
         <Card className="bg-white shadow-lg rounded-lg overflow-hidden">
   <CardHeader>
     <CardTitle>{consultant.name}</CardTitle>
-    <CardDescription> <span>{consultant.email}</span> <span>{consultant.phone}</span></CardDescription>
+    <CardDescription 
+    className="text-gray-500 mt-2 flex justify-between"
+    > <span className=''>{consultant.email}</span> <span>{consultant.phone}</span></CardDescription>
   </CardHeader>
   <CardContent>
     <p>{consultant.about}</p>
