@@ -94,7 +94,7 @@ function PodCasts() {
 
 
 
-      <Carousel className=" w-full px-6">
+      <Carousel className=" w-full px-6 ">
       <CarouselContent className="-ml-1 m ">
         {
       podcastsData.map((podcast, index) => (

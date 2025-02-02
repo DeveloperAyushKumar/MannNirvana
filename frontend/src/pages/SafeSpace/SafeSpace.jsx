@@ -40,7 +40,7 @@ const SafeSpace = () => {
         {tags.map((tag) => (
           <button
           key={tag}
-          className={`px-4 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
+          className={`px-4 py-2 rounded-lg w-full text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
           onClick={() => handleTagSelect(tag)}
           >
             # {tag}

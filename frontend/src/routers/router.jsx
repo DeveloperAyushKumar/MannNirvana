@@ -53,11 +53,11 @@ const router =createBrowserRouter([
                 path:"/devi",
                 element:<Devi/>
             },
-            {
-                path :"/checkout",
-                element:<PrivateRoute><Checkout/></PrivateRoute>
+            // {
+            //     path :"/checkout",
+            //     element:<PrivateRoute><Checkout/></PrivateRoute>
 
-            },
+            // },
             {
                 path:"/books/:id",
                 element:<SingleBook/>
