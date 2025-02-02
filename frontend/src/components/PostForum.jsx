@@ -6,16 +6,15 @@ import { useAddPostMutation } from "../redux/features/posts/postsApi.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useWalletContext } from "../context/WalletContext.jsx";
+import availableTags from '../utils/tags.js';
 
 export default function PostForm() {
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
-  const {user} = useWalletContext();
+  const {user, isConnected} = useWalletContext();
   const [tags, setTags] = useState([]);
   const [addPost, { isLoading, isError, error }] = useAddPostMutation();
-  
-  const availableTags = ["MentalHealthMatters","Grief","HealingJourney","EmotionalSupport","MentalHealthAwareness","VulnerableButStrong","YouAreNotAlone","BreakingTheSilence","SelfCompassion","HealingTogether"];
 
   const handleSubmit = async () => {
     if(!user){
@@ -28,15 +27,15 @@ export default function PostForm() {
       const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
 
       // Hate detection
-      // const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
-      //   headers: { "Content-Type": "application/json" },
-      // });
+      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
+        headers: { "Content-Type": "application/json" },
+      });
 
-      // console.log('Hate speech response:', hateResponse.data, hateResponse.status);
-      // if (hateResponse.status === 250) {
-      //   alert("Please Maintain a Safe Space Here");
-      //   return;
-      // }
+      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
+      if (hateResponse.status === 250) {
+        alert("Please Maintain a Safe Space Here");
+        return;
+      }
 
       const data = {
         content: post,

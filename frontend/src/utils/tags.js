@@ -1,0 +1,2 @@
+const tags = ["MentalHealthAwareness","MentalHealthMatters", "VulnerableButStrong", "BreakingTheSilence","EmotionalSupport","YouAreNotAlone", "HealingTogether","HealingJourney","SelfCompassion"]
+export default tags;

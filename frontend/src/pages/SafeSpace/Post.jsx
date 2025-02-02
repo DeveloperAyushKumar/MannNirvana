@@ -11,7 +11,7 @@ import avatar from '../../assets/user.png';
 
 const PostPage = () => {
   const postId=useParams().id;
-  const {user} = useWalletContext();
+  const {user, isConnected} = useWalletContext();
   const {data:post={},} =useFetchPostByIdQuery(postId);
   const[likes,setLikes]=useState(post.likes?post.likes:0);
   const [comment, setComment] = useState('');
@@ -93,7 +93,10 @@ const PostPage = () => {
 
         {/* Post Footer (Likes) */}
         <CardFooter className="flex justify-between items-center">
+          {isConnected?
           <Button onClick={handleLike} className="bg-dark text-white font-semibold" size="sm">{likes} Like</Button>
+          :
+          <p className="p-2 rounded-md bg-dark text-white font-semibold">{likes} Likes</p>}
         </CardFooter>
       </Card>
 
@@ -121,7 +124,7 @@ const PostPage = () => {
         )}
 
         {/* Add a Comment */}
-        <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
+        {isConnected? <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
           <Textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
@@ -130,7 +133,7 @@ const PostPage = () => {
             rows={3}
           />
           <Button type="submit" variant="solid" size="sm" className="px-4 py-2 bg-extraDark text-white text-md ">Comment</Button>
-        </form>
+        </form> : <></>}
       </div>
     </div>
   );
