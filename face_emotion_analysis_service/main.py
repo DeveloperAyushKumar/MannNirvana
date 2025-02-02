@@ -104,6 +104,3 @@ async def analyze_image(file: UploadFile = File(...),
 async def read_root():
     return {"message": "Welcome to the Emotion Recognition API!"}
 
-
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=PORT)
