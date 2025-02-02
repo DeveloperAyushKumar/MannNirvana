@@ -12,7 +12,7 @@ import logo from '../assets/Logo/logo.png'
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
 function Navbar() {
-  const { user, isConnected } = useWalletContext();
+  const { isConnected } = useWalletContext();
   const {currentUser,logout}={currentUser:null,logout:null}
   const cartItems=useSelector((state)=>(state.cart.cartItems))
   console.log(cartItems);
@@ -21,26 +21,25 @@ function Navbar() {
   const navigation =[
     {
       name : 'Home',
-      herf: '/'
+      href: '/'
     },
     {
       name : 'Consultant',
-      herf: '/consultant'
+      href: '/consultant'
     },
     {
       name : 'Assessment',
-      herf: '/assessment'
+      href: '/assessment'
     },
 
     {
       name :'Devi',
-      herf:'/devi'
+      href:'/devi'
     },
-    // {
-    //   name :'Profile',
-    //   href:'/profile'
-    // }
-
+    {
+      name :'Profile',
+      href:'/profile'
+    }
   ]
   return (
     <header id="header" className='max-w-screen-2xl mx-autopx py-2 px-4 bg-light mx-4 rounded-full  '>
@@ -69,22 +68,26 @@ function Navbar() {
              {
               !isDroppedDown&&
               <div className='flex flex-col items-center gap-2 sm:flex-row sm:gap-4'> 
-                  {
-                
-                    navigation.map((item)=>{
-                      return (
-                        <Link to={item.herf} key={item.name} className='text-lg font-semibold text-white  px-2 rounded-md'>{item.name}</Link>
-                      )
-                    })
-                  }   
-                  
-                  {isConnected? 
-                  <Link to={'/profile'} className='text-lg font-semibold text-white  px-2 rounded-md' > 
-                   Profile
-                  </Link> : <WalletSelector />   } 
+                {
+              
+                  navigation.map((item)=>{
+                    if(!isConnected){
+                      if(item.name==='Assessment'){
+                        return null
+                      }
+
+                      if(item.name==='Profile'){
+                        return <WalletSelector />
+                      }
+                    }
+                    return (
+                      <Link to={item.href} key={item.name} className='text-lg font-semibold text-white  px-2 rounded-md'>{item.name}</Link>
+                    )
+                  })
+                }   
               </div>
-             }
-        </div>
+            }
+      </div>
  
     </nav>
     </header>

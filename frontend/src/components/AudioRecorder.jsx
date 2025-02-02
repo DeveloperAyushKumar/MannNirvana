@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useWalletContext } from "../context/WalletContext";
 
 export default function App({ setIfStart, ifStart, setTime }) {
   const BACKEND_URL = import.meta.env.VITE_RES_URL;
@@ -9,7 +10,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
     "confidence": 90
   });
   const isRecording = useRef(false);
-  let user_id = "6799288f3096d820266cbd6c";
+  const {user} = useWalletContext();
   let timingInterval;
   
   const startInterview = () => {
@@ -74,7 +75,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
     }
 
     const payload = {
-      user_id: "6799288f3096d820266cbd6c",
+      user_id: user._id,
       text: transcript,
     };
 
