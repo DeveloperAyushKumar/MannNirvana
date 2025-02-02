@@ -6,6 +6,6 @@ const router = express.Router();
 router.route('/:id').get(getUser);
 router.route('/').post(createUser);
 router.route('/edit/:id').put(editUser);
-router.route("/reward/:").put(incrementCoins)
+router.route("/reward/:id").put(incrementCoins)
 
 export default router;

@@ -113,6 +113,7 @@ const incrementCoins = async (req, res) => {
 
         user.coins = (user.coins || 0) + 10; // Increment coins
         await user.save(); // Save updated user
+        console.log(user)
 
         res.status(200).json({ message: "Coins incremented successfully", coins: user.coins });
     } catch (error) {
