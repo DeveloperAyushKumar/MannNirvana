@@ -59,7 +59,7 @@ const SafeSpace = () => {
       {isConnected? 
       <PostForm/>
       :
-      <div className="border rounded-lg text-center py-4 text-3xl font-extrabold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text drop-shadow-md animate-fade-in">
+      <div className="border rounded-lg text-center py-4 text-3xl font-extrabold bg-gradient-to-r text-[#817f7f] bg-clip-text animate-fade-in">
         Safe Space
       </div>}
 
