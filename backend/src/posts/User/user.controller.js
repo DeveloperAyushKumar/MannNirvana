@@ -1,4 +1,4 @@
-import { User } from './User.model.js';
+import { User } from './user.model.js';
 import cloudinary from '../../../config/cloudStorage.js';
 
 const createUser = async (req, res) => {
