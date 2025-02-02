@@ -21,6 +21,7 @@ export default function Result() {
       });
   }, [user_id]);
 
+
   return (
     <div className="mt-16 flex flex-col items-center max-w-screen-lg mx-auto gap-16">
       {/* Top Section - Progress Circle & Chart */}
@@ -34,7 +35,7 @@ export default function Result() {
                 Suggestions for {mental_state}
             </h2>
             <div className="flex flex-col gap-4">
-              {suggestion[mental_state].map((suggestion, index) => (
+              {suggestion[mental_state]?.map((suggestion, index) => (
                 <div
                   key={index}
                   className="border-l-4 border-blue-500 pl-4 py-2 bg-gray-100 shadow-md rounded-md transition-all duration-300 hover:bg-blue-50"

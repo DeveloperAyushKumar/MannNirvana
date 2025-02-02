@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useWalletContext } from "../context/WalletContext";
+import axios from "axios";
 
 export default function App({ setIfStart, ifStart, setTime }) {
   const BACKEND_URL = import.meta.env.VITE_RES_URL;
@@ -68,7 +69,21 @@ export default function App({ setIfStart, ifStart, setTime }) {
     }
   };
 
-  const uploadTranscript = async () => {
+  const rewardUser = async () => {
+    try {
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/reward/${user._id}`);
+  
+      if (response.status === 200) {
+        console.log("coins updated successfully");
+      } else {
+        console.error("Failed to add coins:", response.data);
+      }
+    } catch (error) {
+      console.error("Error ending session:", error);
+    }
+  };
+
+  const handleEndSession = async () => {
     if (!transcript.trim()) {
       console.error("No transcript available for upload.");
       return;
@@ -92,6 +107,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
         const result = await response.json();
         console.log("Transcript uploaded successfully:", result);
         setResult(result);
+        await rewardUser();
       } else {
         console.error("Failed to upload transcript:", response.statusText);
       }
@@ -119,7 +135,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
         {
         ifStart===1?
         <button 
-          onClick={uploadTranscript} 
+          onClick={handleEndSession} 
           disabled={!transcript.trim()} 
           className={`w-[30%] rounded-md bg-dark text-black ${!transcript.trim() ? "opacity-50 cursor-not-allowed" : ""}`}
         >

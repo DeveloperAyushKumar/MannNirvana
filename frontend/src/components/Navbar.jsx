@@ -37,12 +37,16 @@ function Navbar() {
       href:'/devi'
     },
     {
+      name: 'Ngo',
+      href:'/ngo'
+    },
+    {
       name :'Profile',
       href:'/profile'
     }
   ]
   return (
-    <header id="header" className='max-w-screen-2xl mx-autopx py-2 px-4 bg-light mx-4 rounded-full  '>
+    <header id="header" className='max-w-screen-2xl mx-autopx py-2 px-4 bg-light mx-4 rounded-full mt-6  '>
         <nav className='flex justify-between items-center   '>
         <div className='flex items-center justify-between px-2'>
             {/* left side */}

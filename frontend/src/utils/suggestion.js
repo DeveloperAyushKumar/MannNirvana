@@ -63,6 +63,13 @@ const label_csp_map = {
         'Peer Support Groups – Connects individuals with others who have experienced similar challenges.'
     ],
     
+    'Neutral': [
+        'Healthy Lifestyle Choices – Encourages balanced nutrition, sleep, and exercise.',
+        'Social Engagement – Strengthens relationships and reduces loneliness.',
+        'Continuous Learning – Stimulates cognitive growth and mental flexibility.',
+        'Self-Reflection Practices – Helps in personal growth and emotional awareness.',
+        'Volunteer Work – Increases feelings of purpose and connectedness.'
+    ],
     'Normal': [
         'Healthy Lifestyle Choices – Encourages balanced nutrition, sleep, and exercise.',
         'Social Engagement – Strengthens relationships and reduces loneliness.',

@@ -14,6 +14,7 @@ import Result from "../components/Result";
 import Devi from "../pages/Devi/Devi";
 import Profile from "../pages/Profile/Profile";
 import Funding from "../components/Funding";
+import NGOList from "../pages/NGO/NGO";
 
 
 const router =createBrowserRouter([
@@ -57,7 +58,15 @@ const router =createBrowserRouter([
             {
                 path: "/funding/:recipientId/:ngo",
                 element: <Funding/>
-            }            
+            },
+            {            
+                path:"/books/:id",
+                element:<SingleBook/>
+            },
+            {
+                path :'/ngo',
+                element:<NGOList/>
+            }
         ]
     },
 ]);
