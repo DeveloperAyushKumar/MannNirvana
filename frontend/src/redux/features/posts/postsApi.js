@@ -62,7 +62,7 @@ const postsApi=createApi({
                 method:"POST",
                 body:rest,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
+            invalidatesTags: (result, error, { id }) => [{ type: "Post", id },"Posts"]
     }),
     likePost:builder.mutation({
         query:({id,...res})=>({
@@ -71,7 +71,7 @@ const postsApi=createApi({
             body:res,
             
         }),
-        invalidatesTags: (result, error, { id }) => [{ type: "Post", id }]
+        invalidatesTags: (result, error, { id }) => [{ type: "Post", id },"Posts"]
     }),
 
 })
