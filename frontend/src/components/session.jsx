@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FaMicrophone, FaStopwatch, FaArrowRight, FaVolumeUp, FaTimes, FaHome } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
 import AudioRecorder from "./AudioRecorder";
 import WebStream from "./WebStream";
 
@@ -58,6 +59,7 @@ const InterviewMEET = (props) => {
   return (
     <>
       <div className="w-full h-screen flex items-center">
+        <ToastContainer />
         <button
           onClick={toggleExitOption}
           className="absolute top-3 left-3 z-10 font-extrabold border border-extraLight rounded-lg p-2 bg-light flex items-center gap-2 text-white"
