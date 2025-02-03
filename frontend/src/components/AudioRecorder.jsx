@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { useWalletContext } from "../context/WalletContext";
+import { ToastContainer, toast } from 'react-toastify';
 import axios from "axios";
 
 export default function App({ setIfStart, ifStart, setTime }) {
@@ -62,6 +63,19 @@ export default function App({ setIfStart, ifStart, setTime }) {
     }
   };
 
+  const notify = () => {
+    toast.success("+10 Coins 🪙", {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      style: { fontSize: "16px", fontWeight: "bold", color: "#FFD700" }, // Gold color for coins
+    });
+  };
+
   const stop = () => {
     if (recognition && isRecording.current) {
       recognition.stop();
@@ -108,6 +122,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
         console.log("Transcript uploaded successfully:", result);
         setResult(result);
         await rewardUser();
+        notify();
       } else {
         console.error("Failed to upload transcript:", response.statusText);
       }
