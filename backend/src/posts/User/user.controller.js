@@ -93,7 +93,6 @@ const editUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        console.log(req.params.id);
         const user = await User.findOne({ address: req.params.id });
         if (!user) {
             return res.status(250).json({ message: "User not found" })
@@ -121,7 +120,14 @@ const incrementCoins = async (req, res) => {
     }
 };
 
+const getTop10User = async(req, res) => {
+    try{
+        const topUsers = await User.find().sort({ coins: -1 }).limit(10);
+        res.status(200).json({message: "Fetched users", data: topUsers});
+    }
+    catch (error){
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
 
-
-
-export { createUser, getUser, editUser, incrementCoins};
+export { createUser, getUser, getTop10User, editUser, incrementCoins};

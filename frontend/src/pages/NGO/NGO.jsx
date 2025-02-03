@@ -50,7 +50,7 @@ const NGOCard = ({ name, address, description, website }) => {
             <Button variant="outline" className="w-full">Visit Website</Button>
           </a>
           <a href={`/funding/${address}/${name}`} target="_blank" rel="noopener noreferrer">
-            <Button className="w-full bg-blue-500 text-white hover:bg-blue-600">
+            <Button className="w-full bg-dark text-white hover:bg-extraDark">
               Fund NGO
             </Button>
           </a>
@@ -62,8 +62,9 @@ const NGOCard = ({ name, address, description, website }) => {
 
 const NGOList = () => {
   return (
-    <div className="max-w-5xl mx-auto p-8">
-      <h1 className="text-3xl font-bold text-center mb-10 text-gray-900">Mental Health NGOs</h1>
+    <div className="max-w-5xl mx-auto pt-8 flex flex-col gap-4">
+      <h1 className="text-3xl font-bold text-center  text-gray-900">Join the mission </h1>
+      <h3 className="text-center">Support mental health NGOs—your donation can provide hope, care, and healing to those in need.</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {ngos.map((ngo, index) => (
           <NGOCard key={index} {...ngo} />

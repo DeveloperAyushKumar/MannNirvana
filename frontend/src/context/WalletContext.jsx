@@ -20,6 +20,9 @@ export const WalletProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    let user_data = localStorage.getItem('user_data');
+    if(user_data) return;
+
     console.log("Connected:", connected);
 
     const fetchUser = async () => {
@@ -30,6 +33,7 @@ export const WalletProvider = ({ children }) => {
           if (response.status === 200) {
             console.log("User already exists");
             setUser(response.data.user);
+            localStorage.setItem('user_data', JSON.stringify(response.data.user));
           } else {
             const user = {
               name: generateAnonymousUsername(),
@@ -39,6 +43,7 @@ export const WalletProvider = ({ children }) => {
             if(createResponse.status === 201){
               console.log("User created successfully");
               setUser(createResponse.data.user);
+              localStorage.setItem('user_data', JSON.stringify(createResponse.data.user));
             }
             else{
               console.error("Error creating user:", createResponse.data.message);
@@ -55,6 +60,15 @@ export const WalletProvider = ({ children }) => {
 
     fetchUser();
   }, [connected, account]);
+
+
+  useEffect(()=>{
+    let user_data = localStorage.getItem('user_data');
+    if(user_data){
+      user_data = JSON.parse(user_data)
+      setUser(user_data)
+    }
+  }, [])
 
 
   return (
