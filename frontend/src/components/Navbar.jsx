@@ -12,7 +12,7 @@ import logo from '../assets/Logo/logo.png'
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
 
 function Navbar() {
-  const { isConnected } = useWalletContext();
+  const { user,isConnected } = useWalletContext();
   const {currentUser,logout}={currentUser:null,logout:null}
   const cartItems=useSelector((state)=>(state.cart.cartItems))
   console.log(cartItems);
@@ -37,7 +37,7 @@ function Navbar() {
       href:'/devi'
     },
     {
-      name: 'Ngo',
+      name: 'Join the misson',
       href:'/ngo'
     },
     {
@@ -75,7 +75,7 @@ function Navbar() {
                 {
               
                   navigation.map((item)=>{
-                    if(!isConnected){
+                    if(!user){
                       if(item.name==='Assessment'){
                         return null
                       }

@@ -89,6 +89,16 @@ export default function App({ setIfStart, ifStart, setTime }) {
   
       if (response.status === 200) {
         console.log("coins updated successfully");
+        let user_data = localStorage.getItem('user_data');
+        if(user_data){
+          user_data = JSON.parse(user_data)
+          user_data.coins = response.data.coins;
+          console.log(user_data);
+        }
+
+        // Save updated user data in localStorage
+        localStorage.setItem("user_data", JSON.stringify(user_data));
+
       } else {
         console.error("Failed to add coins:", response.data);
       }

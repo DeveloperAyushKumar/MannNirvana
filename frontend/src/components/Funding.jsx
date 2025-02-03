@@ -72,7 +72,13 @@ function Funding() {
         <h1 className="text-3xl font-bold text-center mb-6">{ngo}</h1>
 
         {!account ? (
+          <>   
+          <div className='flex flex-col gap-4'>
           <Alert message="Please connect your wallet first" type="warning" showIcon />
+          <WalletSelector  />
+            </div>       
+            
+          </>
         ) : (
           <>
             {error && <Alert message={error} type="error" showIcon className="mb-4" />}
@@ -95,7 +101,7 @@ function Funding() {
 
             <button
               className={`mt-4 w-full py-2 rounded-lg text-white font-semibold transition ${
-                transactionInProgress ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+                transactionInProgress ? "bg-gray-400 cursor-not-allowed" : "bg-dark hover:bg-extraDark"
               }`}
               onClick={handleSendTransaction}
               disabled={transactionInProgress}

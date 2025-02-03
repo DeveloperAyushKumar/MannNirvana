@@ -13,7 +13,7 @@ const SafeSpace = () => {
 
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
-  const {isConnected} = useWalletContext();
+  const {user, isConnected} = useWalletContext();
 
   // Function to handle tag selection
   const handleTagSelect = (tag) => {
@@ -56,7 +56,7 @@ const SafeSpace = () => {
       </Card>
 
       <div className=' col-span-4 w-full h-full'>
-      {isConnected? 
+      {user? 
       <PostForm/>
       :
       <div className="border rounded-lg text-center py-4 text-3xl font-extrabold bg-gradient-to-r text-[#817f7f] bg-clip-text animate-fade-in">
