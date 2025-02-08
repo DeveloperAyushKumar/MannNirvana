@@ -1,12 +1,12 @@
 import express from "express";
-import { commentPost, createPost, deletePost, editPost, getAllPost, getPost, likePost } from "./post.controller.js";
+import { commentPost, createPost, deletePost, editPost, getAllPost, getNews, getPost, likePost } from "./post.controller.js";
 
 const router =express.Router();
 
 // posting a post
 router.route("/create-post").post(createPost)
-
-
+// get news feed
+router.route('/news').get(getNews);
 // get a post
 router.route("/:id").get(getPost)
 // edit a post

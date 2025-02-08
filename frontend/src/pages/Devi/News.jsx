@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-const API_KEY = import.meta.env.VITE_SEARCH_API_KEY; 
-const URL =` https://newsapi.org/v2/everything?q=women%20mental%20health&sortBy=publishedAt&apiKey=${API_KEY}`;
 
 const News = () => {
   const [articles, setArticles] = useState([]);
@@ -11,7 +9,7 @@ const News = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(URL);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/posts/news`);
         if (!response.ok) {
           throw new Error("Failed to fetch articles");
         }

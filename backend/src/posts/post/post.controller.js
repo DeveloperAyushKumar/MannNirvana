@@ -2,6 +2,9 @@ import {Post,Comment} from './post.model.js';
 import cloudinary from '../../../config/cloudStorage.js';
 import fs from 'fs';
 
+const API_KEY = process.env.SEARCH_API_KEY; 
+const URL =` https://newsapi.org/v2/everything?q=women%20mental%20health&sortBy=publishedAt&apiKey=${API_KEY}`;
+
 const createPost=async(req,res)=>{
     try {
     const {content,tags,image_file} = req.body;
@@ -131,4 +134,20 @@ const commentPost=async(req,res)=>{
         res.status(500).json({message:error.message})
     }
 }
-export {createPost,getPost,editPost,getAllPost,deletePost,likePost,commentPost}
+
+const getNews = async(req, res) => {
+    try {
+        const response = await fetch(URL);
+        if (!response.ok) {
+          res.status(500).json({message: "unable to fetch news"});
+        }
+    
+        const data = await response.json();
+        res.status(200).json({message: "fetched successfully" , articles: data.articles || []});
+    }
+    catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
+
+export {createPost,getPost,editPost,getNews,getAllPost,deletePost,likePost,commentPost}
