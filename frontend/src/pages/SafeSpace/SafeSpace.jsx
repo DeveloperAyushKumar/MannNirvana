@@ -4,6 +4,7 @@ import PostForm from '@/src/components/PostForum';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useFetchAllPostsQuery } from '@/src/redux/features/posts/postsApi';
+import { ToastContainer, toast } from 'react-toastify';
 import tags from '../../utils/tags';
 import { useWalletContext } from '../../context/WalletContext';
 import { Link } from 'react-router';
@@ -29,9 +30,11 @@ const SafeSpace = () => {
 
   return (
     // space-y-6 flex justify-evenly
+    <div>
+      <ToastContainer />
     <div className="grid grid-cols-5 p-2">
       {/* Top Selection/Tag-Adding Section */}
-      
+      {/* <ToastContainer /> */}
       <Card className="col-span-1 border-none border-r-4 border-gray-700 transition-shadow duration-300 mt-6 p-4 bg-white text-[#4A4A4A] rounded-none ">
     <div>
 
@@ -64,13 +67,13 @@ const SafeSpace = () => {
       </div>}
 
       <ScrollArea >
-      <div className={`w-full ${isConnected? "max-h-[28rem]" : "max-h-screen"}`}>
+      <div className={`w-full ${user? "max-h-[28rem]" : "max-h-screen"}`}>
 
       {/* Display filtered posts */}
       {filteredPosts.length === 0 ? (
         <p className="text-gray-600">No posts match the selected tags.</p>
       ) : (
-        filteredPosts.map((post) => (
+        filteredPosts.slice().reverse().map((post) => (
           <Link to={"/safespace/"+post._id} key={post._id}>
           <PostPreview key={post.id} post={post}  />
           {/* <Separator className='my-2'/> */}
@@ -80,6 +83,7 @@ const SafeSpace = () => {
       </div>
       </ScrollArea>
       </div>
+    </div>
     </div>
   );
 };
