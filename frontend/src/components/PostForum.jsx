@@ -27,7 +27,7 @@ export default function PostForm() {
       const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
 
       // Hate detection
-      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post, user_id: user._id}, {
+      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post}, {
         headers: { "Content-Type": "application/json" },
       });
 

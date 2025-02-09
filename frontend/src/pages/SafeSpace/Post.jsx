@@ -6,7 +6,7 @@ import { useAddCommentMutation, useFetchPostByIdQuery, useLikePostMutation } fro
 import { useParams } from 'react-router';
 import { useWalletContext } from '../../context/WalletContext';
 import avatar from '../../assets/user.png';
-
+import axios from 'axios';
 
 
 const PostPage = () => {
@@ -32,18 +32,45 @@ const PostPage = () => {
 // console.log(post)
 
   // Handle comment submission
-  const handleCommentSubmit = (e) => {
+  const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    if(!user){
-      alert("Please Login to comment")
-      return 
+    
+    if (!user) {
+      alert("Please Login to comment");
+      return;
     }
+    
     if (comment.trim()) {
-      setComments([...comments, { user, text: comment }]);
-      setComment(''); // Reset comment input
-      addComment({id:post._id,user:user,text:comment});
+      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+  
+      try {
+        // Hate speech detection
+        const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {
+          text: comment, // Corrected this from `post` to `comment`
+        }, {
+          headers: { "Content-Type": "application/json" },
+        });
+  
+        console.log("Hate speech response:", hateResponse.data, hateResponse.status);
+  
+        // Adjust condition based on actual API response
+        if (hateResponse.status === 250) {
+          alert("Please Maintain a Safe Space Here");
+          return;
+        }
+  
+        // Add comment if it's not flagged as hate speech
+        setComments([...comments, { user, text: comment }]);
+        setComment(""); // Reset comment input
+        addComment({ id: post._id, user: user, text: comment });
+  
+      } catch (error) {
+        console.error("Error analyzing text:", error);
+        alert("Error analyzing comment. Please try again later.");
+      }
     }
-  };
+  };  
+
   const handleLike = async () => {
     if(!user) {
       alert("Please login to Like a post") 
@@ -93,7 +120,7 @@ const PostPage = () => {
 
         {/* Post Footer (Likes) */}
         <CardFooter className="flex justify-between items-center">
-          {isConnected?
+          {user?
           <Button onClick={handleLike} className="bg-dark text-white font-semibold" size="sm">{likes} Like</Button>
           :
           <p className="p-2 rounded-md bg-dark text-white font-semibold">{likes} Likes</p>}
@@ -104,7 +131,7 @@ const PostPage = () => {
       <div className="space-y-4 mb-8">
         <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
   {/* Add a Comment */}
-  {isConnected? <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
+  {user? <form onSubmit={handleCommentSubmit} className="flex items-center space-x-2">
           <Textarea
             value={comment}
             onChange={(e) => setComment(e.target.value)}
