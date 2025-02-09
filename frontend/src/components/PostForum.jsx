@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 import { useAddPostMutation } from "../redux/features/posts/postsApi.js";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +34,8 @@ export default function PostForm() {
 
       console.log('Hate speech response:', hateResponse.data, hateResponse.status);
       if (hateResponse.status === 250) {
-        alert("Please Maintain a Safe Space Here");
+        notify("Please Maintain a Safe Space Here", "warn");
+        
         return;
       }
 
@@ -53,9 +55,10 @@ export default function PostForm() {
       setFile(null);
       setPreview(null);
       setTags([]); // Reset selected tags
-
+      notify("posted successfully!", "success");
     } catch (error) {
       console.error('Error submitting post:', error);
+      notify("Error analyzing comment. Please try again later.", "error");
     }
   };
 
@@ -69,13 +72,49 @@ export default function PostForm() {
     });
   }
 
+  const notify = (text, type) => {
+    if (type === "warn") {
+      toast.warning(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#ff9800" }, // Warning color (orange)
+      });
+    } else if (type === "success") {
+      toast.success(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#28a745" }, // Success color (green)
+      });
+    } else if (type === "error") {
+      toast.error(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#dc3545" }, // Error color (red)
+      });
+    }
+  };  
 
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files?.[0];
     if (!selectedFile) return;
 
     if (selectedFile.size > 300 * 1024) {
-      alert("Please select an image smaller than 100KB.");
+      notify("Image size should be less than 300KB", "warn");
       return;
     }
 

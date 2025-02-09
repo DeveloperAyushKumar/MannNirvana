@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import{ Card, CardContent, CardFooter} from '@/components/ui/card';
+import { ToastContainer, toast } from 'react-toastify';
 import { Button} from'@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useAddCommentMutation, useFetchPostByIdQuery, useLikePostMutation } from '@/src/redux/features/posts/postsApi';
@@ -25,11 +26,8 @@ const PostPage = () => {
     }
 }, [post]);
 
-  // console.log(comments)
-  // console.log(post)
   const[likePost]=useLikePostMutation();
   const[addComment]=useAddCommentMutation();
-// console.log(post)
 
   // Handle comment submission
   const handleCommentSubmit = async (e) => {
@@ -63,17 +61,54 @@ const PostPage = () => {
         setComments([...comments, { user, text: comment }]);
         setComment(""); // Reset comment input
         addComment({ id: post._id, user: user, text: comment });
-  
+        notify("commented successfully!", "success");
       } catch (error) {
         console.error("Error analyzing text:", error);
-        alert("Error analyzing comment. Please try again later.");
+        notify("Error analyzing comment. Please try again later.", "error");
       }
+    }
+  };  
+
+  const notify = (text, type) => {
+    if (type === "warn") {
+      toast.warning(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#ff9800" }, // Warning color (orange)
+      });
+    } else if (type === "success") {
+      toast.success(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#28a745" }, // Success color (green)
+      });
+    } else if (type === "error") {
+      toast.error(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#dc3545" }, // Error color (red)
+      });
     }
   };  
 
   const handleLike = async () => {
     if(!user) {
-      alert("Please login to Like a post") 
+      notify("Please login to Like a post", "warn");
       return 
     }
     const prevLikes = likes;
@@ -88,14 +123,14 @@ const PostPage = () => {
     } catch (error) {
       console.error('Error liking the post:', error);
       setLikes(prevLikes); // Revert on error
-      alert(error.data.message)
-      
+      notify(error.data.message, "error");
     }
   };
   
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
+      <ToastContainer />
       {/* Post Content */}
       <Card className="w-full max-w-3xl mx-auto mb-8 p-4 border border-gray-200 rounded-lg space-y-4">
         <div className="flex items-center space-x-4">
@@ -143,7 +178,7 @@ const PostPage = () => {
         </form> : <></>}
         {/* Display Comments */}
         {comments.length > 0 ? (
-          comments.map((comment, index) => (
+          comments.slice().reverse().map((comment, index) => (
             <div key={index} className="flex items-start space-x-4 border-b pb-4 border-white ">
               <img 
                 src={comment.user?.avatar||avatar} 
