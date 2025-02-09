@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useWalletContext } from "../context/WalletContext.jsx";
 import availableTags from '../utils/tags.js';
+import ClipLoader from "react-spinners/ClipLoader";
 
 export default function PostForm() {
   const [post, setPost] = useState("");
@@ -15,11 +16,14 @@ export default function PostForm() {
   const [preview, setPreview] = useState(null);
   const {user, isConnected} = useWalletContext();
   const [tags, setTags] = useState([]);
-  const [addPost, { isLoading, isError, error }] = useAddPostMutation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [addPost, { isError, error }] = useAddPostMutation();
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     if(!user){
-      alert("Please login to add post");
+      notify("Please login to add post", "warn");
+      setIsLoading(false);
       return;
     }
     if (!post.trim()) return;
@@ -32,10 +36,9 @@ export default function PostForm() {
         headers: { "Content-Type": "application/json" },
       });
 
-      console.log('Hate speech response:', hateResponse.data, hateResponse.status);
       if (hateResponse.status === 250) {
         notify("Please Maintain a Safe Space Here", "warn");
-        
+        setIsLoading(false);
         return;
       }
 
@@ -59,6 +62,8 @@ export default function PostForm() {
     } catch (error) {
       console.error('Error submitting post:', error);
       notify("Error analyzing comment. Please try again later.", "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -197,8 +202,8 @@ export default function PostForm() {
             />
           </Button>
   
-          <Button onClick={handleSubmit} className="text-white max-h-10 bg-extraDark">
-            Add Post
+          <Button onClick={handleSubmit} disabled={isLoading} className="text-white max-h-10 bg-extraDark">
+            {isLoading ? <ClipLoader color="#ffffff" size={20} /> : "Add Post"}
           </Button>
         </div>
       </div>
