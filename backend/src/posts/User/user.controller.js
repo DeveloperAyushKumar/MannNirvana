@@ -3,8 +3,6 @@ import cloudinary from '../../../config/cloudStorage.js';
 import { createToken } from '../../../utils/token.js';
 import fs from "fs";
 
-const privateKey = fs.readFileSync("private.pem", "utf8");
-
 // Create User & Generate JWT Token
 export const createUser = async (req, res) => {
     const { name, address, avatar } = req.body;

@@ -5,8 +5,8 @@ import path from "path";
 // Load Public & Private Keys Safely
 let publicKey, privateKey;
 try {
-    publicKey = fs.readFileSync(path.resolve("/etc/secrets/public.pem"), "utf8");
-    privateKey = fs.readFileSync(path.resolve("/etc/secrets/private.pem"), "utf8");
+    publicKey = fs.readFileSync(path.resolve("etc/secrets/public.pem"), "utf8");
+    privateKey = fs.readFileSync(path.resolve("etc/secrets/private.pem"), "utf8");
 } catch (error) {
     console.error("Error loading RSA keys:", error.message);
 }
