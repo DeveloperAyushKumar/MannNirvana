@@ -22,9 +22,6 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
   }));
 
-// preflight 
-app.options("*", cors());
-
 //Routes
 app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
