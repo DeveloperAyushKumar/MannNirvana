@@ -46,7 +46,7 @@ export default function PostForm() {
         content: post,
         tags: tags,
         ...(file && { image_file: file }),
-        user: { _id: user.userId}, 
+        user: { _id: user._id}, 
       };
 
       // Post submission if no hate speech is detected

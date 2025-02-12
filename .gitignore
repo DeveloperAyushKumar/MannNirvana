@@ -29,5 +29,4 @@ response_analysis_service/
 *.sln
 *.sw?
 
-/backend/public.pem
-/backend/private.pem
+/backend/etc
