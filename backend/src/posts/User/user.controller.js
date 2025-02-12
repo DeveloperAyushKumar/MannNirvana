@@ -1,17 +1,20 @@
 import { User } from './user.model.js';
 import cloudinary from '../../../config/cloudStorage.js';
 import { createToken } from '../../../utils/token.js';
-import fs from "fs";
+
+function isBase64Image(str) {
+    return /^data:image\/(png|jpeg|jpg|gif|bmp|webp|svg\+xml);base64,/.test(str);
+}
 
 // Create User & Generate JWT Token
 export const createUser = async (req, res) => {
     const { name, address, avatar } = req.body;
 
     try {
-        let avatarUrl = null;
+        let avatarUrl = avatar;
 
         // Upload avatar if provided
-        if (avatar) {
+        if (avatar && isBase64Image(avatar)) {
             const uploadResult = await cloudinary.uploader.upload(avatar, {
                 upload_preset: "unsigned_upload",
                 folder: "user_avatars",
@@ -41,7 +44,7 @@ export const editUser = async (req, res) => {
         let updatedData = { name, address };
 
         // Upload new avatar if provided
-        if (avatar) {
+        if (avatar && isBase64Image(avatar)) {
             const uploadResult = await cloudinary.uploader.upload(avatar, {
                 upload_preset: "unsigned_upload",
                 folder: "user_avatars",

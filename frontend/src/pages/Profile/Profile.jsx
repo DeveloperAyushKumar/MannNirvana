@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const { user, setUser, isConnected } = useWalletContext();
   const [profile, setProfile] = useState({
     name: "Anonymous User",
-    avatar: defaultAvatar,
+    avatar: null,
   });
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -104,7 +104,7 @@ const ProfilePage = () => {
 
         {/* Avatar Preview */}
         <img
-          src={profile.avatar}
+          src={profile.avatar || defaultAvatar}
           alt="Avatar Preview"
           className="w-24 h-24 rounded-full border-2 border-gray-300 shadow-sm"
         />
