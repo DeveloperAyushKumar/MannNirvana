@@ -29,10 +29,10 @@ export default function PostForm() {
     if (!post.trim()) return;
 
     try {
-      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+      const hateSpeechUrl = import.meta.env.VITE_BACKEND_URL;
 
       // Hate detection
-      const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {text: post}, {
+      const hateResponse = await axios.post(`${hateSpeechUrl}/posts/detect-hate-speech`, {text: post}, {
         headers: { "Content-Type": "application/json" },
       });
 
@@ -46,7 +46,7 @@ export default function PostForm() {
         content: post,
         tags: tags,
         ...(file && { image_file: file }),
-        user: { _id: user._id }, 
+        user: { _id: user.userId}, 
       };
 
       // Post submission if no hate speech is detected
@@ -61,7 +61,7 @@ export default function PostForm() {
       notify("posted successfully!", "success");
     } catch (error) {
       console.error('Error submitting post:', error);
-      notify("Error analyzing comment. Please try again later.", "error");
+      notify("Error analyzing post. Please try again later.", "error");
     } finally {
       setIsLoading(false);
     }
@@ -148,8 +148,8 @@ export default function PostForm() {
         className="mb-4 text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
       />
       {preview && (
-        <div className="mt-1 w-full">
-          <img src={preview} alt="Preview" className="mt-2 max-h-96 object-cover rounded-md" />
+        <div className="mt-1 mb-4 w-full">
+          <img src={preview} alt="Preview" className="mt-2 w-full h-48 object-cover rounded-md" />
         </div>
       )}
       
