@@ -28,3 +28,6 @@ response_analysis_service/
 *.njsproj
 *.sln
 *.sw?
+
+/backend/public.pem
+/backend/private.pem

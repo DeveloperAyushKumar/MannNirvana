@@ -41,11 +41,11 @@ const PostPage = () => {
     }
     
     if (comment.trim()) {
-      const hateSpeechUrl = import.meta.env.VITE_HATE_SPEECH_API;
+      const hateSpeechUrl = import.meta.env.VITE_BACKEND_URL;
       setLoading(true); // Start loading
 
       try {
-        const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, {
+        const hateResponse = await axios.post(`${hateSpeechUrl}/posts/detect-hate-speech`, {
           text: comment,
         }, {
           headers: { "Content-Type": "application/json" },

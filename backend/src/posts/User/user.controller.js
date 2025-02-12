@@ -1,108 +1,87 @@
 import { User } from './user.model.js';
 import cloudinary from '../../../config/cloudStorage.js';
+import { createToken } from '../../../utils/token.js';
+import fs from "fs";
 
-const createUser = async (req, res) => {
+const privateKey = fs.readFileSync("private.pem", "utf8");
+
+// Create User & Generate JWT Token
+export const createUser = async (req, res) => {
     const { name, address, avatar } = req.body;
 
     try {
         let avatarUrl = null;
-        let user = null;
-        // If an avatar is provided, upload it to Cloudinary
+
+        // Upload avatar if provided
         if (avatar) {
-            await cloudinary.uploader.upload(
-                avatar, 
-                {
-                    upload_preset: "unsigned_upload",
-                    folder: "user_avatars",
-                    allowed_formats: ["jpg", "jpeg", "png"]
-                },
-                async (err, result) => {
-                    if (err) {
-                        console.log("Cloudinary upload failed:", err);
-                        return res.status(500).json({ message: "Avatar upload failed" });
-                    } else {
-                        avatarUrl = result.secure_url;
-                        user = await User.create({
-                            name,
-                            address,
-                            avatar: avatarUrl,  
-                        });
-                    }
-                }
-            );
-        }
-        else{
-            // console.log({name, address})
-            user = await User.create({
-                name,
-                address,
+            const uploadResult = await cloudinary.uploader.upload(avatar, {
+                upload_preset: "unsigned_upload",
+                folder: "user_avatars",
+                allowed_formats: ["jpg", "jpeg", "png"]
             });
+            avatarUrl = uploadResult.secure_url;
         }
 
-        res.status(201).json({ user });
+        // Create user in DB
+        const user = await User.create({ name, address, avatar: avatarUrl });
+
+        // Generate JWT Token (RS256)
+        const token = createToken(user);
+
+        res.status(201).json({ message: "User created successfully", user, token });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
-const editUser = async (req, res) => {
-    const userId  = req.params.id;  // Assuming user ID is passed in the URL
+// Edit User (Update name, address, and avatar)
+export const editUser = async (req, res) => {
+    const userId = req.params.id;
     const { name, address, avatar } = req.body;
-    console.log("avatar url")
-    console.log(avatar)
 
     try {
-        let avatarUrl = null;
         let updatedData = { name, address };
 
-        // If a new avatar is provided, upload it to Cloudinary
+        // Upload new avatar if provided
         if (avatar) {
-            await cloudinary.uploader.upload(
-                avatar,
-                {
-                    upload_preset: "unsigned_upload",
-                    folder: "user_avatars",
-                    allowed_formats: ["jpg", "jpeg", "png"]
-                },
-                async (err, result) => {
-                    if (err) {
-                        console.log("Cloudinary upload failed:", err);
-                        return res.status(500).json({ message: "Avatar upload failed" });
-                    } else {
-                        avatarUrl = result.secure_url;
-                        updatedData.avatar = avatarUrl;  
-                    }
-                }
-            );
+            const uploadResult = await cloudinary.uploader.upload(avatar, {
+                upload_preset: "unsigned_upload",
+                folder: "user_avatars",
+                allowed_formats: ["jpg", "jpeg", "png"]
+            });
+            updatedData.avatar = uploadResult.secure_url;
         }
 
-        // Update the user record
-        console.log(updatedData);
+        // Update user
         const user = await User.findByIdAndUpdate(userId, updatedData, { new: true });
 
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(250).json({ message: "User not found" });
         }
 
-        res.status(200).json({ user });
+        res.status(200).json({ message: "User updated successfully", user });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Server error", error: error.message });
     }
 };
 
-
-const getUser = async (req, res) => {
+// Get User by Address
+export const getUser = async (req, res) => {
     try {
         const user = await User.findOne({ address: req.params.id });
+
         if (!user) {
-            return res.status(250).json({ message: "User not found" })
+            return res.status(250).json({ message: "User not found" });
         }
-        res.status(200).json({ user });
+
+        res.status(200).json({ message: "User found", user, token: createToken(user) });
     } catch (error) {
-        res.status(500).json({ message: error.message })
+        res.status(500).json({ message: "Server error", error: error.message });
     }
-}
-const incrementCoins = async (req, res) => {
+};
+
+// Increment User Coins
+export const incrementCoins = async (req, res) => {
     try {
         const user = await User.findById(req.params.id);
 
@@ -110,9 +89,8 @@ const incrementCoins = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        user.coins = (user.coins || 0) + 10; // Increment coins
-        await user.save(); // Save updated user
-        console.log(user)
+        user.coins = (user.coins || 0) + 10;
+        await user.save();
 
         res.status(200).json({ message: "Coins incremented successfully", coins: user.coins });
     } catch (error) {
@@ -120,14 +98,13 @@ const incrementCoins = async (req, res) => {
     }
 };
 
-const getTop10User = async(req, res) => {
-    try{
+// Get Top 10 Users by Coins
+export const getTop10User = async (req, res) => {
+    try {
         const topUsers = await User.find().sort({ coins: -1 }).limit(10);
-        res.status(200).json({message: "Fetched users", data: topUsers});
-    }
-    catch (error){
+
+        res.status(200).json({ message: "Top 10 users fetched", users: topUsers });
+    } catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }
-}
-
-export { createUser, getUser, getTop10User, editUser, incrementCoins};
+};

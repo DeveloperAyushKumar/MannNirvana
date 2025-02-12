@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import faceRoutes from './src/Face_emotion/face.route.js';
 import consultantRoutes from './src/Consultant/Consultant.route.js';
 import userRoutes from './src/posts/User/user.route.js';
+import { verifyToken } from './utils/token.js';
 
 const app=express();
 const PORT=process.env.PORT || 5000;
@@ -21,19 +22,19 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
   }));
 
-  // preflight 
-  app.options("*", cors());
+// preflight 
+app.options("*", cors());
 
 //Routes
 app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
-app.use('/face', faceRoutes);
+app.use('/face', verifyToken, faceRoutes);
 app.use('/user', userRoutes);
 
 
 //Connect to DB
 async function main(){
-    await mongoose.connect(process.env.DB_URL);
+  await mongoose.connect(process.env.DB_URL);
 }
 main().then(()=>console.log('Db Connected')).catch(err=>console.log(err));
 

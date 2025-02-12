@@ -1,25 +1,44 @@
 import express from "express";
-import { commentPost, createPost, deletePost, editPost, getAllPost, getNews, getPost, likePost } from "./post.controller.js";
+import { verifyToken } from "../../../utils/token.js";
+import { 
+    commentPost, 
+    createPost, 
+    deletePost, 
+    editPost, 
+    getAllPost, 
+    getNews, 
+    getPost,
+    detectHateSpeech, 
+    likePost 
+} from "./post.controller.js";
 
-const router =express.Router();
+const router = express.Router();
 
-// posting a post
-router.route("/create-post").post(createPost)
-// get news feed
-router.route('/news').get(getNews);
-// get a post
-router.route("/:id").get(getPost)
-// edit a post
-router.route("/:id").put(editPost)
+// Get news feed (Public)
+router.get('/news', getNews);
 
-// delete a post
-router.route("/:id").delete(deletePost)
+// Get all posts (Public)
+router.get("/", getAllPost);
 
-// get all post
-router.route("/").get(getAllPost)
-//add comment
-router.route("/add-comment/:id").post(commentPost)
-// like a post
-router.route("/like-post/:id").post(likePost)
+// Get a single post by ID (Public)
+router.get("/:id", getPost);
+
+// Edit a post (Protected)
+router.put("/:id", verifyToken, editPost);
+
+// Delete a post (Protected)
+router.delete("/:id", verifyToken, deletePost);
+
+// Add a comment to a post (Protected)
+router.post("/add-comment/:id", verifyToken, commentPost);
+
+// Like a post (Protected)
+router.post("/like-post/:id", verifyToken, likePost);
+
+// Posting a new post (Protected)
+router.post("/create-post", verifyToken, createPost);
+
+// Detect Hate speech
+router.post("/detect-hate-speech", verifyToken, detectHateSpeech);
 
 export default router;

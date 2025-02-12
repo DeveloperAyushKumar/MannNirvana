@@ -1,9 +1,11 @@
 import {Post,Comment} from './post.model.js';
 import cloudinary from '../../../config/cloudStorage.js';
+import axios from 'axios';
 import fs from 'fs';
 
 const API_KEY = process.env.SEARCH_API_KEY; 
-const URL =` https://newsapi.org/v2/everything?q=women%20mental%20health&sortBy=publishedAt&apiKey=${API_KEY}`;
+const URL =` https://newsapi.org/v2/everything?q=women%20mental%20health&sortBy=publishedAt&apiKey=${API_KEY}`; 
+const hateSpeechUrl = process.env.HATE_SPEECH_URL;
 
 const createPost=async(req,res)=>{
     try {
@@ -12,7 +14,7 @@ const createPost=async(req,res)=>{
     const expirationDate = new Date(currentDate);
     expirationDate.setDate(expirationDate.getDate() + 90);
     const expirationDateString = expirationDate.toISOString();
-    const author=req.body.user._id;
+    const author=req.body.user.userId;
     if(image_file){
         cloudinary.uploader.upload(image_file.image, {
             upload_preset: 'unsigned_upload',
@@ -104,10 +106,10 @@ const likePost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        if(post.likes.includes(req.body.user._id)){
+        if(post.likes.includes(req.body.user.userId)){
             return res.status(400).json({message:"You already liked this post"})
         }
-        post.likes.push(req.body.user._id);
+        post.likes.push(req.body.user.userId);
         await post.save();
         res.status(200).json(post);
     } catch (error) {
@@ -124,7 +126,7 @@ const commentPost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        const comment=new Comment({text,user:user._id,});
+        const comment=new Comment({text,user:user.userId,});
         // console.log(comment)
         post.comments.push(comment);
         await post.save();
@@ -150,4 +152,24 @@ const getNews = async(req, res) => {
     }
 }
 
-export {createPost,getPost,editPost,getNews,getAllPost,deletePost,likePost,commentPost}
+const detectHateSpeech = async (req, res) => {
+    try {
+        const { text } = req.body; // Extract text from request body
+      
+        if (!text) {
+            return res.status(400).json({ message: "Text is required" });
+        }
+
+        const hateResponse = await axios.post(`${hateSpeechUrl}/analyze-text/`, 
+            { text }, // Pass text properly
+            { headers: { "Content-Type": "application/json" } }
+        );
+
+        res.status(hateResponse.status).json(hateResponse.data);
+    } catch (err) {
+        console.error("Error detecting hate speech:", err.message);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export {createPost,getPost,detectHateSpeech,editPost,getNews,getAllPost,deletePost,likePost,commentPost}

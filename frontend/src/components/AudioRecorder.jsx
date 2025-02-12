@@ -85,7 +85,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
 
   const rewardUser = async () => {
     try {
-      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/reward/${user._id}`);
+      const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/user/reward/${user.userId}`);
   
       if (response.status === 200) {
         console.log("coins updated successfully");
@@ -114,7 +114,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
     }
 
     const payload = {
-      user_id: user._id,
+      user_id: user.userId,
       text: transcript,
     };
 
@@ -149,7 +149,7 @@ export default function App({ setIfStart, ifStart, setTime }) {
 
   function redirect() {
     console.log("clicked");
-    window.location.href = `/result/${user._id}/${result?.mental_state}/${result?.confidence}`;
+    window.location.href = `/result/${user.userId}/${result?.mental_state}/${result?.confidence}`;
   }
   
   return (

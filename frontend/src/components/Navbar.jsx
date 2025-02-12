@@ -28,11 +28,6 @@ function Navbar() {
       href: '/consultant'
     },
     {
-      name : 'Assessment',
-      href: '/assessment'
-    },
-
-    {
       name :'Devi',
       href:'/devi'
     },
