@@ -39,7 +39,7 @@ export const createToken = (user) => {
 
     return jwt.sign(
         { 
-            userId: user._id, 
+            _id: user._id, 
             name: user.name, 
             address: user.address, 
             avatar: user.avatar,

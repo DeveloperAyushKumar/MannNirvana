@@ -14,7 +14,7 @@ const createPost=async(req,res)=>{
     const expirationDate = new Date(currentDate);
     expirationDate.setDate(expirationDate.getDate() + 90);
     const expirationDateString = expirationDate.toISOString();
-    const author=req.body.user.userId;
+    const author=req.body.user._id;
     if(image_file){
         cloudinary.uploader.upload(image_file.image, {
             upload_preset: 'unsigned_upload',
@@ -106,10 +106,10 @@ const likePost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        if(post.likes.includes(req.body.user.userId)){
+        if(post.likes.includes(req.body.user._id)){
             return res.status(400).json({message:"You already liked this post"})
         }
-        post.likes.push(req.body.user.userId);
+        post.likes.push(req.body.user._id);
         await post.save();
         res.status(200).json(post);
     } catch (error) {
@@ -126,7 +126,7 @@ const commentPost=async(req,res)=>{
         if(!post){
             return res.status(404).json({message:"Post not found"})
         }
-        const comment=new Comment({text,user:user.userId,});
+        const comment=new Comment({text,user:user._id,});
         // console.log(comment)
         post.comments.push(comment);
         await post.save();

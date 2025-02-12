@@ -61,7 +61,7 @@ const ProfilePage = () => {
   const saveProfile = async () => {
     try {
       const { name, avatar } = profile;
-      const response = await axios.put(`${BackendURL}/user/edit/${user.userId}`, {
+      const response = await axios.put(`${BackendURL}/user/edit/${user._id}`, {
         name,
         address: user.address,
         avatar,
@@ -166,7 +166,7 @@ const ProfilePage = () => {
             <tbody>
               {users?.length > 0 ? (
                 users.map((user, index) => (
-                  <tr key={user.userId} className="hover:bg-gray-50 h-20">
+                  <tr key={user._id} className="hover:bg-gray-50 h-20">
                     <td className="p-2 border border-gray-300">#{index + 1}</td>
                     <td className="p-2 border border-gray-300">{user.name}</td>
                     <td className="p-2 border border-gray-300">{user.coins}</td>
