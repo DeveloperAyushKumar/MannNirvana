@@ -4,6 +4,7 @@ import defaultAvatar from "../../assets/user.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const BackendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -38,6 +39,43 @@ const ProfilePage = () => {
     }
   }, [isConnected, user]);
 
+  const notify = (text, type) => {
+    if (type === "warn") {
+      toast.warning(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#ff9800" }, // Warning color (orange)
+      });
+    } else if (type === "success") {
+      toast.success(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#28a745" }, // Success color (green)
+      });
+    } else if (type === "error") {
+      toast.error(text, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        style: { fontSize: "16px", fontWeight: "bold", color: "#dc3545" }, // Error color (red)
+      });
+    }
+  };  
+
   // Handle image upload
   const handleImageChange = async (e) => {
     const selectedFile = e.target.files?.[0];
@@ -68,7 +106,11 @@ const ProfilePage = () => {
       });
 
       setUser(response.data.user);
+      localStorage.removeItem("token");
+      localStorage.setItem("token", response.data.token);
+      notify("Profile updated successfully!", "success");
     } catch (error) {
+      notify("An error occured while updating profile!", "error");
       console.error("Error saving profile:", error);
     }
   };
@@ -92,6 +134,7 @@ const ProfilePage = () => {
 
   return (
     <div className="w-full flex-col items-center justify-center relative p-2">
+      <ToastContainer />
       {/* Coins Section */}
       <div className="flex justify-end gap-2 bg-white px-4 py-2">
         <p className="text-lg font-semibold text-gray-800">{user?.coins} Mann Coins</p>
