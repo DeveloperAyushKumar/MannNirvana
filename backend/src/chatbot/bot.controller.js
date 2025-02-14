@@ -31,4 +31,17 @@ const getResponse = async(req, res) => {
     }
 }
 
-export default getResponse;
+const getAllemotions = async(req, res) => {
+    const user_id  = req.body.user_id; 
+
+    try {
+        const emotions = await emotionRecord.find({user_id: user_id}).sort({created_at: -1}).limit(100);
+
+        res.status(200).json({ message: 'Emotions fetched successfully', emotions: emotions})
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error while fetching top records.' });
+    }
+}
+
+export { getResponse, getAllemotions };

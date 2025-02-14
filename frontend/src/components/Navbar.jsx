@@ -32,6 +32,10 @@ function Navbar() {
       href:'/devi'
     },
     {
+      name: 'Track Your Emotions',
+      href: '/track-your-emotion'
+    },
+    {
       name: 'Join the misson',
       href:'/ngo'
     },

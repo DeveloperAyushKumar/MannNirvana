@@ -48,10 +48,6 @@ const router =createBrowserRouter([
 
             }, 
             {
-                path:"/result/:user_id/:mental_state/:confidence",
-                element:<Result/>
-            },
-            {
                 path:"/devi",
                 element:<Devi/>
             },
@@ -66,6 +62,10 @@ const router =createBrowserRouter([
             {
                 path :'/ngo',
                 element:<NGOList/>
+            },
+            {
+                path: 'track-your-emotion',
+                element: <Result/>
             }
         ]
     },

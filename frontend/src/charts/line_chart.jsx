@@ -32,16 +32,16 @@ const EmotionLineChart = ({ data }) => {
 
   return (
     <div className="w-full text-center">
-      <p className="text-xl font-bold">Emotion Trend</p>
       <ResponsiveContainer width="100%" height={400} className="mt-10">
         <LineChart data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="timestamp" />
-          <YAxis domain={['auto', 'auto']} />
+          <YAxis domain={[-1, 1]} />
           <Tooltip content={<CustomTooltip />} />
           <Line type="basis" dataKey="score" stroke="#8884d8" strokeWidth={2} dot={false} />
         </LineChart>
       </ResponsiveContainer>
+      <p className="text-xl font-bold mb-8">Emotion Trend</p>
     </div>
   );
 };

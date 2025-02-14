@@ -1,34 +1,54 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProgressCircle from "../charts/progress_circle";
 import LineChart from "../charts/line_chart";
 import suggestion from "../utils/suggestion";
+import { useWalletContext } from "../context/WalletContext.jsx";
 
 export default function Result() {
-  const { user_id, mental_state, confidence } = useParams();
+  const { user } = useWalletContext();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [data, setData] = useState([]);
+  const [percentage, setPercentage] = useState({
+    positive: 0,
+    neutral: 0,
+    negative: 0,
+  });
 
   useEffect(() => {
-    axios
-      .get(`${backendUrl}/face?user_id=${user_id}`)
+    if(user) {
+      axios
+      .post(`${backendUrl}/chatbot/get-emotion`, { user_id: user?._id })
       .then((response) => {
-        setData(response.data);
+        setData(response.data.emotions);
+
+        const happyCount = data.filter(item => item.emotions === "Positive").length;
+        const neutralCount = data.filter(item => item.emotions === "Neutral").length;
+        const sadCount = data.filter(item => item.emotions === "Negative").length;
+
+        setPercentage({
+          positive: (happyCount / data.length) * 100,
+          neutral: (neutralCount / data.length) * 100,
+          negative: (sadCount / data.length) * 100
+        });
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [user_id]);
+    }
+
+  }, [user]);
 
 
   return (
-    <div className="mt-16 flex flex-col items-center max-w-screen-lg mx-auto gap-16">
+    <div className="mt-16 flex flex-col justify-center items-center gap-16 max-w-screen">
       {/* Top Section - Progress Circle & Chart */}
       <div className="flex flex-col lg:flex-row items-center justify-center gap-16 w-full">
-        <ProgressCircle mental_state={mental_state} confidence={confidence} />
+        <ProgressCircle mental_state={"Positive"} confidence={percentage.positive} />
+        <ProgressCircle mental_state={"Neutral"} confidence={percentage.neutral} />
+        <ProgressCircle mental_state={"Negative"} confidence={percentage.negative} />
         
-        {/* Suggestions Section */}
+        {/* Suggestions Section 
         {mental_state && (
           <div className="w-full p-6 rounded-lg shadow-lg bg-white">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
@@ -45,10 +65,10 @@ export default function Result() {
               ))}
             </div>
           </div>
-        )}
+        )} */}
       </div>
 
-      <div className="w-full bg-white p-6 rounded-lg shadow-lg">
+      <div className="w-full">
         <LineChart data={data} />
       </div>
     </div>
