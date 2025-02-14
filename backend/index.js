@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import faceRoutes from './src/Face_emotion/face.route.js';
 import consultantRoutes from './src/Consultant/Consultant.route.js';
 import userRoutes from './src/posts/User/user.route.js';
+import botRoutes from './src/chatbot/bot.route.js';
 import { verifyToken } from './utils/token.js';
 
 const app=express();
@@ -27,7 +28,7 @@ app.use('/posts',postRoutes)
 app.use('/consultant',consultantRoutes)
 app.use('/face', verifyToken, faceRoutes);
 app.use('/user', userRoutes);
-
+app.use('/chatbot', botRoutes);
 
 //Connect to DB
 async function main(){
