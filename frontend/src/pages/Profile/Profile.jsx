@@ -122,24 +122,24 @@ const ProfilePage = () => {
   };
 
   // Fetch leaderboard data
-  useEffect(() => {
-    axios
-      .get(`${BackendURL}/user/get-top`)
-      .then((response) => {
-        setUsers(response.data.users);
-      })
-      .catch((error) => console.error("Error fetching leaderboard:", error))
-      .finally(() => setLoading(false));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BackendURL}/user/get-top`)
+  //     .then((response) => {
+  //       setUsers(response.data.users);
+  //     })
+  //     .catch((error) => console.error("Error fetching leaderboard:", error))
+  //     .finally(() => setLoading(false));
+  // }, []);
 
   return (
-    <div className="w-full flex-col items-center justify-center relative p-2">
+    <div className="w-full flex-col items-center justify-center p-16">
       <ToastContainer />
-      {/* Coins Section */}
+      {/* Coins Section 
       <div className="flex justify-end gap-2 bg-white px-4 py-2">
         <p className="text-lg font-semibold text-gray-800">{user?.coins} Mann Coins</p>
         <FontAwesomeIcon icon={faCoins} className="text-yellow-500 text-2xl" />
-      </div>
+      </div> */}
       <div  className="flex justify-around">
       {/* Profile Card */}
       <div className="flex flex-col items-center p-6 bg-white shadow-lg rounded-lg w-96 border border-gray-300">
@@ -191,7 +191,7 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Leaderboard Section */}
+      {/* Leaderboard Section 
       <div className="w-full max-w-xl bg-white shadow-md rounded-lg border border-gray-300">
         <h2 className="text-xl font-semibold text-center m-4">🏆 Leaderboard</h2>
 
@@ -224,8 +224,8 @@ const ProfilePage = () => {
               )}
             </tbody>
           </table>
-        )}
-      </div>
+        )} 
+      </div> */}
       </div>
     </div>
   );
