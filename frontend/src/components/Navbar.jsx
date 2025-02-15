@@ -79,6 +79,10 @@ function Navbar() {
                         return null
                       }
 
+                      if(item.name==='Track Your Emotions'){
+                        return null
+                      }
+
                       if(item.name==='Profile'){
                         return <WalletSelector key={item.name} />
                       }
