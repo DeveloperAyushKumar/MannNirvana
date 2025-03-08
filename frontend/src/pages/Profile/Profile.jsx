@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useWalletContext } from "../../context/WalletContext";
 import defaultAvatar from "../../assets/user.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -24,8 +22,6 @@ const ProfilePage = () => {
     name: "Anonymous User",
     avatar: null,
   });
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Redirect if user is not logged in
   useEffect(() => {

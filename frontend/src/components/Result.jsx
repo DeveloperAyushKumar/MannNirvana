@@ -22,14 +22,14 @@ export default function Result() {
       .then((response) => {
         setData(response.data.emotions);
 
-        const happyCount = data.filter(item => item.emotions === "Positive").length;
-        const neutralCount = data.filter(item => item.emotions === "Neutral").length;
-        const sadCount = data.filter(item => item.emotions === "Negative").length;
-
+        const happyCount = response.data.emotions.filter(item => item.emotions === "Positive").length;
+        const neutralCount = response.data.emotions.filter(item => item.emotions === "Neutral").length;
+        const sadCount = response.data.emotions.filter(item => item.emotions === "Negative").length;
+        
         setPercentage({
-          positive: (happyCount / data.length) * 100,
-          neutral: (neutralCount / data.length) * 100,
-          negative: (sadCount / data.length) * 100
+          positive: (happyCount / response.data.emotions.length) * 100,
+          neutral: (neutralCount / response.data.emotions.length) * 100,
+          negative: (sadCount / response.data.emotions.length) * 100
         });
       })
       .catch((error) => {
@@ -44,9 +44,9 @@ export default function Result() {
     <div className="mt-16 flex flex-col justify-center items-center gap-16 max-w-screen">
       {/* Top Section - Progress Circle & Chart */}
       <div className="flex flex-col lg:flex-row items-center justify-center gap-16 w-full">
-        <ProgressCircle mental_state={"Positive"} confidence={percentage.positive} />
-        <ProgressCircle mental_state={"Neutral"} confidence={percentage.neutral} />
-        <ProgressCircle mental_state={"Negative"} confidence={percentage.negative} />
+        <ProgressCircle mental_state={"Positive"} confidence={percentage.positive.toFixed(2)} />
+        <ProgressCircle mental_state={"Neutral"} confidence={percentage.neutral.toFixed(2)} />
+        <ProgressCircle mental_state={"Negative"} confidence={percentage.negative.toFixed(2)} />
         
         {/* Suggestions Section 
         {mental_state && (
