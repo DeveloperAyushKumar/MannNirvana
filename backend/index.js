@@ -24,11 +24,11 @@ app.use(cors({
   }));
 
 //Routes
-app.use('/posts',postRoutes)
-app.use('/consultant',consultantRoutes)
+app.use('/posts', postRoutes);
+app.use('/consultant', consultantRoutes);
 app.use('/face', verifyToken, faceRoutes);
 app.use('/user', userRoutes);
-app.use('/chatbot', botRoutes);
+app.use('/chatbot', verifyToken, botRoutes);
 
 //Connect to DB
 async function main(){

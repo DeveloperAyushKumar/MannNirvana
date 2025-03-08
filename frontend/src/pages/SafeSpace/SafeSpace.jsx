@@ -7,11 +7,19 @@ import { useFetchAllPostsQuery } from '@/src/redux/features/posts/postsApi';
 import { ToastContainer, toast } from 'react-toastify';
 import tags from '../../utils/tags';
 import { useWalletContext } from '../../context/WalletContext';
+import { RxCross2 } from "react-icons/rx";  // From Radix Icons
 import { Link } from 'react-router';
+import { FaRobot } from "react-icons/fa";
+import { ClipLoader } from 'react-spinners';
+import axios from 'axios';
+
+const BackendURL = import.meta.env.VITE_BACKEND_URL;
 
 const SafeSpace = () => {
   const {data:posts=[]} = useFetchAllPostsQuery();
-
+  const [chats, setChats] = useState(["mr-autoHello! How can I help you?"]);
+  const [loading, setLoading] = useState(false);
+  const [showBot, setShowBot] = useState(false);
   // State for selected tags and filtering
   const [selectedTags, setSelectedTags] = useState([]);
   const {user, isConnected} = useWalletContext();
@@ -27,6 +35,35 @@ const SafeSpace = () => {
   const filteredPosts = posts.filter((post) =>
     selectedTags.every((tag) => post.tags.includes(tag))
   );
+
+  const handleQuery = (e) => {
+    e.preventDefault();
+    
+    const message = e.target[0].value.trim(); 
+    
+    if (!message) {
+      toast.error("Please enter a valid query");
+      return;
+    }
+  
+    setChats((prevChats) => [...prevChats, "ml-auto"+message]); 
+    e.target[0].value = "";  
+    setLoading(true);
+  
+    axios.post(`${BackendURL}/chatbot/generate-response/`, {
+      text: message,  
+      user_id: user._id,
+    })
+    .then((res) => {
+      setChats((prevChats) => [...prevChats, "mr-auto"+res.data.response.slice(14)]);  
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.error("Error:", err);
+      toast.error("Error in fetching response");
+      setLoading(false);
+    });
+  };  
 
   return (
     // space-y-6 flex justify-evenly
@@ -84,6 +121,41 @@ const SafeSpace = () => {
       </ScrollArea>
       </div>
     </div>
+    {showBot? <div className='fixed bottom-0 right-0 m-5 z-500 bg-gray-200 p-2 rounded-lg h-[500px] flex flex-col'>
+      <div className='flex justify-between m-2'>
+        <span className='font-bold text-lg'>Your Dost</span>
+        <button onClick={()=>{
+          setLoading(false);
+          setShowBot(!showBot);
+          setChats(["mr-autoHello! How can I help you?"]);
+        }}>
+          <RxCross2 size={24} className="text-gray-600 hover:text-red-500" />
+        </button>
+      </div>
+
+      <div className='flex flex-col gap-3 my-2 max-h-[400px] overflow-y-auto px-2'
+      style={{ scrollbarWidth: "none"}}>
+      {
+        chats.map((chat, index)=>(
+          <div key={index} className={`bg-dark text-white p-2 rounded-lg w-60 text-left ${chat.slice(0,7)}`}>{chat.slice(7)}</div>
+        ))
+      }
+      </div>
+
+      <form className='mt-auto' onSubmit={handleQuery}>
+        <input type="text" placeholder="Write something..." className="border-2 border-gray-300 p-2 rounded-lg w-60"/>
+        {loading ? 
+        <span className='ml-2 py-2 px-6 bg-dark rounded-lg'><ClipLoader color="white" size={18}/></span>
+        :
+        <button className='ml-2 bg-dark text-white p-2 rounded-lg'>Submit</button> }
+      </form>
+    </div>
+    :
+    <button className='absolute bottom-0 right-0 m-5 z-50' onClick={
+      ()=>setShowBot(!showBot)
+    }>
+      <FaRobot size={56} className="text-gray-600 hover:text-blue-500" />
+    </button>}
     </div>
   );
 };
