@@ -45,6 +45,11 @@ const SafeSpace = () => {
       toast.error("Please enter a valid query");
       return;
     }
+
+    if(!user){
+      toast.error("Please login to chat with your dost");
+      return;
+    }
   
     setChats((prevChats) => [...prevChats, "ml-auto"+message]); 
     e.target[0].value = "";  
