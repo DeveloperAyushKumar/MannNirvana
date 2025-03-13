@@ -9,8 +9,10 @@ import { faImage ,faCamera, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { useWalletContext } from "../context/WalletContext.jsx";
 import availableTags from '../utils/tags.js';
 import ClipLoader from "react-spinners/ClipLoader";
-
+import { FaArrowCircleDown, FaArrowCircleUp } from "react-icons/fa";
+import {motion} from 'motion/react'
 export default function PostForm() {
+  const [dropDown, setDropDown]=useState(true) 
   const [post, setPost] = useState("");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -140,21 +142,21 @@ export default function PostForm() {
 
 
   return (
-    <div className="mx-auto p-4 rounded-r-md bg-white text-[#4A4A4A] border-white border-b-4">
+    <div className="mx-auto p-4 pb-2 rounded-r-md bg-white text-[#4A4A4A] border-white border-b-4">
       <Textarea
         placeholder="Write your post..."
         value={post}
         onChange={(e) => setPost(e.target.value)}
-        className="mb-4 text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
+        className="mb-2 text-[#4A4A4A] focus:outline-none focus:ring-2 focus:ring-dark focus:border-dark"
       />
       {preview && (
-        <div className="mt-1 mb-4 w-full">
+        <div className="mt-1 mb-2 w-full">
           <img src={preview} alt="Preview" className="mt-2 w-full h-48 object-cover rounded-md" />
         </div>
       )}
       
       {/* Updated tags display */}
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2">
         {tags.map((tag, idx) => (
           <span 
             onClick={() => setTags(tags.filter((t) => t !== tag))}
@@ -165,18 +167,24 @@ export default function PostForm() {
           </span>
         ))}
       </div>
+<motion.div
+initial={false}
+animate={{height:dropDown?"auto":0,opacity:dropDown?1:0}}
+transition={{duration:0.4,ease:"easeInOut"}}
+className="overflow-hidden flex justify-between gap-1"
+>
 
-      <div className="flex justify-between">
-        <div className="mb-4 w-full">
+      <div className={`flex justify-between gap-1`}>
+        <div className="mb-2 w-full">
           <p className="font-bold text-lg mb-2">Tags</p>
           <div className="flex flex-wrap gap-2">
             {availableTags.map((tag, idx) => {
               if(tags.includes(tag)) return null;
               return (
                 <button
-                  key={idx}
-                  onClick={() => handleTagClick(tag)}
-                  className="px-3 py-1 border border-dark text-dark rounded-lg hover:bg-light w-auto"
+                key={idx}
+                onClick={() => handleTagClick(tag)}
+                className="px-3 py-1 border border-dark text-dark rounded-lg hover:bg-light w-auto"
                 >
                   {tag}
                 </button>
@@ -185,8 +193,8 @@ export default function PostForm() {
           </div>
         </div>
 
-        <div className="flex w-1/4 justify-around mt-6">
-          <Button className="flex bg-dark rounded-lg items-center space-x-2 max-h-10 m-0">
+        <div className="flex flex-col lg:flex-row w-1/4 lg:justify-around mt-4 gap-2">
+          <Button className="flex text-md bg-dark rounded-lg items-center w-full max-h-10 m-0 py-5">
             <label htmlFor="imageUpload" className="cursor-pointer">
               <div className="flex items-center gap-1 text-white">
                 <FontAwesomeIcon icon={faUpload} className="text-white" />
@@ -199,14 +207,24 @@ export default function PostForm() {
               accept="image/*"
               onChange={handleImageChange}
               className="hidden"
-            />
+              />
           </Button>
   
-          <Button onClick={handleSubmit} disabled={isLoading} className="text-white max-h-10 bg-extraDark">
-            {isLoading ? <ClipLoader color="#ffffff" size={20} /> : "Add Post"}
+          <Button onClick={handleSubmit} disabled={isLoading} className="w-full text-white text-md max-h-10 bg-dark">
+            {isLoading ? <ClipLoader color="#ffffff" size={20} /> : "Post"}
           </Button>
         </div>
       </div>
+              </motion.div>
+              <motion.button
+  className="w-full flex justify-end mt-2"
+  onClick={() => setDropDown(!dropDown)}
+  initial={false}
+  animate={{ rotate: dropDown ? 180 : 0 }}
+  transition={{ duration: 0.4, ease: "easeInOut" }}
+>
+  <FaArrowCircleDown className="size-7" />
+</motion.button>
     </div>
   );
 }

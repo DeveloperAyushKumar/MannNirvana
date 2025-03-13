@@ -19,7 +19,7 @@ function App() {
       }}
     >
       <WalletProvider>
-      <div className="bg-white flex flex-col w-full">
+      <div className="bg-white flex flex-col w-full scale-100">
         < Navbar/>
         <main className="min-h-screen bg-white">
           <Outlet/>

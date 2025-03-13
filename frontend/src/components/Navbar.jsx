@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux';
 import { useWalletContext } from '../context/WalletContext';
 import logo from '../assets/Logo/logo.png'
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-
+import {motion} from "motion/react"
+import { Dropdown } from 'antd';
 function Navbar() {
   const { user,isConnected } = useWalletContext();
   const {currentUser,logout}={currentUser:null,logout:null}
@@ -32,11 +33,11 @@ function Navbar() {
       href:'/devi'
     },
     {
-      name: 'Track Your Emotions',
+      name: 'Reflect',
       href: '/track-your-emotion'
     },
     {
-      name: 'Join the misson',
+      name: 'Join',
       href:'/ngo'
     },
     {
@@ -64,13 +65,50 @@ function Navbar() {
             <input type="text" placeholder='Search here' className='bg-[#EAEAEA] w-full py-2 px-8 rounded-xl focus:outline-none' />
             </div> */}
         </div>
-        <div className='flex justify-evenly gap-2'>
+        <div className='flex justify-end md:justify-evenly gap-2'>
             {/* right side  */}
             
-             { !isDroppedDown&&<RiMenu2Line className='size-8 sm:hidden' onClick={()=>setIsDroppedDown(!isDroppedDown)}></RiMenu2Line>}
-             {
-              !isDroppedDown&&
-              <div className='flex flex-col items-center gap-2 sm:flex-row sm:gap-4'> 
+            <motion.div
+  animate={{ rotate: isDroppedDown ? 90 : 0 }}
+  transition={{ duration: 0.4, ease: "easeInOut" }}
+>
+  <RiMenu2Line
+    className="size-8 md:hidden cursor-pointer"
+    onClick={() => setIsDroppedDown(!isDroppedDown)}
+  />
+</motion.div>
+             <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: isDroppedDown ? 1 : 0, y: isDroppedDown ? 10 : -10 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className={`z-10 absolute right-1 mt-10 w-48 bg-light rounded-md shadow-lg overflow-hidden ${
+          isDroppedDown ? "block" : "hidden"
+        }`}
+      >
+        <ul className="flex flex-col space-y-2 p-2">
+          {navigation.map((item) => {
+            if (!user) {
+              if (item.name === "Assessment" || item.name === "Track Your Emotions") return null;
+              if (item.name === "Profile") return <WalletSelector key={item.name} />;
+            }
+            return (
+              <motion.li
+                key={item.name}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Link to={item.href} className="block px-4 py-2 text-white hover:bg-dark rounded-md">
+                  {item.name}
+                </Link>
+              </motion.li>
+            );
+          })}
+        </ul>
+      </motion.div>
+             
+            
+              <div className='hidden md:flex flex-row items-center gap-2 sm:gap-4 '> 
                 {
               
                   navigation.map((item)=>{
@@ -93,7 +131,7 @@ function Navbar() {
                   })
                 }   
               </div>
-            }
+            
       </div>
  
     </nav>

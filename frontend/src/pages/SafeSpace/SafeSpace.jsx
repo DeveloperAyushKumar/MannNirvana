@@ -72,15 +72,15 @@ const SafeSpace = () => {
     <div className="grid grid-cols-5 p-2">
       {/* Top Selection/Tag-Adding Section */}
       {/* <ToastContainer /> */}
-      <Card className="col-span-1 border-none border-r-4 border-gray-700 transition-shadow duration-300 mt-6 p-4 bg-white text-[#4A4A4A] rounded-none ">
-    <div>
+      <Card className="hidden lg:block col-span-1 border-none border-r-4 border-gray-700 transition-shadow duration-300 mt-6 p-4 bg-white text-[#4A4A4A] rounded-none ">
+    <div  >
 
-    <h1 className='text-2xl bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
+    <h1 className='text-xl xl:text-2xl  bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
       <div className="flex flex-wrap gap-2 mb-4 ">
         {tags.map((tag) => (
           <button
           key={tag}
-          className={`px-4 py-2 rounded-lg w-full text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
+          className={`px-1 py-2 rounded-lg w-full text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
           onClick={() => handleTagSelect(tag)}
           >
             # {tag}
@@ -88,14 +88,9 @@ const SafeSpace = () => {
         ))} 
       </div>
         </div>
-        <div>
-          
-        </div>
-
-
       </Card>
 
-      <div className=' col-span-4 w-full h-full'>
+      <div className=' col-span-5 lg:col-span-4 w-full h-full'>
       {user? 
       <PostForm/>
       :
@@ -103,8 +98,25 @@ const SafeSpace = () => {
         Safe Space
       </div>}
 
-      <ScrollArea >
+      <ScrollArea className="" >
       <div className={`w-full ${user? "max-h-[28rem]" : "max-h-screen"}`}>
+      <Card className="mt-0 lg:hidden border-none border-r-4 border-gray-700 transition-shadow duration-300 p-2 bg-white text-[#4A4A4A] rounded-none ">
+    <div  >
+
+    <h1 className='text-lg bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
+      <div className="flex flex-wrap gap-2 mb-2 ">
+        {tags.map((tag) => (
+          <button
+          key={tag}
+          className={`px-2 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
+          onClick={() => handleTagSelect(tag)}
+          >
+            # {tag}
+          </button>
+        ))} 
+      </div>
+        </div>
+      </Card>
 
       {/* Display filtered posts */}
       {filteredPosts.length === 0 ? (

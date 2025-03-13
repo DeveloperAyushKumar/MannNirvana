@@ -17,7 +17,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 app.use(express.json());
 app.use(cors({
-    origin: ["https://mannnirvana.vercel.app", "http://localhost:5173", "https://5nvd0kvg-5173.inc1.devtunnels.ms/", "https://mann-nirvana-six.vercel.app"],
+    origin: ["https://mannnirvana.vercel.app", "http://localhost:5173", "http://localhost:5174", "https://5nvd0kvg-5173.inc1.devtunnels.ms/", "https://mann-nirvana-six.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
