@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { useWalletContext } from '../context/WalletContext';
 import logo from '../assets/Logo/logo.png'
 import { WalletSelector } from "@aptos-labs/wallet-adapter-ant-design";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Dropdown } from 'antd';
 function Navbar() {
   const { user,isConnected } = useWalletContext();
