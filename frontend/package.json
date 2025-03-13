@@ -30,7 +30,6 @@
     "firebase": "^11.2.0",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.474.0",
-    "motion": "^12.5.0",
     "petra-plugin-wallet-adapter": "^0.4.5",
     "react": "^18.3.1",
     "react-circular-progressbar": "^2.1.0",
@@ -48,6 +47,7 @@
     "spotify-web-api-node": "^5.0.2",
     "sweetalert2": "^11.6.13",
     "swiper": "^11.1.15",
+    "motion": "^12.5.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
