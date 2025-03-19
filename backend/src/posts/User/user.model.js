@@ -15,8 +15,14 @@ const userSchema=new mongoose.Schema({
     },
     avatar:{
         type:String, //cloudinary url
-        // required:true,
-        
+    },
+    phone: {
+        type:String,
+        required:true,
+    },
+    bio: {
+        type: String,
+        default: "",
     },
     coins:{
         type : Number,

@@ -20,6 +20,8 @@ const ProfilePage = () => {
   const { user, setUser, isConnected } = useWalletContext();
   const [profile, setProfile] = useState({
     name: "Anonymous User",
+    phone: "", 
+    bio: "",
     avatar: null,
   });
 
@@ -31,7 +33,11 @@ const ProfilePage = () => {
       setProfile({
         name: user?.name || "Anonymous User",
         avatar: user?.avatar || defaultAvatar,
+        phone: user?.phone || "",
+        bio: user?.bio || "",
       });
+
+      console.log(user);
     }
   }, [isConnected, user]);
 
@@ -98,6 +104,8 @@ const ProfilePage = () => {
       const response = await axios.put(`${BackendURL}/user/edit/${user._id}`, {
         name,
         address: user.address,
+        phone: profile.phone,
+        bio: profile.bio,
         avatar,
       });
 
@@ -165,6 +173,27 @@ const ProfilePage = () => {
             onChange={(e) => setProfile({ ...profile, name: e.target.value })}
             className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+        </div>
+
+        {/* Phone Input */}
+        <div className="w-full mt-4">
+          <label className="block text-gray-700 font-medium mb-1">Phone:</label>
+          <input
+            type="text"
+            value={profile.phone}
+            onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+        </div>
+
+        {/* Bio Input */}
+        <div className="w-full mt-4">
+          <label className="block text-gray-700 font-medium mb-1">Bio:</label>
+          <textarea
+            value={profile.bio || "Tell us about yourself..."}
+            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
         </div>
 
         {/* Save Profile Button */}

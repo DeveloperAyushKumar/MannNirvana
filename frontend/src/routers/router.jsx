@@ -15,6 +15,7 @@ import Devi from "../pages/Devi/Devi";
 import Profile from "../pages/Profile/Profile";
 import Funding from "../components/Funding";
 import NGOList from "../pages/NGO/NGO";
+import Bot from "../pages/chatbot/chatbot";
 
 
 const router =createBrowserRouter([
@@ -29,6 +30,10 @@ const router =createBrowserRouter([
             {
                 path : '/profile',
                 element:<Profile/>
+            },
+            {
+                path: '/your-dost',
+                element: <Bot />
             },
             {
                 path:"/safespace/:id",
