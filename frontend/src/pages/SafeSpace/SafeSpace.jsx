@@ -138,7 +138,7 @@ const SafeSpace = () => {
       </ScrollArea>
       </div>
     </div>
-    {showBot ? (
+    {/* {showBot ? (
       <div className="fixed bottom-[35vh] right-5 z-[999] bg-gray-200 p-2 rounded-lg h-[500px] flex flex-col shadow-lg">
         <div className="flex justify-between m-2">
           <span className="font-bold text-lg">Your Dost</span>
@@ -191,7 +191,7 @@ const SafeSpace = () => {
       >
         <FaRobot size={56} className="text-gray-600 hover:text-blue-500" />
       </button>
-    )}
+    )} */}
     </div>
   );
 };

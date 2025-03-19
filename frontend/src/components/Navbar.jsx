@@ -37,6 +37,10 @@ function Navbar() {
       href: '/track-your-emotion'
     },
     {
+      name: 'Your Dost', 
+      href:'/your-dost'
+    },
+    {
       name: 'Join',
       href:'/ngo'
     },
@@ -88,9 +92,11 @@ function Navbar() {
       >
         <ul className="flex flex-col space-y-2 p-2">
           {navigation.map((item) => {
+            console.log(user);
             if (!user) {
               if (item.name === "Assessment" || item.name === "Track Your Emotions") return null;
               if (item.name === "Profile") return <WalletSelector key={item.name} />;
+              if (item.name === "Your Dost") return null;
             }
             return (
               <motion.li
@@ -123,6 +129,10 @@ function Navbar() {
 
                       if(item.name==='Profile'){
                         return <WalletSelector key={item.name} />
+                      }
+
+                      if(item.name==='Your Dost'){
+                        return null
                       }
                     }
                     return (

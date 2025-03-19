@@ -36,6 +36,8 @@ export const createToken = (user) => {
             name: user.name, 
             address: user.address, 
             avatar: user.avatar,
+            phone: user.phone,
+            bio: user.bio,
             coins: user.coins || 0 
         }, 
         secret,

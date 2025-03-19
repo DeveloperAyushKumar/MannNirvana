@@ -8,7 +8,7 @@ function isBase64Image(str) {
 
 // Create User & Generate JWT Token
 export const createUser = async (req, res) => {
-    const { name, address, avatar } = req.body;
+    const { name, address, avatar, bio, phone } = req.body;
 
     try {
         let avatarUrl = avatar;
@@ -24,7 +24,7 @@ export const createUser = async (req, res) => {
         }
 
         // Create user in DB
-        const user = await User.create({ name, address, avatar: avatarUrl });
+        const user = await User.create({ name, address, avatar: avatarUrl, bio, phone });
 
         // Generate JWT Token (RS256)
         const token = createToken(user);
@@ -38,10 +38,10 @@ export const createUser = async (req, res) => {
 // Edit User (Update name, address, and avatar)
 export const editUser = async (req, res) => {
     const userId = req.params.id;
-    const { name, address, avatar } = req.body;
+    const { name, address, avatar, bio, phone } = req.body;
 
     try {
-        let updatedData = { name, address };
+        let updatedData = { name, address, bio, phone};
 
         // Upload new avatar if provided
         if (avatar && isBase64Image(avatar)) {
