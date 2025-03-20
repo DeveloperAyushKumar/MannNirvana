@@ -194,7 +194,7 @@ const Bot = () => {
             :
             <div className="w-[90vw] h-full flex flex-col p-4">
 
-                <div className="flex-1 overflow-y-auto p-4 rounded-lg">
+                <div className="flex-1 overflow-y-auto p-4 rounded-lg" style={{ scrollbarWidth: "none" }} >
                     {chats.map((chat, index) => (
                         <div
                             key={index}
