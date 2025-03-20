@@ -140,7 +140,7 @@ const Bot = () => {
                 timeoutRef.current = setTimeout(()=>{
                     handleVoiceQuery(finalTranscript);
                     indexRef.current = event.results.length;
-                }, 5000);
+                }, 2000);
             }
             else{
                 setTranscript(finalTranscript);
