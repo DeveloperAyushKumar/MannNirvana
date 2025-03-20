@@ -140,7 +140,7 @@ const Bot = () => {
                 timeoutRef.current = setTimeout(()=>{
                     handleVoiceQuery(finalTranscript);
                     indexRef.current = event.results.length;
-                }, 5000);
+                }, 2000);
             }
             else{
                 setTranscript(finalTranscript);
@@ -234,7 +234,7 @@ const Bot = () => {
                         </button>
                         : 
                         <BsSoundwave size={30} onClick={()=>{
-                            let greet = "Hello! How can I help you?";
+                            let greet = `Hello ${user.name}, How can I help you?`;
                             voiceChat.current = true;
                             setSpeech(true);
                             speak(greet);
