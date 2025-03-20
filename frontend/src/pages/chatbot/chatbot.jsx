@@ -14,7 +14,7 @@ const BackendURL = import.meta.env.VITE_BACKEND_URL;
 const Bot = () => {
     const { user } = useWalletContext();
     const [loading, setLoading] = useState(false);
-    const [chats, setChats] = useState(["mr-autoHello! How can I help you?"]);
+    const [chats, setChats] = useState([`mr-autoHello ${user?.name}! How can I help you?`]);
     const [transcript, setTranscript] = useState(""); 
     const [recognition, setRecognition] = useState(null);
     const isRecording = useRef(false);
