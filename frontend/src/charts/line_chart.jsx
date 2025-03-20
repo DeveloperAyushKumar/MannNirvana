@@ -8,7 +8,16 @@ const EmotionLineChart = ({ data }) => {
     if (!data || data.length === 0) return;
 
     const formattedData = data.map(item => ({
-      timestamp: new Date(item.created_at).toLocaleTimeString(),  
+      timestamp: new Date(item.created_at).toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }),  
+      date: new Date(item.created_at).toISOString().split("T")[0], // Extract YYYY-MM-DD
+      time: new Date(item.created_at).toLocaleTimeString(), // Extract HH:MM:SS
       emotion: item.emotions || "Unknown",
       score: item.score ?? 0 // Ensure score is not null
     }));
