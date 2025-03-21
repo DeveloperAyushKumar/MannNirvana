@@ -81,8 +81,23 @@ const Bot = () => {
         const duration = (wordCount / wordsPerSecond) * 1000; // Duration in ms
     
         console.log(`Playing animation for ${duration} ms`);
-        lottieRef.current?.play();
-        setTimeout(() => lottieRef.current?.stop(), duration);
+
+        const animationDuration = 4000; // Assume Lottie animation duration in ms
+
+        let repeatCount = Math.ceil(duration / animationDuration); // Calculate how many times to loop
+
+        let count = 0;
+        const loopAnimation = () => {
+            if (count < repeatCount) {
+                lottieRef.current?.goToAndPlay(0, true); // Restart animation
+                count++;
+                setTimeout(loopAnimation, animationDuration);
+            } else {
+                lottieRef.current?.stop(); // Stop after enough loops
+            }
+        };
+
+        loopAnimation();
     };    
 
     const handleVoiceQuery = async (transcript) => {
@@ -91,13 +106,11 @@ const Bot = () => {
             console.log(message);
 
             if (!message) {
-                playAnimation("Please enter a valid query");
                 console.log("Please enter a valid query");
                 return;
             }
 
             if (!user) {
-                playAnimation("Please login to chat with your dost");
                 console.log("Please login to chat with your dost");
                 return;
             }
@@ -113,7 +126,6 @@ const Bot = () => {
             indexRef.current += res.data.response.slice(14).length;
             return;
         } catch (error) {
-            console.error("Error:", error);
             console.log("Error in fetching response");
             return;
         } finally {
@@ -191,7 +203,7 @@ const Bot = () => {
                     <Lottie
                         lottieRef={lottieRef} 
                         animationData={animationData}
-                        loop={true}
+                        loop={false}
                     />
                 </div>
 
