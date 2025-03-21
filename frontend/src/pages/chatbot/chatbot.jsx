@@ -7,6 +7,8 @@ import { BsSoundwave } from "react-icons/bs";
 import { ClipLoader } from 'react-spinners';
 import { FaPaperPlane } from "react-icons/fa";
 import { FaMicrophoneSlash } from "react-icons/fa";
+import Lottie from "lottie-react";
+import animationData from "../../assets/animation";
 import axios from 'axios';
 
 const BackendURL = import.meta.env.VITE_BACKEND_URL;
@@ -22,6 +24,7 @@ const Bot = () => {
     const voiceChat = useRef(false);
     const timeoutRef = useRef(null);
     const indexRef = useRef(0);
+    const lottieRef = useRef(null);
 
     const record = () => {
         if (recognition && !isRecording.current) {
@@ -72,17 +75,29 @@ const Bot = () => {
         }
     };
 
+    const playAnimation = (text = "Hello") => {
+        const wordsPerSecond = 2.5; // Average speaking speed
+        const wordCount = text.split(" ").length;
+        const duration = (wordCount / wordsPerSecond) * 1000; // Duration in ms
+    
+        console.log(`Playing animation for ${duration} ms`);
+        lottieRef.current?.play();
+        setTimeout(() => lottieRef.current?.stop(), duration);
+    };    
+
     const handleVoiceQuery = async (transcript) => {
         try {            
             const message = transcript.trim();
             console.log(message);
 
             if (!message) {
+                playAnimation("Please enter a valid query");
                 console.log("Please enter a valid query");
                 return;
             }
 
             if (!user) {
+                playAnimation("Please login to chat with your dost");
                 console.log("Please login to chat with your dost");
                 return;
             }
@@ -93,7 +108,7 @@ const Bot = () => {
                 text: message,
                 user_id: user._id,
             });
-
+            playAnimation(res.data.response.slice(14));
             speak(res.data.response.slice(14));
             indexRef.current += res.data.response.slice(14).length;
             return;
@@ -110,7 +125,10 @@ const Bot = () => {
         return new Promise((resolve) => {
           const synth = window.speechSynthesis;
           const utterance = new SpeechSynthesisUtterance(text);
-          utterance.onend = () => resolve(true);
+          utterance.onend = () => {
+            lottieRef.current?.stop();  // Stop animation when speech ends
+            resolve(true);
+         };
           synth.speak(utterance);
         });
     };
@@ -168,9 +186,13 @@ const Bot = () => {
             <ToastContainer />
 
             {voiceChat.current? 
-            <div className="w-[90vw] h-full flex flex-col p-4">
+            <div className="w-full h-full flex flex-col">
                 <div className='flex-2 h-[90vh] flex items-center justify-center'>
-                    <BsSoundwave size={120} /> 
+                    <Lottie
+                        lottieRef={lottieRef} 
+                        animationData={animationData}
+                        loop={true}
+                    />
                 </div>
 
                 <div className='flex-1 flex w-full gap-36 items-center justify-center'>
@@ -238,6 +260,7 @@ const Bot = () => {
                             voiceChat.current = true;
                             setSpeech(true);
                             speak(greet);
+                            playAnimation(greet);
                             record();
                             indexRef.current+= greet.length;
                         }} /> 
