@@ -108,7 +108,7 @@ const SafeSpace = () => {
 
         <motion.div
       ref={scrollRef}
-      className="w-full p-0 overflow-y-auto overflow-x-hidden custom-scrollbar="
+      className="w-full p-0 overflow-y-auto overflow-x-hidden custom-scrollbar"
       initial={{ y: 0 }}
       animate={{ y: 0 }}
       transition={{ ease: 'easeInOut', duration: 0.5 }}
