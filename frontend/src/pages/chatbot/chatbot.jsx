@@ -66,7 +66,7 @@ const Bot = () => {
                 text: message,
                 user_id: user._id,
             });
-            setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response.slice(14)]);
+            setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response]);
         } catch (error) {
             console.error("Error:", error);
             toast.error("Error in fetching response");
