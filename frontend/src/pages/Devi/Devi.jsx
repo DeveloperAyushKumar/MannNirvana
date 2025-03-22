@@ -7,14 +7,14 @@ import ChannelTree from './DiscordTree'
 // import  SpotifyWebApi from 'spotify-web-api-node';
 function Home() {
   return (
-    <div className='flex ' >
-      <div className='w-1/4'>
+    <div className='flex flex-col md:flex-row ' >
+      <div className='md:w-1/4 '>
       <ChannelTree/>
       </div>
 
-      <div className='w-3/4'>
+      <div className='md:w-3/4'>
       <div className='flex justify-around mt-8'>
-        <div className='w-full'>
+        <div className='w-full mb-4'>
         <PodCasts/>
         </div>
         {/* <LeaderBoard/> */}

@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 
-const HealthTopicNode = ({ topic, level }) => {
+const HealthTopicNode = ({ topic}) => {
   return (
-    <div className="relative flex items-center w-full mb-3">
+    <div className="flex  items-center md:w-full mb-3">
       {/* Channel line */}
-      <div className={`w-1 h-8 bg-light absolute left-${level * 12} flex items-center`} />
-
+      {/* <div className={`w-1 h-8 bg-light flex items-center`} /> */}
       {/* Topic name */}
       <a
         href={topic.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-light text-white px-4 py-3 rounded-lg w-full min-h-[3rem] flex items-center hover:bg-opacity-90 transition-all"
+        className="bg-light text-white px-4 py-3 rounded-lg md:w-full min-h-[3rem] flex items-center hover:bg-opacity-90 transition-all"
       >
         {topic.name}
       </a>
@@ -24,7 +23,7 @@ const HealthTopicTree = () => {
   const topics = [
     {
       id: 1,
-      name: 'Mental Disturbances (Late Pregnancy & Postpartum)',
+      name: 'Late Pregnancy & Postpartum',
       href: 'https://discord.gg/46k7bNrN',
       children: [
         {
@@ -166,9 +165,9 @@ const HealthTopicTree = () => {
         Connect with women facing the same problem.
       </p>
       
-      <div className="space-y-2">
+      <div className="space-y-2 flex gap-1 flex-wrap md:flex-col ">
         {topics.map((topic) => (
-          <HealthTopicNode key={topic.id} topic={topic} level={1} />
+          <HealthTopicNode key={topic.id} topic={topic} />
         ))}
       </div>
     </div>
