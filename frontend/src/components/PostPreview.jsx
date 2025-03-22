@@ -67,10 +67,10 @@ const PostPreview = ({post}) => {
 
         {/* Display tags using Badge */}
         {post.tags && (
-          <div className="flex space-x-2 mt-4">
+          <div className="flex flex-wrap gap-2 mt-4">
             {post.tags.map((tag, index) => (
               <Badge key={index} className="bg-light text-center text-extraDark p-2">
-                # {tag}
+                #{tag}
               </Badge>
             ))}
           </div>
