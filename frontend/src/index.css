@@ -64,3 +64,21 @@
     @apply bg-background text-foreground;
   }
 }
+/* Custom Scrollbar Styling */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Adjust width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Light background */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background:#b4acac; /* Stylish gradient */
+  border-radius: 10px;
+}
+body {
+  @apply custom-scrollbar
+}
+
