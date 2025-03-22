@@ -3,7 +3,7 @@ import { ChevronRight, ChevronDown } from 'lucide-react';
 
 const HealthTopicNode = ({ topic}) => {
   return (
-    <div className="flex  items-center md:w-full mb-3">
+    <div className="flex  items-center md:w-full mt-2">
       {/* Channel line */}
       {/* <div className={`w-1 h-8 bg-light flex items-center`} /> */}
       {/* Topic name */}
