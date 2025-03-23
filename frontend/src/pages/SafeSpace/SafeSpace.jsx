@@ -113,7 +113,7 @@ const SafeSpace = () => {
       animate={{ y: 0 }}
       transition={{ ease: 'easeInOut', duration: 0.5 }}
     >
-      <div className={`w-full ${user ? "max-h-[28rem]" : "max-h-screen"}`}>
+      <div className="w-full max-h-screen">
         <div className="mt-0 lg:hidden border-none border-r-4 border-gray-700 transition-shadow duration-300 p-2 bg-white text-[#4A4A4A] rounded-none">
           <h1 className='text-lg bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2'>Filter By Tags</h1>
           <div className="flex flex-wrap gap-2 mb-2">
