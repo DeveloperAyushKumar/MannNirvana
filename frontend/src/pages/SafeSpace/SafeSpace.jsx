@@ -112,6 +112,7 @@ const SafeSpace = () => {
       initial={{ y: 0 }}
       animate={{ y: 0 }}
       transition={{ ease: 'easeInOut', duration: 0.5 }}
+      style={{ scrollbarWidth: "none" }}
     >
       <div className="w-full max-h-screen">
         <div className="mt-0 lg:hidden border-none border-r-4 border-gray-700 transition-shadow duration-300 p-2 bg-white text-[#4A4A4A] rounded-none">
