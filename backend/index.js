@@ -28,7 +28,7 @@ app.use('/posts', postRoutes);
 app.use('/consultant', consultantRoutes);
 app.use('/face', verifyToken, faceRoutes);
 app.use('/user', userRoutes);
-app.use('/chatbot', verifyToken, botRoutes);
+app.use('/chatbot', botRoutes);
 
 //Connect to DB
 async function main(){
