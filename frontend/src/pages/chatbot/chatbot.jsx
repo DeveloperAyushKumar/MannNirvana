@@ -21,9 +21,8 @@ const Bot = () => {
     const [recognition, setRecognition] = useState(null);
     const isRecording = useRef(false);
     const [speech, setSpeech] = useState(false);
-    const voiceChat = useRef(false);
+    const [voiceChat, setVoiceChat] = useState(false);
     const timeoutRef = useRef(null);
-    const indexRef = useRef(0);
     const lottieRef = useRef(null);
 
     const record = () => {
@@ -35,10 +34,11 @@ const Bot = () => {
         }
     };
 
-    const stop = () => {
+    const stop = (flag = false) => {
         if (recognition && isRecording.current) {
           recognition.stop();
           setSpeech(false);
+          if(flag) handleVoiceQuery(transcript);
           isRecording.current = false;
         }
     };
@@ -123,7 +123,6 @@ const Bot = () => {
             });
             playAnimation(res.data.response);
             speak(res.data.response);
-            indexRef.current += res.data.response.length;
             return;
         } catch (error) {
             console.log("Error in fetching response");
@@ -161,20 +160,11 @@ const Bot = () => {
     
           recognitionInstance.onresult = (event) => {
             let finalTranscript = "";
-            for (let i = indexRef.current; i < event.results.length; i++) {
+            for (let i = 0; i < event.results.length; i++) {
               finalTranscript += event.results[i][0].transcript + " ";
             }
 
-            if(voiceChat.current){
-                clearTimeout(timeoutRef.current);
-                timeoutRef.current = setTimeout(()=>{
-                    handleVoiceQuery(finalTranscript);
-                    indexRef.current = event.results.length;
-                }, 2000);
-            }
-            else{
-                setTranscript(finalTranscript);
-            }
+            setTranscript(finalTranscript);
           };
     
           setRecognition(recognitionInstance);
@@ -197,7 +187,7 @@ const Bot = () => {
         <div className="flex flex-col h-[85vh] items-center">
             <ToastContainer />
 
-            {voiceChat.current? 
+            {voiceChat? 
             <div className="w-full h-full flex flex-col">
                 <div className='flex-2 h-[90vh] flex items-center justify-center'>
                     <Lottie
@@ -210,15 +200,14 @@ const Bot = () => {
                 <div className='flex-1 flex w-full gap-36 items-center justify-center'>
                     <div className='border p-4 rounded-full'>
                         {speech? 
-                        <FaMicrophone size={32} className="text-white" onClick={stop} />
+                        <FaMicrophone size={32} className="text-white" onClick={()=>stop(true)} />
                         :
                         <FaMicrophoneSlash size={32} className="text-red-500 hover:text-red-600" onClick={record} />}
                     </div>
 
                     <div className='border p-4 rounded-full'>
                         <RxCross2 size={32} className="text-gray-500 hover:text-gray-600" onClick={()=>{
-                            voiceChat.current = false;
-                            indexRef.current = 0;
+                            setVoiceChat(false);
                             setTranscript("");
                             stop();
                         }} />
@@ -269,12 +258,10 @@ const Bot = () => {
                         : 
                         <BsSoundwave size={30} onClick={()=>{
                             let greet = `Hello ${user.name}, How can I help you?`;
-                            voiceChat.current = true;
-                            setSpeech(true);
+                            setVoiceChat(true);
                             speak(greet);
                             playAnimation(greet);
-                            record();
-                            indexRef.current+= greet.length;
+                            setTranscript("");
                         }} /> 
                     )}
                 </form>
