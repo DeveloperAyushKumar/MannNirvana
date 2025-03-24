@@ -12,10 +12,13 @@ import { Link } from 'react-router';
 import { FaRobot } from "react-icons/fa";
 import { ClipLoader } from 'react-spinners';
 import axios from 'axios';
+import { motion } from 'framer-motion';
+import { useRef } from 'react';
 
 const BackendURL = import.meta.env.VITE_BACKEND_URL;
 
 const SafeSpace = () => {
+  const scrollRef = useRef(null);
   const {data:posts=[]} = useFetchAllPostsQuery();
   const [chats, setChats] = useState(["mr-autoHello! How can I help you?"]);
   const [loading, setLoading] = useState(false);
@@ -103,44 +106,53 @@ const SafeSpace = () => {
         Safe Space
       </div>}
 
-      <ScrollArea className="" >
-      <div className={`w-full ${user? "max-h-[28rem]" : "max-h-screen"}`}>
-      <Card className="mt-0 lg:hidden border-none border-r-4 border-gray-700 transition-shadow duration-300 p-2 bg-white text-[#4A4A4A] rounded-none ">
-    <div  >
-
-    <h1 className='text-lg bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2 '>Filter By Tags </h1>
-      <div className="flex flex-wrap gap-2 mb-2 ">
-        {tags.map((tag) => (
-          <button
-          key={tag}
-          className={`px-2 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
-          onClick={() => handleTagSelect(tag)}
-          >
-            # {tag}
-          </button>
-        ))} 
-      </div>
+        <motion.div
+      ref={scrollRef}
+      className="w-full p-0 overflow-y-auto overflow-x-hidden custom-scrollbar"
+      initial={{ y: 0 }}
+      animate={{ y: 0 }}
+      transition={{ ease: 'easeInOut', duration: 0.5 }}
+      style={{ scrollbarWidth: "none" }}
+    >
+      <div className="w-full max-h-screen">
+        <div className="mt-0 lg:hidden border-none border-r-4 border-gray-700 transition-shadow duration-300 p-2 bg-white text-[#4A4A4A] rounded-none">
+          <h1 className='text-lg bg-white text-center mb-4 p-2 font-bold rounded-md border-gray-300 border-2'>Filter By Tags</h1>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tags.map((tag) => (
+              <button
+                key={tag}
+                className={`px-2 py-2 rounded-lg text-sm border border-gray-300 ${selectedTags.includes(tag) ? 'bg-dark text-white' : 'bg-white text-dark'}`}
+                onClick={() => handleTagSelect(tag)}
+              >
+                # {tag}
+              </button>
+            ))}
+          </div>
         </div>
-      </Card>
 
-      {/* Display filtered posts */}
-      {filteredPosts.length === 0 ? (
-        <p className="text-gray-600">No posts match the selected tags.</p>
-      ) : (
-        filteredPosts.slice().reverse().map((post) => (
-          <Link to={"/safespace/"+post._id} key={post._id}>
-          <PostPreview key={post.id} post={post}  />
-          {/* <Separator className='my-2'/> */}
-          </Link>
-        ))
-      )}
+        {/* Display filtered posts */}
+        {filteredPosts.length === 0 ? (
+          <p className="text-gray-600">No posts match the selected tags.</p>
+        ) : (
+          filteredPosts.slice().reverse().map((post) => (
+            <Link to={`/safespace/${post._id}`} key={post._id}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <PostPreview key={post.id} post={post} />
+              </motion.div>
+            </Link>
+          ))
+        )}
       </div>
-      </ScrollArea>
+    </motion.div>
       </div>
     </div>
     {/* {showBot ? (
       <div className="fixed bottom-[35vh] right-5 z-[999] bg-gray-200 p-2 rounded-lg h-[500px] flex flex-col shadow-lg">
-        <div className="flex justify-between m-2">
+      <div className="flex justify-between m-2">
           <span className="font-bold text-lg">Your Dost</span>
           <button
             onClick={() => {

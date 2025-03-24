@@ -79,7 +79,7 @@ function Events() {
  
     return (
         <div className='w-full'>
-         <h2 className='text-3xl font-semibold mb-6'>
+         <h2 className='text-3xl font-semibold mb-6 border-b-2 border-dark p-1'>
       Attend The Events
          </h2>
          

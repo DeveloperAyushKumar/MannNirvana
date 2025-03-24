@@ -66,7 +66,7 @@ const Bot = () => {
                 text: message,
                 user_id: user._id,
             });
-            setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response.slice(14)]);
+            setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response]);
         } catch (error) {
             console.error("Error:", error);
             toast.error("Error in fetching response");
@@ -121,9 +121,9 @@ const Bot = () => {
                 text: message,
                 user_id: user._id,
             });
-            playAnimation(res.data.response.slice(14));
-            speak(res.data.response.slice(14));
-            indexRef.current += res.data.response.slice(14).length;
+            playAnimation(res.data.response);
+            speak(res.data.response);
+            indexRef.current += res.data.response.length;
             return;
         } catch (error) {
             console.log("Error in fetching response");
