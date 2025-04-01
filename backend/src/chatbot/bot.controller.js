@@ -1,6 +1,7 @@
 import emotionRecord from "./emotion.model.js";
 
 const CHATBOT_URL = process.env.CHATBOT_URL
+const SENTIMENT_URL = process.env.SENTIMENT_URL
 
 const system = "[System] You are a compassionate and supportive mental health consultant.  - Your goal is to provide emotional support, coping strategies, and encouragement.  - Always respond with empathy and positivity.  - Offer mindfulness techniques, breathing exercises, and self-care suggestions.  - Do NOT diagnose conditions or prescribe medication.  - If the user expresses severe distress, gently recommend professional help. - Try to keep small responses as user is doing converstion with you"
 
@@ -16,11 +17,11 @@ const getResponse = async(req, res) => {
                 user_input: system + text
             })
         });
-        
+
         const responseData = await response.json();
-        console.log(responseData);
+        // console.log(responseData);
         
-        const emotion = await fetch(`${CHATBOT_URL}/analyze-text/`, {
+        const emotion = await fetch(`${SENTIMENT_URL}/analyze-text/`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
