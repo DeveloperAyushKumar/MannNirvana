@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+nltk
+textblob
+torch
+transformers
+python-dotenv
+nest_asyncio
+pydantic
