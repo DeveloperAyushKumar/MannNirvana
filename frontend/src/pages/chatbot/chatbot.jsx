@@ -17,6 +17,7 @@ const Bot = () => {
     const { user } = useWalletContext();
     const [loading, setLoading] = useState(false);
     const [chats, setChats] = useState([`mr-autoHello ${user?.name}! How can I help you?`]);
+    const [history, setHistory] = useState(`[AI] Hello ${user?.name}! How can I help you?`);
     const [transcript, setTranscript] = useState(""); 
     const [recognition, setRecognition] = useState(null);
     const isRecording = useRef(false);
@@ -58,15 +59,17 @@ const Bot = () => {
         }
 
         setChats((prevChats) => [...prevChats, "ml-auto" + message]);
+        setHistory((prevHistory) => prevHistory + ` [${user?.name}] ${message}`);
         setTranscript("");
         setLoading(true);
 
         try {
             const res = await axios.post(`${BackendURL}/chatbot/generate-response/`, {
-                text: message,
+                text: history + ` [${user?.name}] ${message}`,
                 user_id: user._id,
             });
             setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response]);
+            setHistory((prevHistory) => prevHistory + ` [AI] ${res.data.response}`);
         } catch (error) {
             console.error("Error:", error);
             toast.error("Error in fetching response");
@@ -116,12 +119,13 @@ const Bot = () => {
             }
 
             setLoading(true);
-
+            setHistory((prevHistory) => prevHistory + ` [${user?.name}] ${message}`);
             const res = await axios.post(`${BackendURL}/chatbot/generate-response/`, {
-                text: message,
+                text: history + ` [${user?.name}] ${message}`,
                 user_id: user._id,
             });
             playAnimation(res.data.response);
+            setHistory((prevHistory) => prevHistory + ` [AI] ${res.data.response}`);
             speak(res.data.response);
             return;
         } catch (error) {
