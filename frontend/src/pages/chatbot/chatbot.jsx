@@ -65,8 +65,9 @@ const Bot = () => {
 
         try {
             const res = await axios.post(`${BackendURL}/chatbot/generate-response/`, {
-                text: history + ` [${user?.name}] ${message}`,
+                history: history + ` [${user?.name}] ${message}`,
                 user_id: user._id,
+                text: message
             });
             setChats((prevChats) => [...prevChats, "mr-auto" + res.data.response]);
             setHistory((prevHistory) => prevHistory + ` [AI] ${res.data.response}`);
@@ -236,7 +237,7 @@ const Bot = () => {
 
                 <form className="mt-4 flex items-center gap-2" onSubmit={handleQuery}>
                     {speech? 
-                    <RxCross2 size={24} className="text-gray-600 hover:text-red-500" onClick={stop} />
+                    <RxCross2 size={24} className="text-gray-600 hover:text-red-500" onClick={() => stop(false)} />
                     :
                     <FaMicrophone size={24} className="text-white" onClick={record} />}
 
