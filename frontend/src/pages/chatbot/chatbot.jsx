@@ -122,8 +122,9 @@ const Bot = () => {
             setLoading(true);
             setHistory((prevHistory) => prevHistory + ` [${user?.name}] ${message}`);
             const res = await axios.post(`${BackendURL}/chatbot/generate-response/`, {
-                text: history + ` [${user?.name}] ${message}`,
+                history: history + ` [${user?.name}] ${message}`,
                 user_id: user._id,
+                text: message
             });
             playAnimation(res.data.response);
             setHistory((prevHistory) => prevHistory + ` [AI] ${res.data.response}`);
