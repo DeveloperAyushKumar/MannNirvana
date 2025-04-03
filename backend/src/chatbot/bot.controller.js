@@ -5,6 +5,7 @@ const CHATBOT_URL = process.env.CHATBOT_URL
 const getResponse = async(req, res) => {
     const user_id  = req.body.user_id; 
     const text = req.body.text;
+    console.log(user_id, text);
 
     try {
         const response = await fetch(`${CHATBOT_URL}/generate-response/`, {

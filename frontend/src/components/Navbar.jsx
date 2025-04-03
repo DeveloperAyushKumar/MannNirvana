@@ -40,10 +40,10 @@ function Navbar() {
       name: 'Your Dost', 
       href:'/your-dost'
     },
-    {
-      name: 'Join',
-      href:'/ngo'
-    },
+    // {
+    //   name: 'Join',
+    //   href:'/ngo'
+    // },
     {
       name :'Profile',
       href:'/profile'
@@ -58,7 +58,7 @@ function Navbar() {
           <img src={logo} alt="logo" className='size-12 rounded-full'  />
          </Link>
          <div className='font-extrabold px-4'>
-         MannNirvana
+         {/* MannNirvana */}
          </div>
         
             {
